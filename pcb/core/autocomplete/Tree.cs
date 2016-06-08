@@ -41,7 +41,12 @@ namespace pcb.core.autocomplete
             }
             if (temp.Count != 0)
             {
-                return temp.value.getValues(keys.Last());
+                List<string> result = new List<string>();
+                foreach (Tree tree in temp)
+                {
+                    result.AddRange(tree.value.getValues(keys.Last()));
+                }
+                return result;
             }
             else
             {
