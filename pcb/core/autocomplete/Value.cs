@@ -85,7 +85,7 @@ namespace pcb.core.autocomplete
         public static BlockingCollection<string> scbObj = new BlockingCollection<string>();
         public static BlockingCollection<string> triggerObj = new BlockingCollection<string>();
 
-        private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector"};
+        private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector","command"};
 
         public enum Type{
             reference, //values[0] = value key
@@ -96,16 +96,16 @@ namespace pcb.core.autocomplete
         }
         public Type type;
         public List<string> values = new List<string>();
-        public string prefix = "";
+        public List<string> prefix = new List<string>();
         public string rawValue = "";
 
         public Value(string para)
         {
             rawValue = para;
-            if (para.StartsWith("["))
+            while (para.StartsWith("["))
             {
                 int index = para.IndexOf("]");
-                prefix = para.Substring(1, index - 1);
+                prefix.Add(para.Substring(1, index - 1));
                 para = para.Substring(index + 1);
             }
             int commentIndex = para.IndexOf('\'');
@@ -181,8 +181,19 @@ namespace pcb.core.autocomplete
         }
         public bool isMatch(string segment)
         {
-            if (prefix.Length > 0 && segment.StartsWith(prefix))
-                segment = segment.Substring(prefix.Length);
+            bool noPrefix = false;
+            do
+            {
+                noPrefix = true;
+                foreach (string str in prefix)
+                {
+                    if (segment.StartsWith(str))
+                    {
+                        noPrefix = false;
+                        segment = segment.Substring(str.Length);
+                    }
+                }
+            } while (!noPrefix);
             switch (type)
             {
                 case Type.function:
@@ -209,8 +220,19 @@ namespace pcb.core.autocomplete
         {
             List<string> result = new List<string>();
             string beginMatch = input;
-            if (prefix.Length > 0 && beginMatch.StartsWith(prefix))
-                beginMatch = beginMatch.Substring(prefix.Length);
+            bool noPrefix = false;
+            do
+            {
+                noPrefix = true;
+                foreach (string str in prefix)
+                {
+                    if (beginMatch.StartsWith(str))
+                    {
+                        noPrefix = false;
+                        beginMatch = beginMatch.Substring(str.Length);
+                    }
+                }
+            } while (!noPrefix);
             switch (type)
             {
                 case Type.reference:
@@ -244,12 +266,12 @@ namespace pcb.core.autocomplete
                             if (attributes != null)
                                 foreach (string value in values.Skip(1))
                                 {
-                                    result.AddRange(attributes.Autocomplete(value + "." + input));
+                                    result.AddRange(attributes.Autocomplete(value + "." + beginMatch));
                                 }
                             beginMatch = input.Split('.').Last();
                             break;
                         case "selector":
-                            if ((input.StartsWith("@a[") || input.StartsWith("@p[") || input.StartsWith("@e[") || input.StartsWith("@r[")) && input.LastIndexOf(',') >= input.LastIndexOf('='))
+                            if ((beginMatch.StartsWith("@a[") || beginMatch.StartsWith("@p[") || beginMatch.StartsWith("@e[") || beginMatch.StartsWith("@r[")) && beginMatch.LastIndexOf(',') >= beginMatch.LastIndexOf('='))
                             {
                                 input = input.Substring(3);
                                 result.Add("x");

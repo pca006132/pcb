@@ -17,13 +17,13 @@ namespace pcb.core.autocomplete.Tests
         [TestMethod]
         public void typeNormalTest()
         {
-            Value value = new Value("[test:]abc'fuckU");
+            Value value = new Value("[test:][test2:]abc'fuckU");
             //check for no input
             Assert.AreEqual("abc", value.getValues("")[0][0]);
 
             //check for display
             Assert.AreEqual("abc", value.getValues("a")[0][0]);
-            Assert.AreEqual("abc", value.getValues("test:a")[0][0]);
+            Assert.AreEqual("abc", value.getValues("test:test2:a")[0][0]);
             //check for completion
             Assert.AreEqual("bc", value.getValues("a")[1][0]);
             Assert.AreEqual("bc", value.getValues("test:a")[1][0]);
@@ -32,6 +32,7 @@ namespace pcb.core.autocomplete.Tests
             //is match
             Assert.IsTrue(value.isMatch("abc"));
             Assert.IsTrue(value.isMatch("test:abc"));
+            Assert.IsTrue(value.isMatch("test2:test:abc"));
             //not match
             Assert.IsFalse(value.isMatch("a"));
             Assert.IsFalse(value.isMatch("test:a"));

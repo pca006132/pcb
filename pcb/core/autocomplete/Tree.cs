@@ -8,12 +8,17 @@ namespace pcb.core.autocomplete
 {
     public class Tree : IEnumerable
     {
+        private static readonly string[] defaultPrefixes = { "icb:", "rcb:", "cond:", "data:", "init:", "after:" };
+
         public static Tree generateTree(string text)
         {
-            Tree tree = new Tree(null);
+            Tree tree = new Tree(null);                  
+
             foreach (string rawLine in text.Split('\n'))
             {
                 string line = rawLine.Trim();
+                if (line.Length == 0)
+                    continue;
                 Tree temp = tree;
                 foreach (string para in line.Split(' '))
                 {
@@ -27,6 +32,37 @@ namespace pcb.core.autocomplete
 
         public List<string>[] autocomplete(string input)
         {
+            bool deletePrefix = true;
+            if (input.StartsWith(defaultPrefixes[4]))
+            {
+                input = input.Substring(5);
+                deletePrefix = false;
+            } else if (input.StartsWith(defaultPrefixes[5]))
+            {
+                input = input.Substring(6);
+                deletePrefix = false;
+            }
+            while (deletePrefix)
+            {
+                deletePrefix = false;
+                foreach (string prefix in defaultPrefixes.Take(4))
+                {
+                    if (input.StartsWith(prefix))
+                    {
+                        int length = prefix.Length;
+                        deletePrefix = true;
+                        if (prefix == "data:")
+                            length = 7;
+                        if (input.Length > 7)
+                            input = input.Substring(length);
+                        else if (input.Length == 7)
+                            input = "";
+                        else
+                            return new List<string>[] { new List<string>(), new List<string>() };
+                    }
+                }
+            }
+
             string[] keys = input.Split(' ');
             Tree temp = this;
 
@@ -37,6 +73,11 @@ namespace pcb.core.autocomplete
                 else
                 {
                     temp = temp.getChild(keys[i]);
+                    if (temp.value.type == Value.Type.function && temp.value.values[0] == "command")
+                    {
+                        temp = this;
+                        i--;
+                    }
                 }
             }
             if (temp.Count > 0)
@@ -45,6 +86,14 @@ namespace pcb.core.autocomplete
                 foreach (Tree tree in temp)
                 {
                     List<string>[] tempList = tree.value.getValues(keys.Last());
+                    if (tree.value.type == Value.Type.function && tree.value.values[0] == "command")
+                    {
+                        nodes.ForEach((t) => {
+                            List<string>[] tempList2 = t.value.getValues(keys.Last());
+                            tempList[0].AddRange(tempList2[0]);
+                            tempList[1].AddRange(tempList2[1]);
+                        });
+                    }
                     result[0].AddRange(tempList[0]);
                     result[1].AddRange(tempList[1]);
                 }
@@ -85,12 +134,18 @@ namespace pcb.core.autocomplete
         }
         public Tree getChild(string para)
         {
+            Tree func = null;
             foreach (Tree node in nodes)
             {
                 if (node.value.isMatch(para))
-                    return node;
+                {
+                    if (node.value.type == Value.Type.function)
+                        func = node;
+                    else
+                        return node;
+                }
             }
-            return null;
+            return func;
         }
         public Tree getChildRaw(string para)
         {
