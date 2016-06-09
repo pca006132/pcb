@@ -31,10 +31,18 @@ namespace pcb
             try
             {
                 tree = InitAutocomplete.init();
-            } catch (Exception ex)
+            } catch (AutocompleteParseException ex)
+            {
+                MessageBox.Show(ex.Message);
+                App.Current.Shutdown();
+                return;
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
                 MessageBox.Show(ex.StackTrace);
+                App.Current.Shutdown();
+                return;
             }
             updateList();
             input.Focus();

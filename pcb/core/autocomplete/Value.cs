@@ -85,6 +85,8 @@ namespace pcb.core.autocomplete
         public static BlockingCollection<string> scbObj = new BlockingCollection<string>();
         public static BlockingCollection<string> triggerObj = new BlockingCollection<string>();
 
+        private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector"};
+
         public enum Type{
             reference, //values[0] = value key
             regex,  //values[0] = pattern
@@ -108,7 +110,7 @@ namespace pcb.core.autocomplete
             }
             int commentIndex = para.IndexOf('\'');
             if (commentIndex < 0)
-                commentIndex = para.Length;
+                commentIndex = para.Length;            
             para = para.Substring(0, commentIndex);
             switch (para[0])
             {
@@ -121,6 +123,8 @@ namespace pcb.core.autocomplete
                 case '<':
                     type = Type.regex;
                     int closeBracketIndex = para.LastIndexOf('>');
+                    if (closeBracketIndex < 0)
+                        throw new AutocompleteParseException("missing ending bracket > ");
                     string pattern = para.Substring(1, closeBracketIndex - 1);
                     switch (pattern)
                     {
@@ -138,6 +142,8 @@ namespace pcb.core.autocomplete
                     break;
                 case '{':
                     type = Type.options;
+                    if (!para.Contains("}"))
+                        throw new AutocompleteParseException("missing ending bracket } ");
                     foreach (string str in para.Substring(1, Math.Min(para.LastIndexOf('}'), para.Length - 2)).Split('|'))
                     {
                         values.Add(str);
@@ -147,11 +153,19 @@ namespace pcb.core.autocomplete
                     type = Type.function;
                     if (para.Contains("("))
                     {
+                        if (!para.Contains(")"))
+                            throw new AutocompleteParseException("missing ending bracket ) ");
                         int index = para.IndexOf('(');
                         values.Add(para.Substring(1, index - 1));
+
+                        if (!functionNames.Contains(values[0]))
+                            throw new AutocompleteParseException("unknown function name");
                         foreach (string str in para.Substring(index + 1, para.Length - index - 2).Split(','))
                         {
                             values.Add(str);
+                            if (values[0] == "dot")
+                                if (!attributes.contains(str))
+                                    throw new AutocompleteParseException("unknown dot attribute");
                         }
                     }
                     else

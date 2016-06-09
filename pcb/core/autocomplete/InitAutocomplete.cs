@@ -12,16 +12,44 @@ namespace pcb.core.autocomplete
     {
         public static Tree init()
         {
-            string jsonString = File.ReadAllText("ref/references.json");
-            JObject json = JObject.Parse(jsonString);
+            string jsonString;
+            try
+            {
+                jsonString = File.ReadAllText("ref/references.json");
+            } catch (Exception ex)
+            {
+                throw new AutocompleteParseException("io error when reading references.json: \n" + ex.Message);
+            }
+            JObject json;
+            try
+            {
+                json = JObject.Parse(jsonString);
+            } catch (Exception ex)
+            {
+                throw new AutocompleteParseException("json error when reading references.json: \n" + ex.Message);
+            }
             foreach (var pair in json)
             {
                 if (pair.Value.Type == JTokenType.Array)
                     Value.addRef(pair.Key, ((JArray)pair.Value).Select(s => (string)s).ToList());
             }
 
-            jsonString = File.ReadAllText("ref/dot.json");
-            json = JObject.Parse(jsonString);
+            try
+            {
+                jsonString = File.ReadAllText("ref/dot.json");
+            }
+            catch (Exception ex)
+            {
+                throw new AutocompleteParseException("io error when reading dot.json: \n" + ex.Message);
+            }
+            try
+            {
+                json = JObject.Parse(jsonString);
+            }
+            catch (Exception ex)
+            {
+                throw new AutocompleteParseException("json error when reading dot.json: \n" + ex.Message);
+            }
             foreach (var pair in json)
             {
                 if (pair.Value.Type == JTokenType.Array)
