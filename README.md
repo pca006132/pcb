@@ -3,8 +3,8 @@
 ###命令格式:
 存放在commands.txt里，每行当作一条命令  
 参数之间必须以空格分隔(也就是说参数里不能有空格，然而如果有必要以后可能会修改)  
-reference和$function会自动当作符合，也就是说say #entityID say 和 say hi bye，后面那个可能会被覆盖  
 (能补全hi，但是say hi 的时候可能会补全了say)  
+(然而function的话会自动放在最后配对，也就是说其他东西全部配对不了的时候才会当作符合)
 
 ####参数格式
 * #reference
@@ -33,6 +33,7 @@ reference和$function会自动当作符合，也就是说say #entityID say 和 s
 * //以上目前都没有用，有这function然而都是没有资料的
 * dot(str1, str2): 自动补全dot文件里的字串(xxx.xxx.xxx这类型资料的时候使用) 详细在下方dot部分讲解
 * selector: 自动补全选择器参数(拿取当前位置的字串进行配对)
+* command: 从之后的字串开始重新配对，比如execute $selector <coor> <coor> <coor> $command
 
 ####例子
 ···
