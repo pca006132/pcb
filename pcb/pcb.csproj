@@ -71,6 +71,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="core\autocomplete\AutocompleteParseException.cs" />
+    <Compile Include="core\autocomplete\InitAutocomplete.cs" />
     <Compile Include="core\autocomplete\TreeNode.cs" />
     <Compile Include="core\autocomplete\Tree.cs" />
     <Compile Include="core\autocomplete\Value.cs" />

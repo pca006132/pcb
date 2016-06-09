@@ -10,7 +10,7 @@ namespace pcb.core.autocomplete
     {
         public static Tree generateTree(string text)
         {
-            Tree tree = new Tree("");
+            Tree tree = new Tree(null);
             foreach (string rawLine in text.Split('\n'))
             {
                 string line = rawLine.Trim();
@@ -19,13 +19,13 @@ namespace pcb.core.autocomplete
                 {
                     if (!temp.containsRaw(para))
                         temp.addNode(new Tree(para));
-                    temp.getChildRaw(para);
+                    temp = temp.getChildRaw(para);
                 }
             }
             return tree;
         }
 
-        public List<string> autocomplete(string input)
+        public List<string>[] autocomplete(string input)
         {
             string[] keys = input.Split(' ');
             Tree temp = this;
@@ -33,31 +33,34 @@ namespace pcb.core.autocomplete
             for (int i = 0; i < keys.Length - 1; i++)
             {
                 if (!temp.contains(keys[i]))
-                    return new List<string>();
+                    return new List<string>[] {new List<string>(), new List<string>() };
                 else
                 {
                     temp = temp.getChild(keys[i]);
                 }
             }
-            if (temp.Count != 0)
+            if (temp.Count > 0)
             {
-                List<string> result = new List<string>();
+                List<string>[] result = {new List<string>(), new List<string>() };
                 foreach (Tree tree in temp)
                 {
-                    result.AddRange(tree.value.getValues(keys.Last()));
+                    List<string>[] tempList = tree.value.getValues(keys.Last());
+                    result[0].AddRange(tempList[0]);
+                    result[1].AddRange(tempList[1]);
                 }
                 return result;
             }
             else
             {
-                return new List<string>();
+                return new List<string>[] { new List<string>(), new List<string>() };
             }
         }
         List<Tree> nodes = new List<Tree>();
         public Value value;
         public Tree(string str)
         {
-            this.value = new Value(str);
+            if (str != null)
+                this.value = new Value(str);
         }
         public void addNode(Tree node)
         {
@@ -75,9 +78,8 @@ namespace pcb.core.autocomplete
         }
         public bool containsRaw(string para)
         {
-            Value value = new Value(para);
             foreach (Tree node in nodes)
-                if (value.Equals(node.value))
+                if (node.value.rawValue.Equals(para))
                     return true;
             return false;
         }
@@ -92,9 +94,8 @@ namespace pcb.core.autocomplete
         }
         public Tree getChildRaw(string para)
         {
-            Value value = new Value(para);
             foreach (Tree node in nodes)
-                if (value.Equals(node.value))
+                if (node.value.rawValue.Equals(para))
                     return node;
             return null;
         }

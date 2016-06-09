@@ -51,6 +51,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="core\autocomplete\InitStaticValue.cs" />
+    <Compile Include="core\autocomplete\TreeTests.cs" />
+    <Compile Include="core\autocomplete\ValueTests.cs" />
     <Compile Include="core\CommandBlockTests.cs" />
     <Compile Include="core\MarkerTests.cs" />
     <Compile Include="core\util\Command_UtilTests.cs" />

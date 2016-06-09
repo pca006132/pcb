@@ -7,7 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TextBox x:Name="input" Height="280" VerticalAlignment="Top" AcceptsReturn="True" TextWrapping="Wrap"/>
-        <Button Height="30" Width="50" VerticalAlignment="Bottom" Click="Button_Click"/>
+        <TextBox x:Name="input" Height="170" VerticalAlignment="Top" TextWrapping="Wrap" TextChanged="input_TextChanged" PreviewKeyDown="input_PreviewKeyDown" Margin="10,10,10,0"/>
+        <ListBox x:Name="listBox" Height="129" Focusable="False" Margin="10,10,10,10" VerticalAlignment="Bottom">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
