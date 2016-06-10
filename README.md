@@ -8,7 +8,7 @@
 
 ####参数格式
 * #reference
-* <regex pattern>
+* \<regex pattern\>
 * {option1|option2...}
 * $function(parameters)
 * [optional_prefix]things
@@ -36,13 +36,13 @@
 * command: 从之后的字串开始重新配对，比如execute $selector <coor> <coor> <coor> $command
 
 ####例子
-···
+```
 scoreboard objectives add <\w+>'记分板名称 $dot(stat)'判据 <\w+>'记分板显示名称
 scoreboard objectives remove $$scbObj'记分板名称
 scoreboard objectives setdisplay #displaySlot'显示位置 $scbObj'记分板名称
 scoreboard objectives list
 scoreboard players {set|add|remove|reset} $selector'实体或假名 $scbObj'记分板名称 <-?\d+>'分数
-···
+```
 
 ###dot格式:
 存放在dot.json里，使用json格式  
