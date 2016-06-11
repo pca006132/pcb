@@ -31,6 +31,7 @@ namespace pcb
             try
             {
                 tree = InitAutocomplete.init();
+                core.LoadConfig.readConfig();
             } catch (AutocompleteParseException ex)
             {
                 MessageBox.Show(ex.Message);

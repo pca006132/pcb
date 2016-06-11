@@ -11,6 +11,8 @@ namespace pcb.core.autocomplete
 {
     public class Value
     {
+        public static bool forceCompletePrefix = false;
+
         //for references
         private static Dictionary<string, List<string>> references = new Dictionary<string, List<string>>();
         public static void addRef(string key, List<string> reference)
@@ -221,18 +223,37 @@ namespace pcb.core.autocomplete
             List<string> result = new List<string>();
             string beginMatch = input;
             bool noPrefix = false;
-            do
-            {
-                noPrefix = true;
+            if (forceCompletePrefix)
                 foreach (string str in prefix)
                 {
                     if (beginMatch.StartsWith(str))
                     {
-                        noPrefix = false;
                         beginMatch = beginMatch.Substring(str.Length);
                     }
+                    else
+                    {
+                        result.Add(str);
+                        var result2 = new List<string>(result);
+                        for (int i = 0; i < result2.Count; i++)
+                        {
+                            result2[i] = result2[i].Substring(beginMatch.Length);
+                        }
+                        return new List<string>[] { result, result2 };
+                    }
                 }
-            } while (!noPrefix);
+            else
+                do
+                {
+                    noPrefix = true;
+                    foreach (string str in prefix)
+                    {
+                        if (beginMatch.StartsWith(str))
+                        {
+                            noPrefix = false;
+                            beginMatch = beginMatch.Substring(str.Length);
+                        }
+                    }
+                } while (!noPrefix);
             switch (type)
             {
                 case Type.reference:

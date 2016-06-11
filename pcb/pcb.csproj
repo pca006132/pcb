@@ -79,6 +79,7 @@
     <Compile Include="core\chain\BoxCbChain.cs" />
     <Compile Include="core\chain\StraightCbChain.cs" />
     <Compile Include="core\CommandBlock.cs" />
+    <Compile Include="core\LoadConfig.cs" />
     <Compile Include="core\Marker.cs" />
     <Compile Include="core\OOCMaker.cs" />
     <Compile Include="core\PcbException.cs" />
