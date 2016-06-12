@@ -114,6 +114,12 @@ namespace pcb.core.autocomplete
             if (commentIndex < 0)
                 commentIndex = para.Length;            
             para = para.Substring(0, commentIndex);
+            
+            if (para.Length == 0)
+            {
+                throw new AutocompleteParseException("empty argument");
+            }
+            
             switch (para[0])
             {
                 case '#':
@@ -131,16 +137,16 @@ namespace pcb.core.autocomplete
                     switch (pattern)
                     {
                         case "number":
-                            pattern = @"^-?\d+(\.\d+)?$";
+                            pattern = @"-?\d+(\.\d+)?";
                             break;
                         case "coor":
-                            pattern = @"^(~?(-?\d+(\.\d+)?)|~)$";
+                            pattern = @"(~?(-?\d+(\.\d+)?)|~)";
                             break;
                         case "int":
-                            pattern = @"^-?\d+$";
+                            pattern = @"-?\d+";
                             break;
                     }
-                    values.Add(pattern);
+                    values.Add("^" + pattern + "$");
                     break;
                 case '{':
                     type = Type.options;

@@ -8,9 +8,9 @@ namespace pcb.core.chain
 {
     class StraightCbChain : AbstractCBChain
     {
-        private static Direction initialDir = Direction.positiveY;
+        public static Direction initialDir = Direction.positiveY;
         private Direction dir = initialDir;
-        private static int limit = 0;
+        public static int limit = 0;
         private bool autoChangeDirection = true;
         private int rowCbCount = 0;
 

@@ -22,9 +22,15 @@ namespace pcb.core.autocomplete
                 Tree temp = tree;
                 foreach (string para in line.Split(' '))
                 {
-                    if (!temp.containsRaw(para))
-                        temp.addNode(new Tree(para));
-                    temp = temp.getChildRaw(para);
+                    try
+                    {
+                        if (!temp.containsRaw(para))
+                            temp.addNode(new Tree(para));
+                        temp = temp.getChildRaw(para);
+                    } catch (AutocompleteParseException ex)
+                    {
+                        throw new AutocompleteParseException(ex.Message + "\nat: " + para + "\nat: " + line);
+                    }
                 }
             }
             return tree;
