@@ -29,8 +29,8 @@
 * trigger: 返回所有trigger目标
 * team: 返回所有队伍名称
 * tag: 返回所有记分板tag
-* sound: 自动补全sounds.json的名称(拿取当前位置的字串进行配对)  
 * //以上目前都没有用，有这function然而都是没有资料的
+* sound: 自动补全sounds.json的名称(拿取当前位置的字串进行配对)  
 * dot(str1, str2): 自动补全dot文件里的字串(xxx.xxx.xxx这类型资料的时候使用) 详细在下方dot部分讲解
 * selector: 自动补全选择器参数(拿取当前位置的字串进行配对)
 * command: 从之后的字串开始重新配对，比如execute $selector <coor> <coor> <coor> $command
