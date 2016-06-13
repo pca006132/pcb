@@ -22,7 +22,7 @@ namespace pcb
     public partial class autocomplete_menu
     {
         public List<string> display = new List<string>();
-        public List<string> completion = new List<string>();
+        public List<int> completion = new List<int>();
         public TextEditor editor;
         int line;
         int column;
@@ -30,7 +30,7 @@ namespace pcb
         double y;
         public bool shown = false;
 
-        public void updateitem(List<string> display, List<string> completion)
+        public void updateitem(List<string> display, List<int> completion)
         {
             line = editor.Document.GetLineByOffset(editor.CaretOffset).LineNumber;
             column = editor.CaretOffset - editor.Document.GetLineByOffset(editor.CaretOffset).Offset;
@@ -52,9 +52,9 @@ namespace pcb
                 shown = false;
                 return;
             }
-            foreach (string str in completion)
+            for (int i = 0; i < display.Count; i++)
             {
-                if (str.Length == 0)
+                if (completion[i] == display[i].Length)
                 {
                     Hide();
                     shown = false;
@@ -135,14 +135,14 @@ namespace pcb
                             DocumentLine line = editor.Document.GetLineByOffset(editor.CaretOffset);
                             string before = editor.Document.GetText(line.Offset, editor.CaretOffset - line.Offset);
                             string after = editor.Document.GetText(editor.CaretOffset, line.EndOffset - editor.CaretOffset);
-                            StringBuilder temp = new StringBuilder();
-                            List<string> elements = completion;
-                            foreach (string item in elements)
+                            StringBuilder temp = new StringBuilder();                            
+                            for (int i = 0; i < display.Count; i++)
                             {
                                 temp.Append(before);
-                                temp.Append(item);
+                                temp.Remove(temp.Length - completion[i], completion[i]);
+                                temp.Append(display[i]);
                                 temp.AppendLine(after);
-                            }
+                            }                            
                             editor.Document.Replace(line, temp.ToString());
                         }
                     }
@@ -166,8 +166,7 @@ namespace pcb
                     }
                     if (e.Key == Key.Enter || e.Key == Key.Tab)
                     {
-                        
-                        editor.Document.Insert(editor.SelectionStart, completion[listbox.SelectedIndex]);
+                        editor.Document.Replace(editor.SelectionStart - completion[listbox.SelectedIndex], completion[listbox.SelectedIndex], display[listbox.SelectedIndex]);
                         display.Clear();
                         completion.Clear();
                         listbox.Items.Clear();
@@ -176,7 +175,7 @@ namespace pcb
                     }
                     if (e.Key == Key.Space || e.Key == Key.Decimal ||  e.Key == Key.OemPeriod)
                     {
-                        editor.Document.Insert(editor.SelectionStart, completion[listbox.SelectedIndex]);
+                        editor.Document.Replace(editor.SelectionStart - completion[listbox.SelectedIndex], completion[listbox.SelectedIndex], display[listbox.SelectedIndex]);
                         display.Clear();
                         completion.Clear();
                         listbox.Items.Clear();
@@ -185,9 +184,9 @@ namespace pcb
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-
+                window.log(ex);
             }
         }
         private void Window_LocationChanged(object sender, EventArgs e)
@@ -201,7 +200,7 @@ namespace pcb
         }
         private void listbox_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            editor.Document.Insert(editor.SelectionStart, completion[listbox.SelectedIndex]);
+            editor.Document.Replace(editor.SelectionStart - completion[listbox.SelectedIndex], completion[listbox.SelectedIndex], display[listbox.SelectedIndex]);
             display.Clear();
             completion.Clear();
             listbox.Items.Clear();

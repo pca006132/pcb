@@ -24,7 +24,7 @@ namespace pcb.core.autocomplete
         {
             if (references.ContainsKey(key))
                 return references[key];
-            return null;
+            return new List<string>();
         }
         public static bool lazyMatch = true;
 
@@ -224,7 +224,7 @@ namespace pcb.core.autocomplete
             }
         }
 
-        public List<string>[] getValues(string input)
+        public CompletionData getValues(string input)
         {
             List<string> result = new List<string>();
             string beginMatch = input;
@@ -239,12 +239,12 @@ namespace pcb.core.autocomplete
                     else
                     {
                         result.Add(str);
-                        var result2 = new List<string>(result);
-                        for (int i = 0; i < result2.Count; i++)
+                        var result2 = new List<int>();
+                        for (int i = 0; i < result.Count; i++)
                         {
-                            result2[i] = result2[i].Substring(beginMatch.Length);
+                            result2.Add(beginMatch.Length);
                         }
-                        return new List<string>[] { result, result2 };
+                        return new CompletionData(result, result2);
                     }
                 }
             else
@@ -364,14 +364,14 @@ namespace pcb.core.autocomplete
                     }
                     break;
             }
-            result = result.Distinct().Where(s => s.StartsWith(beginMatch)).ToList();
+            result = result.Distinct().Where(s => s.ToLower().StartsWith(beginMatch.ToLower())).ToList();
             result.Sort();
-            List<string> complete = new List<string>(result);
-            for (int i = 0; i < complete.Count; i++)
+            List<int> indexes = new List<int>();
+            for (int i = 0; i < result.Count; i++)
             {
-                complete[i] = complete[i].Substring(beginMatch.Length);
+                indexes.Add(beginMatch.Length);
             }
-            return new List<string>[] {result, complete};
+            return new CompletionData(result, indexes);
         }
     }
 }

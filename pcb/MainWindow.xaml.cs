@@ -26,7 +26,6 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using MahApps.Metro;
 using System.Diagnostics;
 using Microsoft.Win32;
-
 namespace pcb
 {
     /// <summary>
@@ -354,7 +353,8 @@ namespace pcb
             }
             catch (AutocompleteParseException ex)
             {
-                MessageBox.Show(ex.Message);
+                showMessage(ex.Message, "error!");
+                log(ex);
                 App.Current.Shutdown();
                 return;
             }
@@ -362,13 +362,14 @@ namespace pcb
             {
                 showMessage(ex.Message, "error");
                 showMessage(ex.StackTrace, "error!");
+                log(ex);
                 App.Current.Shutdown();
                 return;
             }
             initBackUpFile();
             registerCommands();
             updateNotification();
-            Editor.Focus();
+            Editor.Focus();            
         }
         //autocomplete
         void parseDocument()
@@ -417,7 +418,7 @@ namespace pcb
                 return;
             if (text.Contains('\t'))
                 return;
-            List<string>[] list;
+            CompletionData list;
             try
             {
                 list = tree.autocomplete(text);
@@ -427,9 +428,9 @@ namespace pcb
                 return;
             }
 
-            if (list[0].Count > 0)
+            if (list.displayData.Count > 0)
             {
-                autocomplete.updateitem(list[0],list[1]);
+                autocomplete.updateitem(list.displayData,list.startLength);
             }
             else
             {
@@ -569,14 +570,15 @@ namespace pcb
 
         }
         //windows special function
-        void log(Exception ex)
+        public void log(Exception ex)
         {
             try
             {
-                if (!File.Exists("documents/log.txt"))
-                    File.Create("documents/log.txt");
-                File.AppendText("documents/log.txt").WriteLine(ex.Message);
-                File.AppendText("documents/log.txt").WriteLine(ex.StackTrace);
+                if (!File.Exists("documents/log/log.txt"))
+                    File.Create("documents/log/log.txt");
+                var writer = File.AppendText("documents/log/log.txt");
+                writer.WriteLine(ex.Message);
+                writer.WriteLine(ex.StackTrace);
             }
             catch { }
         }
@@ -645,6 +647,27 @@ namespace pcb
             text += "side_dam:" + core.chain.BoxCbChain.outerDamage.ToString() + Environment.NewLine;
             text += Editor.Text;
             return text;
+        }
+        void deleteBackupFile()
+        {
+            try
+            {
+                File.Delete(backupFileName);
+            }
+            catch
+            {
+                try
+                {
+                    System.Windows.Threading.DispatcherTimer dispatcherTimer;
+                    dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                    dispatcherTimer.Tick += new EventHandler((object sender1, EventArgs e1) => {
+                        File.Delete(backupFileName);
+                    });
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+                    dispatcherTimer.Start();
+                }
+                catch { }
+            }
         }
         //events
         void Editor_TextEntering(object sender, TextCompositionEventArgs e)
@@ -732,7 +755,7 @@ namespace pcb
                         loadFile(openFileDialog.FileName);
                         return;
                     }
-                    if (MessageBox.Show("加载文件后即将覆盖原先文件，请问是否覆盖?", "提示！", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    if (CustomMessageBox.ShowMessage("加载文件后即将覆盖原先文件，请问是否覆盖?", "提示！") == CustomMessageBox.State.yes)
                     {
                         loadFile(openFileDialog.FileName);
                     }
@@ -792,7 +815,7 @@ namespace pcb
         }
         void Deesacpe_Click(object sender, RoutedEventArgs e)
         {
-            Editor.SelectedText = CommandUtil.deescape(Editor.SelectedText);
+            Editor.SelectedText = CommandUtil.unescape(Editor.SelectedText);
         }
         void insertUUID_Click(object sender, RoutedEventArgs e)
         {
@@ -835,9 +858,18 @@ namespace pcb
         {
             findReplaceDialog.Show();
         }
-        void MenuItem_Click(object sender, RoutedEventArgs e)
+        void showSetting(object sender, RoutedEventArgs e)
         {
             new Settings(this);
+        }
+        void showList(object sender, RoutedEventArgs e)
+        {
+            add_ac_list window = new add_ac_list();
+            window.ShowDialog();
+        }
+        void openPyEditor(object sender, RoutedEventArgs e)
+        {
+            ScriptWindow window = new ScriptWindow(Editor);
         }
         void generateFromEditor(object sender, RoutedEventArgs e)
         {
@@ -877,33 +909,16 @@ namespace pcb
             string gettext = getText();
             if (Editor.Text == "")
             {
-                try
-                {
-                    File.Delete(backupFileName);
-                }
-                catch
-                {
-                    try
-                    {
-                        System.Windows.Threading.DispatcherTimer dispatcherTimer;
-                        dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                        dispatcherTimer.Tick += new EventHandler((object sender1, EventArgs e1) => {
-                            File.Delete(backupFileName);
-                        });
-                        dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-                        dispatcherTimer.Start();
-                    }
-                    catch { }
-                }
+                deleteBackupFile();
                 Application.Current.Shutdown();
                 return;
             }
             if (autocomplete.Visibility == Visibility.Visible)
                 autocomplete.Hide();
             if (path == "")
-            {
-                var dialogResult = MessageBox.Show("关闭前要不要先另存新档", "提示", MessageBoxButton.YesNoCancel);
-                if (dialogResult == MessageBoxResult.Yes)
+            {                
+                var dialogResult = CustomMessageBox.ShowMessage("关闭前要不要先另存新档", "提示");
+                if (dialogResult == CustomMessageBox.State.yes)
                 {
                     SaveFileDialog savefiledialog = new SaveFileDialog();
                     savefiledialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -915,6 +930,7 @@ namespace pcb
                     if (savefiledialog.ShowDialog() == true)
                     {
                         File.WriteAllText(savefiledialog.FileName, gettext, new UTF8Encoding());
+                        deleteBackupFile();
                         Application.Current.Shutdown();
                     }
                     else
@@ -923,13 +939,14 @@ namespace pcb
                         return;
                     }
                 }
-                else if (dialogResult == MessageBoxResult.Cancel)
+                else if (dialogResult == CustomMessageBox.State.close)
                 {
                     closed = false;
                     return;
                 }
-                else if (dialogResult == MessageBoxResult.No)
+                else if (dialogResult == CustomMessageBox.State.no)
                 {
+                    deleteBackupFile();
                     Application.Current.Shutdown();
                 }
             }
@@ -941,45 +958,35 @@ namespace pcb
                     text = File.ReadAllText(path, new UTF8Encoding());
                     if (text != gettext)
                     {
-                        var dialogResult = MessageBox.Show("检测到还没储存的更改，请问是否需要先储存?", "提示", MessageBoxButton.YesNoCancel);
-                        if (dialogResult == MessageBoxResult.Yes)
+                        var dialogResult = CustomMessageBox.ShowMessage("检测到还没储存的更改，请问是否需要先储存?", "提示");
+                        if (dialogResult == CustomMessageBox.State.yes)
                         {
                             File.WriteAllText(path, gettext);
                             Application.Current.Shutdown();
                         }
-                        else if (dialogResult == MessageBoxResult.Cancel)
+                        else if (dialogResult == CustomMessageBox.State.close)
                         {
                             closed = false;
                             return;
                         }
-                        else if (dialogResult == MessageBoxResult.No)
+                        else if (dialogResult == CustomMessageBox.State.no)
                         {
+                            deleteBackupFile();
                             Application.Current.Shutdown();
                         }
                     }
                     else
-                        Application.Current.Shutdown();
+                    {
+                        deleteBackupFile();
+                        Application.Current.Shutdown();                    
+                    }
                 }
                 catch
                 {
 
                 }
             }
-            try { File.Delete(backupFileName); }
-            catch
-            {
-                try
-                {
-                    System.Windows.Threading.DispatcherTimer dispatcherTimer;
-                    dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                    dispatcherTimer.Tick += new EventHandler((object sender1, EventArgs e1) => {
-                        File.Delete(backupFileName);
-                    });
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-                    dispatcherTimer.Start();
-                }
-                catch { }
-            }
+            deleteBackupFile();
         }
         //command classes
         class generate : ICommand
@@ -1302,6 +1309,7 @@ namespace pcb
                 parent.findReplaceDialog.Show();
             }
         }
+
     }
 }
 public class BraceFoldingStrategy : ICSharpCode.AvalonEdit.Folding.NewFolding

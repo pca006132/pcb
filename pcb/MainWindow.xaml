@@ -51,8 +51,12 @@
                 <MenuItem Header="寻找/替换" Click="FindReplace_Click" InputGestureText="Ctrl + F"/>
                 <MenuItem Header="注释选择的行" Click="comment_Click" InputGestureText="Ctrl + /"/>
                 <MenuItem Header="反注释选择的行" Click="uncomment_Click" InputGestureText="Ctrl + \"/>
+                <Separator/>
+                <MenuItem Header="执行python" Click="openPyEditor"></MenuItem>
             </MenuItem>
-            <MenuItem Header="设置" Click="MenuItem_Click">
+            <MenuItem Header="设置">
+                <MenuItem Header="生成器/编辑器设置"  Click="showSetting"/>
+                <MenuItem Header="自动补全特殊参数设置" Click="showList"/>
             </MenuItem>
             <MenuItem Header="生成" Click="generateFromEditor" InputGestureText="Ctrl + G"
                       ToolTip="把所有指令变为OOC / 把选择部分变为OOC">

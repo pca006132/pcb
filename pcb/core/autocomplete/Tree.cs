@@ -36,7 +36,7 @@ namespace pcb.core.autocomplete
             return tree;
         }
 
-        public List<string>[] autocomplete(string input)
+        public CompletionData autocomplete(string input)
         {
             bool deletePrefix = true;
             if (input.StartsWith(defaultPrefixes[4]))
@@ -64,7 +64,7 @@ namespace pcb.core.autocomplete
                         else if (input.Length == 7)
                             input = "";
                         else
-                            return new List<string>[] { new List<string>(), new List<string>() };
+                            return new CompletionData();
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace pcb.core.autocomplete
             for (int i = 0; i < keys.Length - 1; i++)
             {
                 if (!temp.contains(keys[i]))
-                    return new List<string>[] {new List<string>(), new List<string>() };
+                    return new CompletionData();
                 else
                 {
                     temp = temp.getChild(keys[i]);
@@ -88,26 +88,26 @@ namespace pcb.core.autocomplete
             }
             if (temp.Count > 0)
             {
-                List<string>[] result = {new List<string>(), new List<string>() };
+                CompletionData result = new CompletionData();
                 foreach (Tree tree in temp)
                 {
-                    List<string>[] tempList = tree.value.getValues(keys.Last());
+                    CompletionData tempList = tree.value.getValues(keys.Last());
                     if (tree.value.type == Value.Type.function && tree.value.values[0] == "command")
                     {
                         nodes.ForEach((t) => {
-                            List<string>[] tempList2 = t.value.getValues(keys.Last());
-                            tempList[0].AddRange(tempList2[0]);
-                            tempList[1].AddRange(tempList2[1]);
+                            CompletionData tempList2 = t.value.getValues(keys.Last());
+                            tempList.displayData.AddRange(tempList2.displayData);
+                            tempList.startLength.AddRange(tempList2.startLength);
                         });
                     }
-                    result[0].AddRange(tempList[0]);
-                    result[1].AddRange(tempList[1]);
+                    result.displayData.AddRange(tempList.displayData);
+                    result.startLength.AddRange(tempList.startLength);
                 }
                 return result;
             }
             else
             {
-                return new List<string>[] { new List<string>(), new List<string>() };
+                return new CompletionData();
             }
         }
         List<Tree> nodes = new List<Tree>();

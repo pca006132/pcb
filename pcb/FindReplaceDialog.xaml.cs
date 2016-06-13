@@ -92,7 +92,7 @@ namespace pcb
                     if (Editor.SelectionLength == 0)
                     {
                         string text = Editor.Text.Replace(findTB.Text, replaceTB.Text);
-                        Editor.Document.Text = text;
+                        Editor.Document.Replace(0, Editor.Text.Length, text);
                     }
                     else
                     {
@@ -104,13 +104,12 @@ namespace pcb
                 {
                     if (Editor.SelectionLength == 0)
                     {
-                        string text = Regex.Replace(Editor.Text, findTB.Text, replaceTB.Text, (((bool)MultiLine.IsChecked) ? RegexOptions.Multiline : RegexOptions.None));
-                        Editor.Document.Text = text;
-
+                        string text = Regex.Replace(Editor.Text, findTB.Text, Regex.Unescape(replaceTB.Text), (((bool)MultiLine.IsChecked) ? RegexOptions.Multiline : RegexOptions.None));
+                        Editor.Document.Replace(0, Editor.Text.Length, text);
                     }
                     else
                     {
-                        string text = Regex.Replace(Editor.SelectedText, findTB.Text, replaceTB.Text, (((bool)MultiLine.IsChecked) ? RegexOptions.Multiline : RegexOptions.None));
+                        string text = Regex.Replace(Editor.SelectedText, findTB.Text, Regex.Unescape(replaceTB.Text), (((bool)MultiLine.IsChecked) ? RegexOptions.Multiline : RegexOptions.None));
                         Editor.Document.Replace(Editor.SelectionStart, Editor.SelectionLength, text);
                     }
                 }

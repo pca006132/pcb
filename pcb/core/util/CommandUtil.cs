@@ -14,7 +14,7 @@ namespace pcb.core.util
         {
             return text.Replace("\\", "\\\\").Replace("\"", "\\\"");
         }
-        public static string deescape(string text)
+        public static string unescape(string text)
         {
             return text.Replace("\\\"", "\"").Replace("\\\\", "\\");
         }

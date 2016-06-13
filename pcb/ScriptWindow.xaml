@@ -1,0 +1,15 @@
+﻿<Controls:MetroWindow x:Class="pcb.ScriptWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:pcb"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" 
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+        mc:Ignorable="d" Background="#232323" BorderBrush="AliceBlue" BorderThickness="1"
+        Title="ScriptWindow" Height="300" Width="500" Closing="MetroWindow_Closing" TitleCaps="False">
+    <Grid>
+        <avalonEdit:TextEditor WordWrap="True" x:Name="editor" Margin="10,10,10,50" FontFamily="Microsoft Yahei" Foreground="White"></avalonEdit:TextEditor>
+        <Button VerticalAlignment="Bottom" Content="run" Width="70" Margin="10" Height="30" Click="Button_Click"></Button>
+    </Grid>
+</Controls:MetroWindow>

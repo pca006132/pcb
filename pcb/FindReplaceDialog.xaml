@@ -6,65 +6,26 @@
         xmlns:local="clr-namespace:pcb" TitleCaps="False" ShowInTaskbar="False"
         mc:Ignorable="d" Background="#545454" ShowMinButton="False" ShowMaxRestoreButton="False"                     
         xmlns:control="http://metro.mahapps.com/winfx/xaml/controls" ResizeMode="NoResize"
-        Title="寻找/替换" Height="200" Width="261.333" WindowStartupLocation="CenterOwner" Closing="MetroWindow_Closing">
+        Title="寻找/替换" Height="170" Width="260" WindowStartupLocation="CenterOwner" Closing="MetroWindow_Closing">
     <Grid>
         <TextBox x:Name="findTB" HorizontalAlignment="Left" Height="23" Margin="52,10,0,0"
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="193"/>
         <Label Content="寻找:" HorizontalAlignment="Left" Margin="10,11,0,0" 
                VerticalAlignment="Top"/>
         <TextBox x:Name="replaceTB" HorizontalAlignment="Left" Height="23" Margin="52,41,0,0"
-                 TextWrapping="Wrap" VerticalAlignment="Top" Width="191"/>
+                 TextWrapping="Wrap" VerticalAlignment="Top" Width="193"/>
         <Label Content="替换:" HorizontalAlignment="Left" Margin="10,41,0,0" 
                VerticalAlignment="Top"/>
-        <ToggleButton Content="使用Regex" IsChecked="False" 
-            Template="{DynamicResource toggleButtonTemplate}"
-            x:Name="UseRegex" Margin="10,72,170,70"/>
-        <ToggleButton Content="多行模式" IsChecked="True"
-            Template="{DynamicResource toggleButtonTemplate}"
-            x:Name="MultiLine" Margin="170,72,0,70" HorizontalAlignment="Left" Width="75"/>
-        <Button x:Name="btnFindNext" Content="寻找下一个" HorizontalAlignment="Left" 
-                FontFamily="MicroSoft Yahei UI"
-                Margin="10,134,0,0" VerticalAlignment="Top" Width="75" Click="btnFindNext_Click"/>
-        <Button x:Name="btnReplaceAll" Content="替换所有" HorizontalAlignment="Left" 
-                FontFamily="MicroSoft Yahei UI"
-                Margin="170,134,0,0" VerticalAlignment="Top" Width="75" Click="btnReplaceAll_Click"/>
+        <CheckBox Content="使用Regex" IsChecked="False" 
+            ToolTip="如果使用Regex模式，替换部分的文字就需要转义哦_(:3 」∠ )_"
+            x:Name="UseRegex" Margin="10,72,161,40"/>
+        <CheckBox Content="多行模式" IsChecked="True"            
+            x:Name="MultiLine" Margin="170,72,0,40" HorizontalAlignment="Left" Width="75"/>
+        <Button x:Name="btnFindNext" Content="寻找下一个" HorizontalAlignment="Left" BorderThickness="0"
+                FontFamily="MicroSoft Yahei UI" Style="{DynamicResource SquareButtonStyle}"
+                Margin="10,106,0,0" VerticalAlignment="Top" Width="84" Click="btnFindNext_Click"/>
+        <Button x:Name="btnReplaceAll" Content="替换所有" HorizontalAlignment="Left" BorderThickness="0"
+                FontFamily="MicroSoft Yahei UI" Style="{DynamicResource SquareButtonStyle}"
+                Margin="170,106,0,0" VerticalAlignment="Top" Width="75" Click="btnReplaceAll_Click"/>
     </Grid>
-    <Window.Resources>
-        <ControlTemplate TargetType="{x:Type ToggleButton}" x:Key="toggleButtonTemplate">
-            <Border BorderBrush="Black"
-                    CornerRadius="1"
-                    BorderThickness="1" 
-                    Margin="1" 
-                    Name="Border" 
-                    Background="{TemplateBinding Background}">
-                <Grid>
-                    <Rectangle Name="FocusCue" 
-                            Visibility="Hidden" 
-                            Stroke="Black"
-                            StrokeThickness="1" 
-                            StrokeDashArray="1 2"
-                            SnapsToDevicePixels="True" ></Rectangle>
-                    <ContentPresenter  Margin="3" 
-                                    HorizontalAlignment="Center" 
-                                    VerticalAlignment="Center"/>
-                </Grid>
-            </Border>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsChecked" Value="True">
-                    <Setter TargetName="Border" Property="Background" Value="#232323" />
-                    <Setter Property="ToolTip" Value="使用"/>
-                </Trigger>
-                <Trigger Property="IsChecked" Value="False">
-                    <Setter TargetName="Border" Property="Background" Value="#545454" />
-                    <Setter Property="ToolTip" Value="不使用"/>
-                </Trigger>
-                <Trigger Property="IsKeyboardFocused" Value="True">
-                    <Setter TargetName="FocusCue" Property="Visibility" Value="Visible" />
-                </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter TargetName="Border" Property="Background" Value="#7a7a7a" />
-                </Trigger>
-            </ControlTemplate.Triggers>
-        </ControlTemplate>
-    </Window.Resources>
 </control:MetroWindow>
