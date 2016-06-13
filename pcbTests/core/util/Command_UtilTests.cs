@@ -16,7 +16,7 @@ namespace pcb.core.util.Tests
         {
             string testString = "\"\\ \\\\ \\\\\\ ";
             Assert.AreEqual("\\\"\\\\ \\\\\\\\ \\\\\\\\\\\\ ", escape(testString));
-            Assert.AreEqual(testString, deescape(escape(testString)));
+            Assert.AreEqual(testString, unescape(escape(testString)));
         }
 
         [TestMethod()]

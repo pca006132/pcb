@@ -36,14 +36,12 @@ namespace pcb
         Tree tree;
         List<string> displayData = new List<string>();
         List<string> completionData = new List<string>();
-        int dowork = 2;
         bool closed = false;
         string path = "";
         string version = "0.5.13";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
-        System.Windows.Threading.DispatcherTimer AutocompleteTimer = new System.Windows.Threading.DispatcherTimer();
         //folding
         System.Windows.Threading.DispatcherTimer foldingUpdateTimer = new System.Windows.Threading.DispatcherTimer();
         FoldingManager foldingManager;
@@ -317,9 +315,6 @@ namespace pcb
         public MainWindow()
         {
             InitializeComponent();
-            AutocompleteTimer.Interval = TimeSpan.FromSeconds(0.04);
-            AutocompleteTimer.Tick += AutoCompleteTimerTick;
-            AutocompleteTimer.Start();
 
             foldingUpdateTimer.Interval = TimeSpan.FromSeconds(3);
             foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
@@ -438,19 +433,7 @@ namespace pcb
                 autocomplete.shown = false;
             }
             Editor.Focus();
-        }
-        void AutoCompleteTimerTick(object sender, EventArgs e)
-        {
-            if (!useAutocomplete)
-                return;
-            if (dowork == 0)
-            {
-                dowork = 2;
-                addElements();
-            }
-            if (dowork == 1)
-                dowork = 0;
-        }
+        }        
         //folding
         void foldingUpdateTimer_Tick(object sender, EventArgs e)
         {
@@ -716,13 +699,15 @@ namespace pcb
         }
         void Editor_TextChanged(object sender, EventArgs e)
         {
-            dowork = 1;
+            if (!useAutocomplete)
+                return;            
+            addElements();            
         }
         void Editor_caretChanged(object sender, EventArgs e)
         {
             updateNotification();
             if (autocomplete.Visibility == Visibility.Visible)
-                dowork = 1;
+                addElements();
             Editor.TextArea.TextView.LineTransformers.RemoveAt(Editor.TextArea.TextView.LineTransformers.Count - 1);
             Editor.TextArea.TextView.LineTransformers.Add(new BracketBracing(Editor.CaretOffset, Editor.TextArea.Caret.Line));
         }

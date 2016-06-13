@@ -23,20 +23,20 @@ namespace pcb.core.autocomplete.Tests
         [TestMethod]
         public void autocompleteTests()
         {
-            CollectionAssert.AreEquivalent(new List<string> { "scoreboard" }, tree.autocomplete("")[0]);
-            CollectionAssert.AreEquivalent(new List<string> { "objectives","players" }, tree.autocomplete("scoreboard ")[0]);
+            CollectionAssert.AreEquivalent(new List<string> { "scoreboard" }, tree.autocomplete("").displayData);
+            CollectionAssert.AreEquivalent(new List<string> { "objectives","players" }, tree.autocomplete("scoreboard ").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "set", "add","remove","reset" }, 
-                tree.autocomplete("scoreboard players ")[0]);
+                tree.autocomplete("scoreboard players ").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "a" },
-                tree.autocomplete("scoreboard players add @a ")[0]);
+                tree.autocomplete("scoreboard players add @a ").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "stat","dummy","trigger" },
-                tree.autocomplete("scoreboard objectives add abc ")[0]);
+                tree.autocomplete("scoreboard objectives add abc ").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "killEntity", "animalsBred", "drop" },
-                tree.autocomplete("scoreboard objectives add abc stat.")[0]);
+                tree.autocomplete("scoreboard objectives add abc stat.").displayData);
             CollectionAssert.AreEquivalent(new List<string> {"Zombie", "Slime", "Skeleton"}, 
-                tree.autocomplete("scoreboard objectives add abc stat.killEntity.")[0]);
+                tree.autocomplete("scoreboard objectives add abc stat.killEntity.").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "Zombie", "Slime", "Skeleton" ,"Player"},
-                tree.autocomplete("scoreboard players add @e[type=!")[0]);
+                tree.autocomplete("scoreboard players add @e[type=!").displayData);
         }
         [TestMethod]
         public void containsRawTest()
