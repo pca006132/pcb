@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pcb"
         mc:Ignorable="d" xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" Topmost="True"
-        Height="270" Width="400" ResizeMode="NoResize" ShowCloseButton="False" ShowInTaskbar="False" Icon="Command_Block.ico"
+        Height="200" Width="400" ResizeMode="NoResize" ShowCloseButton="False" ShowInTaskbar="False" Icon="Command_Block.ico"
         Closing="MetroWindow_Closing" BorderBrush="#37AFF2" BorderThickness="2" ShowTitleBar="False" Background="White" WindowStartupLocation="CenterScreen">
     <Grid>
         <Rectangle VerticalAlignment="Top" Height="40" Fill="#37AFF2" x:Name="TitleBar"/>
         <TextBlock VerticalAlignment="Top" Margin="10" Height="25" Foreground="Black" FontSize="20" x:Name="title" FontFamily="Microsoft Yahei"></TextBlock>
         <ScrollViewer Margin="20,60,5,45">
-            <TextBlock x:Name="message" Foreground="Black" Background="White" FontSize="20" FontFamily="Microsoft Yahei"></TextBlock>
+            <TextBlock x:Name="message" TextWrapping="Wrap" Foreground="Black" Background="White" FontSize="20" FontFamily="Microsoft Yahei"></TextBlock>
         </ScrollViewer>
         <Button x:Name="btnClose" Content="取消" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" FontFamily="Microsoft Yahei" Width="100" Height="25" Click="btnClose_Click" FontSize="15" Padding="0"></Button>
         <Button x:Name="btnNo" Content="否" HorizontalAlignment="Right" FontSize="15" Padding="0" Margin="0,0,120,10" FontFamily="Microsoft Yahei" VerticalAlignment="Bottom" Width="100" Height="25" Click="btnNo_Click" ></Button>

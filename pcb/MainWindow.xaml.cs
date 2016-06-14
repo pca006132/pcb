@@ -26,6 +26,9 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using MahApps.Metro;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Threading;
+using System.Net;
+
 namespace pcb
 {
     /// <summary>
@@ -38,7 +41,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.5.13";
+        string version = "0.6.1";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -321,7 +324,6 @@ namespace pcb
             foldingUpdateTimer.Start();
             Show();
             setUp();
-            tryLoadText();
 
             foldingStrategy = new BraceFoldingStrategy();
             foldingManager = FoldingManager.Install(Editor.TextArea);
@@ -335,10 +337,7 @@ namespace pcb
 
             //change background of current line
             Editor.TextArea.TextView.BackgroundRenderers.Add(new XBackgroundRenderer(Editor));
-
-            autocomplete = new autocomplete_menu(Editor, this);
-            autocomplete.Owner = this;
-
+            
             findReplaceDialog = new FindReplaceDialog(this);
             findReplaceDialog.Owner = this;
             try
@@ -361,10 +360,174 @@ namespace pcb
                 App.Current.Shutdown();
                 return;
             }
+            try
+            {
+                File.WriteAllText("/documents/log/log.txt", "");
+            } catch { }
+            autocomplete = new autocomplete_menu(Editor, this);
+            autocomplete.Owner = this;
+
+            checkUpdate();
+            tryLoadText();
             initBackUpFile();
             registerCommands();
             updateNotification();
-            Editor.Focus();            
+            Editor.Focus();
+        }       
+        bool Islatest(string LatestVersion)
+        {
+            try
+            {
+                int version1 = int.Parse(version.Split('.')[0]);
+                int version2 = int.Parse(version.Split('.')[1]);
+                int version3 = int.Parse(version.Split('.')[2]);
+
+                int Latestversion1 = int.Parse(LatestVersion.Split('.')[0]);
+                int Latestversion2 = int.Parse(LatestVersion.Split('.')[1]);
+                int Latestversion3 = int.Parse(LatestVersion.Split('.')[2]);
+
+                if (Latestversion1 > version1)
+                    return true;
+                else if (Latestversion1 == version1)
+                {
+                    if (Latestversion2 > version2)
+                        return true;
+                    else if (Latestversion2 == version2)
+                    {
+                        if (Latestversion3 > version3)
+                            return true;
+                    }
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        void checkUpdate()
+        {
+            new Thread(() =>
+            {
+                try
+                {
+                    string urlAddress = "http://www.mcbbs.net/thread-533943-1-1.html";
+                    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        Stream receiveStream = response.GetResponseStream();
+                        StreamReader readStream = null;
+
+                        if (response.CharacterSet == null)
+                        {
+                            readStream = new StreamReader(receiveStream);
+                        }
+                        else
+                        {
+                            readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                        }
+
+                        string data = readStream.ReadToEnd();
+
+                        if (Regex.IsMatch(data, @"<th>软件版本:<\/th>\s*<td>([^<]*)<\/td>"))
+                        {
+                            Match match = Regex.Match(data, @"<th>软件版本:<\/th>\s*<td>([^<]*)<\/td>");
+                            string latestVersion = match.Groups[1].ToString().Trim();
+                            if (Islatest(latestVersion))
+                            {
+                                var mySettings = new MetroDialogSettings()
+                                {
+                                    AffirmativeButtonText = "下载(打开浏览器)",
+                                    NegativeButtonText = "关闭"
+                                };
+                                Match url = Regex.Match(data, @"<th>下载地址:<\/th>\s*<td><a href=""([^""]*)");
+
+                                Dispatcher.Invoke((Action)(() =>
+                                {
+                                    if (CustomMessageBox.ShowMessage("当前版本:" + version + Environment.NewLine + "最新版本:" +
+                                        latestVersion + Environment.NewLine + "下载地址:" +
+                                        url.Groups[1].ToString(), "发现新版本！") == CustomMessageBox.State.yes)
+                                    {
+                                        Process.Start(url.Groups[1].ToString());
+                                    }
+                                }));                                
+                            }
+                            else
+                            {
+                                throw new Exception();
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                        response.Close();
+                        readStream.Close();
+                    }
+                }
+                catch
+                {
+                    new Thread(() =>
+                    {
+                        try
+                        {
+                            string urlAddress = "http://www.pcapcb.com/forum.php?mod=viewthread&tid=24";
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                            if (response.StatusCode == HttpStatusCode.OK)
+                            {
+                                Stream receiveStream = response.GetResponseStream();
+                                StreamReader readStream = null;
+
+                                if (response.CharacterSet == null)
+                                {
+                                    readStream = new StreamReader(receiveStream);
+                                }
+                                else
+                                {
+                                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
+                                }
+
+                                string data = readStream.ReadToEnd();
+
+                                if (Regex.IsMatch(data, @"版本: ([0-9.]*)"))
+                                {
+                                    Match match = Regex.Match(data, @"版本: ([0-9.]*)");
+                                    string latestVersion = match.Groups[1].ToString().Trim();
+                                    if (Islatest(latestVersion))
+                                    {
+                                        var mySettings = new MetroDialogSettings()
+                                        {
+                                            AffirmativeButtonText = "下载(打开浏览器)",
+                                            NegativeButtonText = "关闭"
+                                        };
+                                        Match url = Regex.Match(data, @"下载地址: <a href=""([^""]*)""");               
+                                        Dispatcher.Invoke((Action)(() =>
+                                        {
+                                            if (CustomMessageBox.ShowMessage("当前版本:" + version + Environment.NewLine +
+                                                "最新版本:" + latestVersion + Environment.NewLine + "下载地址:" +
+                                                    url.Groups[1].ToString(), "发现新版本！") == CustomMessageBox.State.yes)
+                                            {
+                                                System.Diagnostics.Process.Start(url.Groups[1].ToString());
+                                            }
+                                        }));
+                                    }
+                                }
+                                response.Close();
+                                readStream.Close();
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            log(ex);
+                        }
+                    }).Start();
+                }
+            }).Start();
+
         }
         //autocomplete
         void parseDocument()
@@ -407,18 +570,30 @@ namespace pcb
         }
         void addElements()
         {
+            if (autocomplete == null)
+                return;
             string text = Editor.Document.GetText(Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0), Editor.TextArea.Caret.Offset - Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0));            
             text = text.TrimStart(' ', '\t');
             if (text.Length == 0)
+            {
+                autocomplete.Hide();
+                autocomplete.shown = false;
                 return;
+            }
             if (text.Contains('\t'))
+            {
+                autocomplete.Hide();
+                autocomplete.shown = false;
                 return;
+            }
             CompletionData list;
             try
             {
                 list = tree.autocomplete(text);
             } catch (Exception ex)
             {
+                autocomplete.Hide();
+                autocomplete.shown = false;
                 log(ex);
                 return;
             }
@@ -450,7 +625,7 @@ namespace pcb
             {
                 File.WriteAllText(backupFileName, Editor.Text);
             }
-            catch (Exception ex) { log(ex); }
+            catch {}
         }
         void loadFile(string filePath)
         {
@@ -911,7 +1086,7 @@ namespace pcb
                     {
                         savefiledialog.InitialDirectory += @"documents\";
                     }
-                    savefiledialog.Filter = "*.txt|*.txt";
+                    savefiledialog.Filter = "*.pcb|*.pcb|*.txt|*.txt";
                     if (savefiledialog.ShowDialog() == true)
                     {
                         File.WriteAllText(savefiledialog.FileName, gettext, new UTF8Encoding());
@@ -1294,7 +1469,6 @@ namespace pcb
                 parent.findReplaceDialog.Show();
             }
         }
-
     }
 }
 public class BraceFoldingStrategy : ICSharpCode.AvalonEdit.Folding.NewFolding

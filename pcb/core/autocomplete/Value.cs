@@ -117,22 +117,25 @@ namespace pcb.core.autocomplete
             
             if (para.Length == 0)
             {
-                throw new AutocompleteParseException("empty argument");
+                //throw new AutocompleteParseException("empty argument");
+                throw new AutocompleteParseException("空置参数");
             }
-            
+
             switch (para[0])
             {
                 case '#':
                     type = Type.reference;
                     if (!references.ContainsKey(para.Substring(1)))
-                        throw new AutocompleteParseException("unknown reference:" + para.Substring(1));
+                        //throw new AutocompleteParseException("unknown reference:" + para.Substring(1));
+                        throw new AutocompleteParseException("未知参照:" + para.Substring(1));
                     values.Add(para.Substring(1));
                     break;
                 case '<':
                     type = Type.regex;
                     int closeBracketIndex = para.LastIndexOf('>');
                     if (closeBracketIndex < 0)
-                        throw new AutocompleteParseException("missing ending bracket > ");
+                        //throw new AutocompleteParseException("missing ending bracket > ");
+                        throw new AutocompleteParseException("缺少关闭括号: > ");
                     string pattern = para.Substring(1, closeBracketIndex - 1);
                     switch (pattern)
                     {
@@ -151,7 +154,8 @@ namespace pcb.core.autocomplete
                 case '{':
                     type = Type.options;
                     if (!para.Contains("}"))
-                        throw new AutocompleteParseException("missing ending bracket } ");
+                        //throw new AutocompleteParseException("missing ending bracket } ");
+                        throw new AutocompleteParseException("缺少关闭括号: } ");
                     foreach (string str in para.Substring(1, Math.Min(para.LastIndexOf('}'), para.Length - 2)).Split('|'))
                     {
                         values.Add(str);
@@ -162,18 +166,21 @@ namespace pcb.core.autocomplete
                     if (para.Contains("("))
                     {
                         if (!para.Contains(")"))
-                            throw new AutocompleteParseException("missing ending bracket ) ");
+                            //throw new AutocompleteParseException("missing ending bracket ) ");
+                            throw new AutocompleteParseException("缺少关闭括号: ) ");
                         int index = para.IndexOf('(');
                         values.Add(para.Substring(1, index - 1));
 
                         if (!functionNames.Contains(values[0]))
-                            throw new AutocompleteParseException("unknown function name");
+                            //throw new AutocompleteParseException("unknown function name");
+                            throw new AutocompleteParseException("未知函数名称: " + values[0]);
                         foreach (string str in para.Substring(index + 1, para.Length - index - 2).Split(','))
                         {
                             values.Add(str);
                             if (values[0] == "dot")
                                 if (!attributes.contains(str))
-                                    throw new AutocompleteParseException("unknown dot attribute");
+                                    //throw new AutocompleteParseException("unknown dot attribute");
+                                    throw new AutocompleteParseException("未知dot参数" + str);
                         }
                     }
                     else

@@ -19,6 +19,7 @@ using Microsoft.Scripting.Hosting;
 using ICSharpCode.AvalonEdit;
 using System.Threading;
 using MahApps.Metro.Controls.Dialogs;
+using System.IO;
 
 namespace pcb
 {
@@ -37,7 +38,7 @@ namespace pcb
             scope.SetVariable("editor", new editorMethod(editor));
             scope.SetVariable("util", new Util());
             Show();
-            
+
         }
         public void showMessage(string text, string title)
         {
@@ -54,7 +55,7 @@ namespace pcb
             pythonThread = new Thread(() =>
             {
                 try
-                {                    
+                {
                     ScriptSource source =
             engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);
 
@@ -70,7 +71,16 @@ namespace pcb
                 }
                 catch (Exception ex)
                 {
-                    Dispatcher.BeginInvoke((Action)(()=>showMessage(ex.StackTrace, "error!")));                    
+                    Dispatcher.BeginInvoke((Action)(() => showMessage(ex.Message, "error!")));
+                    try
+                    {
+                        if (!File.Exists("documents/log/log.txt"))
+                            File.Create("documents/log/log.txt");
+                        var writer = File.AppendText("documents/log/log.txt");
+                        writer.WriteLine(ex.Message);
+                        writer.WriteLine(ex.StackTrace);
+                    }
+                    catch { }
                 }
             });
             pythonThread.Start();
@@ -82,7 +92,7 @@ namespace pcb
         }
     }
 
-    class editorMethod
+    public class editorMethod
     {
         TextEditor main_editor;
         public editorMethod(TextEditor editor)
@@ -96,11 +106,11 @@ namespace pcb
         }
         public void insertText(int index, string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(()=> main_editor.Document.Insert(index, text)));
+            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Insert(index, text)));
         }
         public void replaceText(int index, int length, string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(()=> main_editor.Document.Replace(index, length, text)));
+            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Replace(index, length, text)));
         }
         public string getText()
         {
@@ -119,9 +129,9 @@ namespace pcb
             var length = -1;
             main_editor.Dispatcher.Invoke((Action)(() => length = main_editor.SelectionLength));
             return length;
-        }       
+        }
     }
-    class Util
+    public class Util
     {
         public string[] getReference(string key)
         {
@@ -140,7 +150,7 @@ namespace pcb
             return Value.tags.ToArray();
         }
         public string[] getNames()
-        {            
+        {
             return Value.names.ToArray();
         }
         public string escape(string text)
@@ -154,6 +164,6 @@ namespace pcb
         public string uuidToString(long uuidLeast, long uuidMost)
         {
             return CommandUtil.UUIDPairToString(uuidMost, uuidLeast);
-        }        
+        }
     }
 }

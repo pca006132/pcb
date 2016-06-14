@@ -37,7 +37,7 @@ namespace pcb.core.chain
             StringBuilder result = new StringBuilder();
             if (cbStack.Count < 1)
                 return "";
-            int lastDamage = cbStack.ElementAt(0).damage;
+            int lastDamage = cbStack.Peek().damage;
             foreach (CommandBlock cb in cbStack.Reverse())
             {
                 if (cb.isCond && cb.damage != lastDamage)

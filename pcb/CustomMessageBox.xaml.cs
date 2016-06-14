@@ -34,6 +34,8 @@ namespace pcb
             InitializeComponent();
             this.message.Text = message;
             this.title.Text = title;
+            if (this.message.ActualHeight > 100)
+                Height = 250;
             TitleBar.MouseDown += delegate { DragMove(); };
             this.title.MouseDown += delegate { DragMove(); };
             ShowDialog();

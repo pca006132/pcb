@@ -32,7 +32,7 @@ namespace pcb.core
         private string[] pcb2Command(string pcb, AbstractCBChain chain)
         {
             currentLineNum = 0;
-            string[] lines = pcb.Split('\n');
+            string[] lines = pcb.Split(new string[] {"\r\n", "\n","\r" }, StringSplitOptions.None);
             List<string> initCmd = new List<string>();
             List<string> cbCmd = new List<string>();
             List<string> middleCmd = new List<string>();

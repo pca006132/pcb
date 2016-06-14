@@ -15,9 +15,9 @@ namespace pcb.core
         public Marker(string type, string name, int[] coor, string[] tags)
         {
             if (type != "ArmorStand" && type != "AreaEffectCloud")
-                throw new PcbException("unknown marker type");
+                throw new PcbException("未知marker类型");
             if (coor.Length != 3)
-                throw new PcbException("wrong coordinate");
+                throw new PcbException("错误坐标");
             this.type = type;
             this.name = name;
             this.coor = coor;

@@ -59,9 +59,9 @@ namespace pcb.core.autocomplete
                         deletePrefix = true;
                         if (prefix == "data:")
                             length = 7;
-                        if (input.Length > 7)
+                        if (input.Length > length)
                             input = input.Substring(length);
-                        else if (input.Length == 7)
+                        else if (input.Length == length)
                             input = "";
                         else
                             return new CompletionData();
