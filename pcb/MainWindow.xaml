@@ -3,9 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:p="clr-namespace:pcb.Properties"
         xmlns:local="clr-namespace:pcb" TitleCaps="False"
         Icon="Command_Block.ico" MinWidth="300" MinHeight="200"
-        FontFamily="Microsoft YaHei" Title="懒癌卫士——OOC生成器(1.9)" 
+        FontFamily="Microsoft YaHei" Title="{x:Static p:UIresources.pcbName}" 
         FontSize="16" Height="450" Width="720" ResizeMode="CanResize"
         TitlebarHeight="30" BorderBrush="#007ACC" Background="#272822"
         ShowIconOnTitleBar="False" BorderThickness="1" Closing="MetroWindow_Closing"
@@ -32,34 +33,34 @@
         </Grid>
         <Menu VerticalAlignment="Top" Height="30" IsMainMenu="True" BorderBrush="Gray"
         BorderThickness="1">
-            <MenuItem Header="文件">
-                <MenuItem Header="新建" Click="NewFile_Click"/>
-                <MenuItem Header="载入文件" Click="OpenFile_Click"></MenuItem>
-                <MenuItem Header="另存新档" Click="SaveNewFile_Click"></MenuItem>
-                <MenuItem Header="保存文件" IsEnabled="False" x:Name="SaveFile" 
+            <MenuItem Header="{x:Static p:UIresources.file}">
+                <MenuItem Header="{x:Static p:UIresources.newFile}" Click="NewFile_Click"/>
+                <MenuItem Header="{x:Static p:UIresources.loadFile}" Click="OpenFile_Click"></MenuItem>
+                <MenuItem Header="{x:Static p:UIresources.saveAs}" Click="SaveNewFile_Click"></MenuItem>
+                <MenuItem Header="{x:Static p:UIresources.saveFile}" IsEnabled="False" x:Name="SaveFile" 
                           Click="SaveFile_Click" InputGestureText="Ctrl + S"></MenuItem>
             </MenuItem>
-            <MenuItem Header="编辑">
-                <MenuItem Header="转义选择字符" Click="Escape_Click" InputGestureText="Alt + \"/>
-                <MenuItem Header="反转义选择字符" Click="Deesacpe_Click" InputGestureText="Alt + /"/>
-                <MenuItem Header="插入随机UUID(UUIDMost/UUIDLeast)" Click="insertUUID_Click" InputGestureText="Alt + R"/>
-                <MenuItem Header="插入Marker type(AS/AEC)" Click="inserType_Click" InputGestureText="Alt + T"/>
-                <MenuItem Header="插入§" Click="insertFormat_Click" InputGestureText="Alt + F"/>
-                <MenuItem Header="颜色黑科技" ToolTip="牌子clickEvent,强行在MC输入§" Click="colorBlackTech_Click" InputGestureText="Alt + C"/>
+            <MenuItem Header="{x:Static p:UIresources.edit}">
+                <MenuItem Header="{x:Static p:UIresources.escapeSelected}" Click="Escape_Click" InputGestureText="Alt + \"/>
+                <MenuItem Header="{x:Static p:UIresources.unescapeSelected}" Click="Deesacpe_Click" InputGestureText="Alt + /"/>
+                <MenuItem Header="{x:Static p:UIresources.insertUUID}" Click="insertUUID_Click" InputGestureText="Alt + R"/>
+                <MenuItem Header="{x:Static p:UIresources.insertType}" Click="inserType_Click" InputGestureText="Alt + T"/>
+                <MenuItem Header="{x:Static p:UIresources.insertFormatter}" Click="insertFormat_Click" InputGestureText="Alt + F"/>
+                <MenuItem Header="{x:Static p:UIresources.colorJson}" ToolTip="{x:Static p:UIresources.colorJsonUsage}" Click="colorBlackTech_Click" InputGestureText="Alt + C"/>
                 <Separator/>
-                <MenuItem Header="折叠全部" Click="foldAll_Click" InputGestureText="Ctrl + K"/>
-                <MenuItem Header="寻找/替换" Click="FindReplace_Click" InputGestureText="Ctrl + F"/>
-                <MenuItem Header="注释选择的行" Click="comment_Click" InputGestureText="Ctrl + /"/>
-                <MenuItem Header="反注释选择的行" Click="uncomment_Click" InputGestureText="Ctrl + \"/>
+                <MenuItem Header="{x:Static p:UIresources.foldAll}" Click="foldAll_Click" InputGestureText="Ctrl + K"/>
+                <MenuItem Header="{x:Static p:UIresources.findOrReplace}" Click="FindReplace_Click" InputGestureText="Ctrl + F"/>
+                <MenuItem Header="{x:Static p:UIresources.comment}" Click="comment_Click" InputGestureText="Ctrl + /"/>
+                <MenuItem Header="{x:Static p:UIresources.uncomment}" Click="uncomment_Click" InputGestureText="Ctrl + \"/>
                 <Separator/>
-                <MenuItem Header="执行python" Click="openPyEditor"></MenuItem>
+                <MenuItem Header="{x:Static p:UIresources.runPython}" Click="openPyEditor"></MenuItem>
             </MenuItem>
-            <MenuItem Header="设置">
-                <MenuItem Header="生成器/编辑器设置"  Click="showSetting"/>
-                <MenuItem Header="自动补全特殊参数设置" Click="showList"/>
+            <MenuItem Header="{x:Static p:UIresources.setting}">
+                <MenuItem Header="{x:Static p:UIresources.settingGenerator}"  Click="showSetting"/>
+                <MenuItem Header="{x:Static p:UIresources.pcbName}" ToolTip="scb objectives, tags, names, teams" Click="showList"/>
             </MenuItem>
-            <MenuItem Header="生成" Click="generateFromEditor" InputGestureText="Ctrl + G"
-                      ToolTip="把所有指令变为OOC / 把选择部分变为OOC">
+            <MenuItem Header="{x:Static p:UIresources.generate}" Click="generateFromEditor" InputGestureText="Ctrl + G"
+                      ToolTip="{x:Static p:UIresources.generateToolTip}">
             </MenuItem>
         </Menu>
     </Grid>

@@ -4,27 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pcb" TitleCaps="False" ShowInTaskbar="False"
+        xmlns:p="clr-namespace:pcb.Properties"
         mc:Ignorable="d" Background="#545454" ShowMinButton="False" ShowMaxRestoreButton="False"                     
         xmlns:control="http://metro.mahapps.com/winfx/xaml/controls" ResizeMode="NoResize"
-        Title="寻找/替换" Height="170" Width="260" WindowStartupLocation="CenterOwner" Closing="MetroWindow_Closing">
+        Title="{x:Static p:UIresources.findOrReplace}" Height="170" Width="260" WindowStartupLocation="CenterOwner" Closing="MetroWindow_Closing">
     <Grid>
         <TextBox x:Name="findTB" HorizontalAlignment="Left" Height="23" Margin="52,10,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="193"/>
-        <Label Content="寻找:" HorizontalAlignment="Left" Margin="10,11,0,0" 
+        <Label Content="{x:Static p:UIresources.find}" HorizontalAlignment="Left" Margin="10,11,0,0" 
                VerticalAlignment="Top"/>
         <TextBox x:Name="replaceTB" HorizontalAlignment="Left" Height="23" Margin="52,41,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="193"/>
-        <Label Content="替换:" HorizontalAlignment="Left" Margin="10,41,0,0" 
+        <Label Content="{x:Static p:UIresources.replace}" HorizontalAlignment="Left" Margin="10,41,0,0" 
                VerticalAlignment="Top"/>
-        <CheckBox Content="使用Regex" IsChecked="False" 
-            ToolTip="如果使用Regex模式，替换部分的文字就需要转义哦_(:3 」∠ )_"
+        <CheckBox Content="{x:Static p:UIresources.useRegex}" IsChecked="False" 
+            ToolTip="{x:Static p:UIresources.regexNeedEscape}"
             x:Name="UseRegex" Margin="10,72,161,40"/>
-        <CheckBox Content="多行模式" IsChecked="True"            
+        <CheckBox Content="{x:Static p:UIresources.multiLine}" IsChecked="True"            
             x:Name="MultiLine" Margin="170,72,0,40" HorizontalAlignment="Left" Width="75"/>
-        <Button x:Name="btnFindNext" Content="寻找下一个" HorizontalAlignment="Left" BorderThickness="0"
+        <Button x:Name="btnFindNext" Content="{x:Static p:UIresources.findNext}" HorizontalAlignment="Left" BorderThickness="0"
                 FontFamily="MicroSoft Yahei UI" Style="{DynamicResource SquareButtonStyle}"
                 Margin="10,106,0,0" VerticalAlignment="Top" Width="84" Click="btnFindNext_Click"/>
-        <Button x:Name="btnReplaceAll" Content="替换所有" HorizontalAlignment="Left" BorderThickness="0"
+        <Button x:Name="btnReplaceAll" Content="{x:Static p:UIresources.replaceAll}" HorizontalAlignment="Left" BorderThickness="0"
                 FontFamily="MicroSoft Yahei UI" Style="{DynamicResource SquareButtonStyle}"
                 Margin="170,106,0,0" VerticalAlignment="Top" Width="75" Click="btnReplaceAll_Click"/>
     </Grid>

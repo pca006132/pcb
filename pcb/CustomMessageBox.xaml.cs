@@ -19,19 +19,25 @@ namespace pcb
     /// </summary>
     public partial class CustomMessageBox
     {
-        public static State ShowMessage(string message, string title)
+        public static State ShowMessage(string message, string title, bool showYesNo = true)
         {
             CustomMessageBox msg;
-            msg = new CustomMessageBox(message, title);
+            msg = new CustomMessageBox(message, title, showYesNo);
             
             State state = msg.state;
             msg.shouldClose = true;
             msg.Close();
             return state;
         }
-        public CustomMessageBox(string message, string title)
+
+        public CustomMessageBox(string message, string title, bool showYesNo)
         {            
             InitializeComponent();
+            if (!showYesNo)
+            {
+                btnNo.Visibility = Visibility.Hidden;
+                btnYes.Visibility = Visibility.Hidden;
+            }
             this.message.Text = message;
             this.title.Text = title;
             if (this.message.ActualHeight > 100)

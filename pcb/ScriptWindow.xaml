@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pcb"
+        xmlns:p="clr-namespace:pcb.Properties"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" 
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
         mc:Ignorable="d" Background="#232323" BorderBrush="AliceBlue" BorderThickness="1"
-        Title="执行python" Height="300" Width="500" Closing="MetroWindow_Closing" TitleCaps="False">
+        Title="{x:Static p:UIresources.runPython}" Height="300" Width="500" Closing="MetroWindow_Closing" TitleCaps="False">
     <Grid>
         <avalonEdit:TextEditor WordWrap="True" x:Name="editor" Margin="10,10,10,50" FontFamily="Microsoft Yahei" Foreground="White"></avalonEdit:TextEditor>
-        <Button VerticalAlignment="Bottom" FontFamily="Microsoft Yahei" Content="执行" Width="70" Margin="210,0,210,10" Height="30" Click="Button_Click"></Button>
+        <Button VerticalAlignment="Bottom" FontFamily="Microsoft Yahei" Content="{x:Static p:UIresources.run}" Width="70" Margin="210,0,210,10" Height="30" Click="Button_Click"></Button>
     </Grid>
 </Controls:MetroWindow>

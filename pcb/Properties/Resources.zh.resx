@@ -118,63 +118,63 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="formatError" xml:space="preserve">
-    <value>wrong format</value>
+    <value>错误格式</value>
   </data>
   <data name="ioError" xml:space="preserve">
-    <value>error when reading file</value>
+    <value>未能读取档案</value>
   </data>
   <data name="unknownError" xml:space="preserve">
-    <value>unknown error</value>
+    <value>未知错误</value>
   </data>
   <data name="emptyArgument" xml:space="preserve">
-    <value>empty argument</value>
+    <value>空置参数</value>
   </data>
   <data name="unknownReference" xml:space="preserve">
-    <value>unknown reference</value>
+    <value>未知参照</value>
   </data>
   <data name="noBracket" xml:space="preserve">
-    <value>missing bracket</value>
+    <value>缺少括号</value>
   </data>
   <data name="unknownFunctionName" xml:space="preserve">
-    <value>unknown function name</value>
+    <value>未知函数名称</value>
   </data>
   <data name="unknownDotPara" xml:space="preserve">
-    <value>unknown dot parameter</value>
+    <value>未知的dot参数名称</value>
   </data>
   <data name="signText" xml:space="preserve">
-    <value>click to generate</value>
+    <value>左键点击以生成</value>
   </data>
   <data name="dataLargerThan7" xml:space="preserve">
-    <value>wrong data value: data cannot be larger than 7</value>
+    <value>错误data数值: data不能大于7</value>
   </data>
   <data name="dataFormatError" xml:space="preserve">
-    <value>wrong data prefix: format must be "data:x command", there should be a space char</value>
+    <value>data前缀格式错误: 格式必须为 "data:x command", 那里应该有一个空格符号</value>
   </data>
   <data name="dataNotNum" xml:space="preserve">
-    <value>wrong data value: not number/byte</value>
+    <value>错误data数值: 非数字/byte</value>
   </data>
   <data name="newFormatError" xml:space="preserve">
-    <value>new command format error</value>
+    <value>new命令格式错误</value>
   </data>
   <data name="newCoorError" xml:space="preserve">
-    <value>new command's coordinates error: not valid integer</value>
+    <value>new命令坐标错误: 非数字</value>
   </data>
   <data name="statsFormatError" xml:space="preserve">
-    <value>stats command format error</value>
+    <value>stats命令格式错误</value>
   </data>
   <data name="commandTooLong" xml:space="preserve">
-    <value>there is a command longer than 30000 char</value>
+    <value>单一命令过长</value>
   </data>
   <data name="cannotInitBackup" xml:space="preserve">
-    <value>cannot init backup file, when the program crashes, data may be lost.</value>
+    <value>不能设置备份档案 本生成器崩溃后可能会失去一切的资料，请小心保存</value>
   </data>
   <data name="warn" xml:space="preserve">
-    <value>warning!</value>
+    <value>提示</value>
   </data>
   <data name="wrongTheme" xml:space="preserve">
-    <value>wrong theme name</value>
+    <value>错误theme名称</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>error!</value>
+    <value>错误!</value>
   </data>
 </root>

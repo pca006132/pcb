@@ -7,7 +7,7 @@ namespace pcb.core.autocomplete
 {
     public class AutocompleteParseException : Exception
     {
-        public AutocompleteParseException() : base("unknown error has occured when parsing autocomplete script") { }
+        public AutocompleteParseException() : base(Properties.Resources.unknownError) { }
         public AutocompleteParseException(string message) : base(message) { }
         public AutocompleteParseException(string message, Exception innerException) : base(message, innerException) { }
     }

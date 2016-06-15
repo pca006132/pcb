@@ -70,7 +70,7 @@ namespace pcb.core
             if (_needEscape)
             {
                 if (getEscapedLength(command) > 30000)
-                    throw new PcbException("单一命令过长");
+                    throw new PcbException(Properties.Resources.commandTooLong);
                 if (useColorBlackTech || command.Contains("§"))
                 {
                     if (colorModeLength + getColorModeLength(command, true) + colorCmdPrefixLength + 4 + colorSuffixLength > 28000)
@@ -87,7 +87,7 @@ namespace pcb.core
             } else
             {
                 if (command.Length > 30000)
-                    throw new PcbException("单一命令过长");
+                    throw new PcbException(Properties.Resources.commandTooLong);
                 if (useColorBlackTech || command.Contains("§"))
                 {
                     if (colorModeLength + getColorModeLength(command, false) + colorCmdPrefixLength + 4 + colorSuffixLength > 28000)

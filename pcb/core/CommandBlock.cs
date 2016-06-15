@@ -69,13 +69,13 @@ namespace pcb.core
                     {
                         damage = Byte.Parse(cmd.Substring(5, 1));
                         if (damage > 7)
-                            throw new PcbException(this.lineNum, "错误data数值: data不可大于7");
+                            throw new PcbException(this.lineNum, Properties.Resources.dataLargerThan7);
                         if (cmd[6] != ' ')
-                            throw new PcbException(this.lineNum, "data前缀格式错误: 格式必须为 \"data:x command\", 那里应该有一个空格符号");
+                            throw new PcbException(this.lineNum, Properties.Resources.dataFormatError);
                         cmd = cmd.Substring(7);
                     } catch (FormatException)
                     {
-                        throw new PcbException(this.lineNum, "错误data数值: 非数字/byte");
+                        throw new PcbException(this.lineNum, Properties.Resources.dataNotNum);
                     }
                 } else
                 {

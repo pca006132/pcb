@@ -26,7 +26,7 @@ namespace pcb
             textBox.Text = text[0];
             texts = text;
             if (text.Length > 1)
-                Title = "Output 命令过长，OOC:(1/" + text.Length.ToString() + ")";
+                Title = String.Format(Properties.UIresources.ooc2Long,1,text.Length);
             Show();
         }
         private void copyAll(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace pcb
                 return;
             }
             textBox.Text = texts[count - 1];
-            Title = "Output 命令过长，OOC:(" + (count).ToString() + "/" + texts.Length.ToString() + ")";
+            Title = String.Format(Properties.UIresources.ooc2Long, count, texts.Length);
         }
     }
 }

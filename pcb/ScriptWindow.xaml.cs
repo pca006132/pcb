@@ -37,8 +37,8 @@ namespace pcb
             scope = engine.CreateScope();
             scope.SetVariable("editor", new editorMethod(editor));
             scope.SetVariable("util", new Util());
-            Show();
-
+            scope.SetVariable("math", new math());
+            Show();            
         }
         public void showMessage(string text, string title)
         {
@@ -164,6 +164,78 @@ namespace pcb
         public string uuidToString(long uuidLeast, long uuidMost)
         {
             return CommandUtil.UUIDPairToString(uuidMost, uuidLeast);
+        }
+    }
+    public class math
+    {
+        public static double pi = Math.PI;
+        public static int round(double num)
+        {
+            return (int)Math.Round(num);
+        }
+        public static double sin(double rad)
+        {
+            return Math.Sin(rad);
+        }
+        public static double cos(double rad)
+        {
+            return Math.Cos(rad);
+        }
+        public static double tan(double rad)
+        {
+            return Math.Tan(rad);
+        }
+        public static double radToDeg(double rad)
+        {
+            return rad / pi * 180;
+        }
+        public static double degToRad(double deg)
+        {
+            return deg * pi / 180;
+        }
+        public static double asin(double num)
+        {
+            return Math.Asin(num);
+        }
+        public static double acos(double num)
+        {
+            return Math.Acos(num);
+        }
+        public static double atan(double num)
+        {
+            return Math.Atan(num);
+        }
+        public static double atan2(double y, double x)
+        {
+            return Math.Atan2(y, x);            
+        }
+        public static double sinh(double num)
+        {
+            return Math.Sinh(num);
+        }
+        public static double cosh(double num)
+        {
+            return Math.Cosh(num);
+        }
+        public static double tanh(double num)
+        {
+            return Math.Tanh(num);
+        }
+        public static double exp(double num)
+        {
+            return Math.Exp(num);
+        }
+        public static double log(double num, double logBase)
+        {
+            return Math.Log(num, logBase);
+        }
+        public static double log10(double num)
+        {
+            return Math.Log10(num);            
+        }
+        public static double pow(double num, double power)
+        {
+            return Math.Pow(num, power);
         }
     }
 }

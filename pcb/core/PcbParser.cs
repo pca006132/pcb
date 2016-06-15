@@ -67,7 +67,7 @@ namespace pcb.core
                 {
                     string[] components = line.Split(' ');
                     if (components.Length < 4)
-                        throw new PcbException(currentLineNum, "new命令格式错误");
+                        throw new PcbException(currentLineNum, Properties.Resources.newFormatError);
                     try
                     {
                         int[] newChainCoor = new int[3];
@@ -84,7 +84,7 @@ namespace pcb.core
                     }
                     catch (FormatException)
                     {
-                        throw new PcbException(currentLineNum, "new命令数值错误");
+                        throw new PcbException(currentLineNum, Properties.Resources.newCoorError);
                     }
                     continue;
                 }
@@ -144,7 +144,7 @@ namespace pcb.core
         {
             string [] components = cmd.Split(' ');
             if (components.Length < 3)
-                throw new PcbException(currentLineNum, "stats命令格式错误");
+                throw new PcbException(currentLineNum, Properties.Resources.statsFormatError);
             string stat = components[0].Substring(6);
             switch (stat) {
                 case "ab":

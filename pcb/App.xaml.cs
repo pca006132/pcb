@@ -13,5 +13,15 @@ namespace pcb
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {            
+            if (System.Threading.Thread.CurrentThread.CurrentCulture.Name == "zh-CN")
+            {
+                var culture = new System.Globalization.CultureInfo("us");
+                System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            }
+            
+        }
     }
 }

@@ -28,6 +28,7 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using System.Threading;
 using System.Net;
+using System.Globalization;
 
 namespace pcb
 {
@@ -41,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.1";
+        string version = "0.6.2";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -76,7 +77,7 @@ namespace pcb
             }
             catch (Exception ex)
             {
-                showMessage("不能设置备份档案\n本生成器崩溃后可能会失去一切的资料，请小心保存", "警告!");
+                showMessage(Properties.Resources.cannotInitBackup, Properties.Resources.warn);
                 log(ex);
             }
         }
@@ -90,7 +91,7 @@ namespace pcb
                 }
                 catch (Exception ex)
                 {
-                    showMessage("在开启config档案时发生错误！", "错误！");
+                    showMessage(Properties.Resources.ioError + " config.txt", Properties.Resources.warn);
                     log(ex);
                 }
             }
@@ -240,7 +241,7 @@ namespace pcb
                     }
                     catch
                     {
-                        showMessage("Theme不正确", "错误");
+                        showMessage(Properties.Resources.wrongTheme, Properties.Resources.warn);
                     }
                 }
             }
@@ -292,7 +293,7 @@ namespace pcb
                 }
                 catch (Exception ex)
                 {
-                    showMessage("在加载文件时出现错误！", "错误！");
+                    showMessage(Properties.Resources.ioError, Properties.Resources.warn);
                     log(ex);
                 }
             }
@@ -347,15 +348,15 @@ namespace pcb
             }
             catch (AutocompleteParseException ex)
             {
-                showMessage(ex.Message, "error!");
+                CustomMessageBox.ShowMessage(ex.Message, Properties.Resources.error, false);
                 log(ex);
                 App.Current.Shutdown();
                 return;
             }
             catch (Exception ex)
             {
-                showMessage(ex.Message, "error");
-                showMessage(ex.StackTrace, "error!");
+                CustomMessageBox.ShowMessage(ex.Message, Properties.Resources.error, false);
+                CustomMessageBox.ShowMessage(ex.StackTrace, Properties.Resources.error, false);
                 log(ex);
                 App.Current.Shutdown();
                 return;
@@ -366,8 +367,10 @@ namespace pcb
             } catch { }
             autocomplete = new autocomplete_menu(Editor, this);
             autocomplete.Owner = this;
-
-            checkUpdate();
+            if (Thread.CurrentThread.CurrentCulture.Name == "zh-CN")
+            {
+                checkUpdate();
+            }
             tryLoadText();
             initBackUpFile();
             registerCommands();
@@ -608,7 +611,7 @@ namespace pcb
                 autocomplete.shown = false;
             }
             Editor.Focus();
-        }        
+        }
         //folding
         void foldingUpdateTimer_Tick(object sender, EventArgs e)
         {
@@ -630,7 +633,7 @@ namespace pcb
         void loadFile(string filePath)
         {
             path = filePath;
-            LastEditTB.Text = "最后储存:" + File.GetLastWriteTime(path).ToString();
+            LastEditTB.Text = Properties.UIresources.lastSaved + File.GetLastWriteTime(path).ToString();
             string text = File.ReadAllText(path, new UTF8Encoding());
             string[] lines = text.Split('\n');
             bool a = true;
@@ -724,7 +727,7 @@ namespace pcb
                     section.IsFolded = true;
                 }
             }
-            Title = System.IO.Path.GetFileName(path) + "----懒癌卫士——OOC生成器(1.9)";
+            Title = System.IO.Path.GetFileName(path) + "----" + Properties.UIresources.pcbName;
 
         }
         //windows special function
@@ -744,7 +747,7 @@ namespace pcb
         {
             var mySettings = new MetroDialogSettings()
             {
-                AffirmativeButtonText = "关闭"
+                AffirmativeButtonText = Properties.UIresources.close
             };
 
             this.ShowMessageAsync(title, text, MessageDialogStyle.Affirmative, mySettings);
@@ -753,11 +756,11 @@ namespace pcb
         {
             if (Editor.SelectionLength > 0)
             {
-                notificationTB.Text = "选择了" + Editor.SelectionLength.ToString() + "个字符";
+                notificationTB.Text = String.Format(Properties.UIresources.statsDisplaySelect, Editor.SelectionLength);
             }
             else
             {
-                notificationTB.Text = "行:" + Editor.TextArea.Caret.Line.ToString() + " 第" + (Editor.CaretOffset - Editor.Document.GetLineByNumber(Editor.TextArea.Caret.Line).Offset + 1).ToString() + "个字符";
+                notificationTB.Text = String.Format(Properties.UIresources.statsDisplay, Editor.TextArea.Caret.Line, (Editor.CaretOffset - Editor.Document.GetLineByNumber(Editor.TextArea.Caret.Line).Offset + 1));
             }
             parseDocument();
         }
@@ -855,28 +858,32 @@ namespace pcb
             {
                 Editor.Document.Insert(Editor.SelectionStart, "}");
                 Editor.SelectionStart--;
+                Editor_TextChanged(null, null);
             }
             if (e.Text == "[")
             {
                 Editor.Document.Insert(Editor.SelectionStart, "]");
                 Editor.SelectionStart--;
+                Editor_TextChanged(null, null);
             }
             if (e.Text == "(")
             {
                 Editor.Document.Insert(Editor.SelectionStart, ")");
                 Editor.SelectionStart--;
+                Editor_TextChanged(null, null);
             }
             if (e.Text == '"'.ToString())
             {
                 Editor.Document.Insert(Editor.SelectionStart, "\"");
                 Editor.SelectionStart--;
+                Editor_TextChanged(null, null);
             }
         }
         void Editor_TextChanged(object sender, EventArgs e)
         {
             if (!useAutocomplete)
                 return;            
-            addElements();            
+            addElements();
         }
         void Editor_caretChanged(object sender, EventArgs e)
         {
@@ -894,7 +901,7 @@ namespace pcb
             }
             catch
             {
-                showMessage("不能开启懒癌卫士", "错误！");
+                showMessage(Properties.UIresources.openPcbError, Properties.Resources.error);
             }
         }
         void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -915,7 +922,7 @@ namespace pcb
                         loadFile(openFileDialog.FileName);
                         return;
                     }
-                    if (CustomMessageBox.ShowMessage("加载文件后即将覆盖原先文件，请问是否覆盖?", "提示！") == CustomMessageBox.State.yes)
+                    if (CustomMessageBox.ShowMessage(Properties.UIresources.overwritePrompt, Properties.Resources.warn) == CustomMessageBox.State.yes)
                     {
                         loadFile(openFileDialog.FileName);
                     }
@@ -923,9 +930,9 @@ namespace pcb
             }
             catch (Exception ex)
             {
-                showMessage("错误:\n在读取文档的时候出现错误\n\n" + ex.ToString(), "错误");
+                showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
                 log(ex);
-                Title = "懒癌卫士——OOC生成器(1.9)";
+                Title = Properties.UIresources.pcbName;
             }
         }
         void SaveNewFile_Click(object sender, RoutedEventArgs e)
@@ -945,14 +952,14 @@ namespace pcb
                 {
                     File.WriteAllText(savefiledialog.FileName, getText(), new UTF8Encoding());
                     path = savefiledialog.FileName;
-                    LastEditTB.Text = "最后储存:" + DateTime.Now.ToString();
+                    LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
                 }
-                Title = System.IO.Path.GetFileName(path) + "----懒癌卫士——OOC生成器(1.9)";
+                Title = System.IO.Path.GetFileName(path) + "----" + Properties.UIresources.pcbName;
                 SaveFile.IsEnabled = true;
             }
             catch (Exception ex)
             {
-                showMessage("错误:\n在保存文件时出现错误\n\n" + ex.ToString(), "错误");
+                showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
                 log(ex);
             }
         }
@@ -961,11 +968,11 @@ namespace pcb
             try
             {
                 File.WriteAllText(path, getText());
-                LastEditTB.Text = "最后储存:" + DateTime.Now.ToString();
+                LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
             }
             catch (Exception ex)
             {
-                showMessage("错误:\n在保存文件时出现错误\n\n" + ex.ToString(), "错误");
+                showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
                 log(ex);
             }
         }
@@ -1077,7 +1084,7 @@ namespace pcb
                 autocomplete.Hide();
             if (path == "")
             {                
-                var dialogResult = CustomMessageBox.ShowMessage("关闭前要不要先另存新档", "提示");
+                var dialogResult = CustomMessageBox.ShowMessage(Properties.UIresources.promptSaveNew, Properties.Resources.warn);
                 if (dialogResult == CustomMessageBox.State.yes)
                 {
                     SaveFileDialog savefiledialog = new SaveFileDialog();
@@ -1118,7 +1125,7 @@ namespace pcb
                     text = File.ReadAllText(path, new UTF8Encoding());
                     if (text != gettext)
                     {
-                        var dialogResult = CustomMessageBox.ShowMessage("检测到还没储存的更改，请问是否需要先储存?", "提示");
+                        var dialogResult = CustomMessageBox.ShowMessage(Properties.UIresources.unsaveDetected, Properties.Resources.warn);
                         if (dialogResult == CustomMessageBox.State.yes)
                         {
                             File.WriteAllText(path, gettext);
@@ -1180,16 +1187,16 @@ namespace pcb
                     string[] oocs = parser.getOOC(text, chain);
                     string warn = parser.checkForCondDir();
                     if (warn.Length > 0)
-                        parent.showMessage(warn, "warning!");
+                        parent.showMessage(warn, Properties.Resources.warn);
                     new Output(oocs);
                 }
                 catch (core.PcbException ex)
                 {
-                    parent.showMessage(ex.Message, "pcb error!");
+                    parent.showMessage(ex.Message, Properties.Resources.error);
                 }
                 catch (Exception ex)
                 {
-                    parent.showMessage(ex.Message, "error!");
+                    parent.showMessage(ex.Message, Properties.Resources.error);
                     parent.log(ex);
                 }
             }
@@ -1357,7 +1364,7 @@ namespace pcb
                     if (parent.path != "")
                     {
                         File.WriteAllText(parent.path, parent.getText());
-                        parent.notificationTB.Text = "已储存";
+                        parent.LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
                     }
                     else
                     {
@@ -1372,26 +1379,17 @@ namespace pcb
                         {
                             parent.path = savefiledialog.SafeFileName;
                             File.WriteAllText(savefiledialog.FileName, parent.getText(), new UTF8Encoding());
-                            parent.notificationTB.Text = "已储存";
-                            parent.LastEditTB.Text = "最后储存:" + DateTime.Now.ToString();
-                            parent.Title = System.IO.Path.GetFileName(parent.path) + "----懒癌卫士——OOC生成器(1.9)";
+                            parent.LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
+                            parent.Title = System.IO.Path.GetFileName(parent.path) + "----" + Properties.UIresources.pcbName;
                             parent.SaveFile.IsEnabled = true;
                         }
                     }
-                    dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                    dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
-                    dispatcherTimer.Start();
                 }
                 catch (Exception ex)
                 {
-                    parent.showMessage("错误:\n在保存文件时出现错误\n\n" + ex.ToString(), "错误");
+                    parent.showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
                     parent.log(ex);
                 }
-            }
-            private void dispatcherTimer_Tick(object sender, EventArgs e)
-            {
-                parent.updateNotification();
             }
         }
         class insertFormat : ICommand

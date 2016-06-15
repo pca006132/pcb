@@ -14,35 +14,38 @@ namespace pcb.core
         public static void readConfig()
         {
             Dictionary<string, string> configs = new Dictionary<string, string>();
-            foreach (string line in File.ReadAllLines("ref/auto-config.txt"))
+            try
             {
-                string[] pair = line.Split('=');
-                if (pair.Length == 2)
+                foreach (string line in File.ReadAllLines("ref/auto-config.txt"))
                 {
-                    string key = pair[0].Trim();
-                    string value = pair[1].Trim();
-                    if (configs.ContainsKey(key))
+                    string[] pair = line.Split('=');
+                    if (pair.Length == 2)
                     {
-                        configs.Remove(key);
+                        string key = pair[0].Trim();
+                        string value = pair[1].Trim();
+                        if (configs.ContainsKey(key))
+                        {
+                            configs.Remove(key);
+                        }
+                        configs.Add(key, value);
                     }
-                    configs.Add(key,value);
                 }
-            }
-            foreach (string key in configs.Keys)
-            {
-                string value = configs[key];
-                switch (key)
+                foreach (string key in configs.Keys)
                 {
-                    case "strict-autocomplete":
-                        if (value.ToLower() == "true")
-                            Value.forceCompletePrefix = true;
-                        break;
-                    case "lazyMatch-autocomplete":
-                        if (value.ToLower() == "false")
-                            Value.lazyMatch = false;
-                        break;
+                    string value = configs[key];
+                    switch (key)
+                    {
+                        case "strict-autocomplete":
+                            if (value.ToLower() == "true")
+                                Value.forceCompletePrefix = true;
+                            break;
+                        case "lazyMatch-autocomplete":
+                            if (value.ToLower() == "false")
+                                Value.lazyMatch = false;
+                            break;
+                    }
                 }
-            }
+            } catch { }
         }
     }
 }

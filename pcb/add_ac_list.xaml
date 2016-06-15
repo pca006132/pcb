@@ -4,19 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pcb"
+        xmlns:p="clr-namespace:pcb.Properties"
         mc:Ignorable="d" FontFamily="Microsoft Yahei"
         xmlns:control="http://metro.mahapps.com/winfx/xaml/controls" ResizeMode="NoResize"
-        Title="自动补全额外设置" Height="320" Width="530" WindowStartupLocation="CenterScreen">
+        Title="{x:Static p:UIresources.autocompleteSourceSetting}" Height="320" Width="530" WindowStartupLocation="CenterScreen">
     <Grid>
         <ListBox x:Name="list_type" HorizontalAlignment="Left" Height="271" Margin="10,10,0,0" VerticalAlignment="Top" Width="108" SelectionChanged="list_type_SelectionChanged" FontFamily="Microsoft Yahei">
-            <ListBoxItem>记分板目标</ListBoxItem>
-            <ListBoxItem>记分板tag</ListBoxItem>
-            <ListBoxItem>队伍名称</ListBoxItem>
-            <ListBoxItem>实体名字</ListBoxItem>            
+            <ListBoxItem Content="{x:Static p:UIresources.scbObj}"/>
+            <ListBoxItem Content="{x:Static p:UIresources.scbTag}"/>
+            <ListBoxItem Content="{x:Static p:UIresources.scbTeam}"/>
+            <ListBoxItem Content="{x:Static p:UIresources.entityNames}"/>
         </ListBox>
         <ListBox x:Name="list_content" HorizontalAlignment="Left" Height="241" Margin="123,10,0,0" VerticalAlignment="Top" Width="391" FontFamily="Microsoft Yahei"/>
-        <Button x:Name="btn_delete" FontFamily="Microsoft Yahei" Content="删除" HorizontalAlignment="Left" Margin="123,256,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.143,0.424" Click="btn_delete_Click"/>
-        <Button x:Name="btn_add" FontFamily="Microsoft Yahei" Content="添加" HorizontalAlignment="Left" Margin="439,256,0,0" VerticalAlignment="Top" Width="75" Click="btn_add_Click"/>
+        <Button x:Name="btn_delete" FontFamily="Microsoft Yahei" Content="{x:Static p:UIresources.delete}" HorizontalAlignment="Left" Margin="123,256,0,0" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.143,0.424" Click="btn_delete_Click"/>
+        <Button x:Name="btn_add" FontFamily="Microsoft Yahei" Content="{x:Static p:UIresources.add}" HorizontalAlignment="Left" Margin="439,256,0,0" VerticalAlignment="Top" Width="75" Click="btn_add_Click"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" FontFamily="Microsoft Yahei" Height="23" Margin="203,256,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="231" KeyDown="textBox_KeyDown"/>
     </Grid>
 </control:MetroWindow>

@@ -1,0 +1,304 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="pcbName" xml:space="preserve">
+    <value>pcb-OOC generator</value>
+  </data>
+  <data name="lastSaved" xml:space="preserve">
+    <value>last saved:</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>close</value>
+  </data>
+  <data name="statsDisplaySelect" xml:space="preserve">
+    <value>selected {0} characters</value>
+  </data>
+  <data name="statsDisplay" xml:space="preserve">
+    <value>line {0},  column {1}</value>
+  </data>
+  <data name="openPcbError" xml:space="preserve">
+    <value>cannot open pcb</value>
+  </data>
+  <data name="overwritePrompt" xml:space="preserve">
+    <value>load file will overwrite the current document</value>
+  </data>
+  <data name="promptSaveNew" xml:space="preserve">
+    <value>do you want to save the document before exiting?</value>
+  </data>
+  <data name="unsaveDetected" xml:space="preserve">
+    <value>unsaved changes detected, do you want to save the document before exiting?</value>
+  </data>
+  <data name="autocompleteSourceSetting" xml:space="preserve">
+    <value>autocomplete source setting</value>
+  </data>
+  <data name="scbObj" xml:space="preserve">
+    <value>scb objectives</value>
+  </data>
+  <data name="scbTag" xml:space="preserve">
+    <value>scb tags</value>
+  </data>
+  <data name="scbTeam" xml:space="preserve">
+    <value>team names</value>
+  </data>
+  <data name="entityNames" xml:space="preserve">
+    <value>entity names</value>
+  </data>
+  <data name="delete" xml:space="preserve">
+    <value>delete</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>add</value>
+  </data>
+  <data name="yes" xml:space="preserve">
+    <value>yes</value>
+  </data>
+  <data name="no" xml:space="preserve">
+    <value>no</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="findOrReplace" xml:space="preserve">
+    <value>find/replace</value>
+  </data>
+  <data name="find" xml:space="preserve">
+    <value>find</value>
+  </data>
+  <data name="replace" xml:space="preserve">
+    <value>replace</value>
+  </data>
+  <data name="useRegex" xml:space="preserve">
+    <value>use Regex</value>
+  </data>
+  <data name="multiLine" xml:space="preserve">
+    <value>multiline mode</value>
+  </data>
+  <data name="findNext" xml:space="preserve">
+    <value>find next</value>
+  </data>
+  <data name="replaceAll" xml:space="preserve">
+    <value>replace all</value>
+  </data>
+  <data name="regexNeedEscape" xml:space="preserve">
+    <value>if u use Regex mode, u also need to escape the text for replacement_(:3 」∠ )_</value>
+  </data>
+  <data name="ooc2Long" xml:space="preserve">
+    <value>OOC is too long, command:({0}/{1})</value>
+  </data>
+  <data name="copy" xml:space="preserve">
+    <value>copy</value>
+  </data>
+  <data name="copyAll" xml:space="preserve">
+    <value>copy all</value>
+  </data>
+  <data name="run" xml:space="preserve">
+    <value>run</value>
+  </data>
+  <data name="runPython" xml:space="preserve">
+    <value>run python</value>
+  </data>
+  <data name="setting" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="editorFont" xml:space="preserve">
+    <value>editor font</value>
+  </data>
+  <data name="useAutocomplete" xml:space="preserve">
+    <value>use autocomplete</value>
+  </data>
+  <data name="useAEC" xml:space="preserve">
+    <value>use AEC as marker</value>
+  </data>
+  <data name="displaySpace" xml:space="preserve">
+    <value>display space</value>
+  </data>
+  <data name="direction" xml:space="preserve">
+    <value>cb direction</value>
+  </data>
+  <data name="wrapCount" xml:space="preserve">
+    <value>cb count for each line</value>
+  </data>
+  <data name="blockMode" xml:space="preserve">
+    <value>block mode</value>
+  </data>
+  <data name="xlength" xml:space="preserve">
+    <value>x length</value>
+  </data>
+  <data name="zlength" xml:space="preserve">
+    <value>z length</value>
+  </data>
+  <data name="baseID" xml:space="preserve">
+    <value>base(top and bottom) block id</value>
+  </data>
+  <data name="baseData" xml:space="preserve">
+    <value>base(top and bottom) block data</value>
+  </data>
+  <data name="sideID" xml:space="preserve">
+    <value>side block id</value>
+  </data>
+  <data name="sideData" xml:space="preserve">
+    <value>side block data</value>
+  </data>
+  <data name="noMatch" xml:space="preserve">
+    <value>match not found</value>
+  </data>
+  <data name="file" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="newFile" xml:space="preserve">
+    <value>new file</value>
+  </data>
+  <data name="loadFile" xml:space="preserve">
+    <value>load file</value>
+  </data>
+  <data name="saveAs" xml:space="preserve">
+    <value>save as...</value>
+  </data>
+  <data name="save" xml:space="preserve">
+    <value>save</value>
+  </data>
+  <data name="saveFile" xml:space="preserve">
+    <value>save</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="escapeSelected" xml:space="preserve">
+    <value>escape selected text</value>
+  </data>
+  <data name="unescapeSelected" xml:space="preserve">
+    <value>unescape selected text</value>
+  </data>
+  <data name="insertUUID" xml:space="preserve">
+    <value>insert random uuid</value>
+  </data>
+  <data name="insertType" xml:space="preserve">
+    <value>insert marker type</value>
+  </data>
+  <data name="insertFormatter" xml:space="preserve">
+    <value>insert §</value>
+  </data>
+  <data name="colorJson" xml:space="preserve">
+    <value>command to sign setblock</value>
+  </data>
+  <data name="colorJsonUsage" xml:space="preserve">
+    <value>use clickEvent and setblock to insert § char into the game</value>
+  </data>
+  <data name="foldAll" xml:space="preserve">
+    <value>fold all</value>
+  </data>
+  <data name="comment" xml:space="preserve">
+    <value>comment selected lines</value>
+  </data>
+  <data name="uncomment" xml:space="preserve">
+    <value>uncomment selected lines</value>
+  </data>
+  <data name="settingGenerator" xml:space="preserve">
+    <value>window/editor settings</value>
+  </data>
+  <data name="settingAc" xml:space="preserve">
+    <value>autocomplete setting</value>
+  </data>
+  <data name="generate" xml:space="preserve">
+    <value>generate</value>
+  </data>
+  <data name="generateToolTip" xml:space="preserve">
+    <value>generate ooc from whole document/selected lines</value>
+  </data>
+</root>

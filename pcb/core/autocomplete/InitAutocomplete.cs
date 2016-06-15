@@ -18,7 +18,7 @@ namespace pcb.core.autocomplete
                 jsonString = File.ReadAllText("ref/references.json");
             } catch (Exception ex)
             {
-                throw new AutocompleteParseException("未能读取references.json: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.ioError + " references.json: \n" + ex.Message);
             }
             JObject json;
             try
@@ -26,7 +26,7 @@ namespace pcb.core.autocomplete
                 json = JObject.Parse(jsonString);
             } catch (Exception ex)
             {
-                throw new AutocompleteParseException("references.json格式错误: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.formatError + ": references.json: \n" + ex.Message);
             }
             foreach (var pair in json)
             {
@@ -40,7 +40,7 @@ namespace pcb.core.autocomplete
             }
             catch (Exception ex)
             {
-                throw new AutocompleteParseException("未能读取dot.json: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.ioError + " dot.json: \n" + ex.Message);
             }
             try
             {
@@ -48,7 +48,7 @@ namespace pcb.core.autocomplete
             }
             catch (Exception ex)
             {
-                throw new AutocompleteParseException("dot.json格式错误: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.formatError + ": dot.json: \n" + ex.Message);
             }
             foreach (var pair in json)
             {
@@ -62,7 +62,7 @@ namespace pcb.core.autocomplete
             }
             catch (Exception ex)
             {
-                throw new AutocompleteParseException("未能读取sounds.json: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.ioError + " sounds.json: \n" + ex.Message);
             }
             try
             {
@@ -70,7 +70,7 @@ namespace pcb.core.autocomplete
             }
             catch (Exception ex)
             {
-                throw new AutocompleteParseException("sounds.json格式错误: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.formatError + ": sounds.json: \n" + ex.Message);
             }
             string commands;
             try
@@ -78,7 +78,7 @@ namespace pcb.core.autocomplete
                 commands = File.ReadAllText("ref/commands.txt");
             } catch (Exception ex)
             {
-                throw new AutocompleteParseException("未能读取commands.txt: \n" + ex.Message);
+                throw new AutocompleteParseException(Properties.Resources.ioError + " commands.txt: \n" + ex.Message);
             }
             return Tree.generateTree(commands);
         }

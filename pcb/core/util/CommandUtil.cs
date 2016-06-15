@@ -8,7 +8,7 @@ namespace pcb.core.util
     public class CommandUtil
     {
         //for color black tech
-        public static string colorSignText = "左键生成";
+        public static string colorSignText = Properties.Resources.signText;
 
         public static string escape(string text)
         {

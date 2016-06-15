@@ -30,7 +30,7 @@ namespace pcb
         {
             var mySettings = new MetroDialogSettings()
             {
-                AffirmativeButtonText = "关闭"
+                AffirmativeButtonText = Properties.UIresources.close
             };
 
             this.ShowMessageAsync(title, text, MessageDialogStyle.Affirmative, mySettings);
@@ -52,7 +52,7 @@ namespace pcb
                     if (!Editor.Text.Substring(selectionStart).Contains(findTB.Text))
                     {
                         System.Media.SystemSounds.Beep.Play();
-                        parent.notificationTB.Text = "没有符合的结果";
+                        parent.notificationTB.Text = Properties.UIresources.noMatch;
                         return;
                     }
                     int index = Editor.Text.Substring(selectionStart).IndexOf(findTB.Text) + selectionStart;
@@ -73,13 +73,13 @@ namespace pcb
                     else
                     {
                         System.Media.SystemSounds.Beep.Play();
-                        parent.notificationTB.Text = "没有符合的结果";
+                        parent.notificationTB.Text = Properties.UIresources.noMatch;
                     }
                 }
             }
             catch (Exception ex)
             {
-                showMessage(ex.ToString(), "错误");
+                showMessage(ex.ToString(), Properties.Resources.error);
             }
         }
         private void replaceAll()
@@ -116,7 +116,7 @@ namespace pcb
             }
             catch (Exception ex)
             {
-                showMessage(ex.ToString(), "错误");
+                showMessage(ex.ToString(), Properties.Resources.error);
             }
         }
 
