@@ -93,7 +93,7 @@ namespace pcb
                     display.Clear();
                     completion.Clear();
                     listbox.Items.Clear();
-                    this.Hide();
+                    Hide();
                     return;
                 }
                 if (Math.Abs(column - (editor.CaretOffset - editor.Document.GetLineByOffset
@@ -110,6 +110,8 @@ namespace pcb
         public void update_position()
         {
             Point p = editor.TextArea.TextView.GetVisualPosition(editor.TextArea.Caret.Position, VisualYPosition.LineBottom) - editor.TextArea.TextView.ScrollOffset;
+            double Left = this.Left;
+            double Top = this.Top;
             Top = window.Top + p.Y + 65;
             y = Top;
             if (p.X  + listbox.ActualWidth + 55 > window.ActualWidth)
@@ -121,6 +123,8 @@ namespace pcb
                 Left -= window.Left;
                 Top -= window.Top;
             }
+            this.Left = Left;
+            this.Top = Top;
         }
         private void editor_keyDown(object sender, KeyEventArgs e)
         {

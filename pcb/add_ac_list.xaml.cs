@@ -99,19 +99,19 @@ namespace pcb
                 {
                     case 0:
                         item = Value.scbObj.ElementAt(list_content.SelectedIndex);
-                        Value.scbObj.TryTake(out item);
+                        Value.scbObj.Remove(item);
                         break;
                     case 1:
                         item = Value.tags.ElementAt(list_content.SelectedIndex);
-                        Value.tags.TryTake(out item);
+                        Value.tags.Remove(item);
                         break;
                     case 2:
                         item = Value.teams.ElementAt(list_content.SelectedIndex);
-                        Value.teams.TryTake(out item);
+                        Value.teams.Remove(item);
                         break;
                     case 3:
                         item = Value.names.ElementAt(list_content.SelectedIndex);
-                        Value.names.TryTake(out item);
+                        Value.names.Remove(item);
                         break;
                 }
             }

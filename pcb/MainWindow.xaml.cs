@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.2";
+        string version = "0.6.3";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -536,6 +536,11 @@ namespace pcb
         void parseDocument()
         {
             string[] lines = Editor.Text.Split('\n');
+            Value.runtime_names.Clear();
+            Value.runtime_scbObj.Clear();
+            Value.runtime_tags.Clear();
+            Value.runtime_teams.Clear();
+            Value.runtime_triggerObj.Clear();
             foreach (string rawLine in lines)
             {
                 string text = rawLine.Trim();
@@ -543,31 +548,31 @@ namespace pcb
                     if (Regex.IsMatch(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w"))
                     {
                         string str = Regex.Match(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w").Groups[1].ToString();
-                        if (!Value.scbObj.Contains(str))
-                            Value.scbObj.Add(str);
+                        if (!Value.runtime_scbObj.Contains(str))
+                            Value.runtime_scbObj.Add(str);
 
                         string[] elements = text.Split(' ');
                         if (elements.Length > 4 && elements[4] == "trigger")
-                            if (!Value.triggerObj.Contains(elements[3]))
-                                Value.triggerObj.Add(elements[3]);
+                            if (!Value.runtime_triggerObj.Contains(elements[3]))
+                                Value.runtime_triggerObj.Add(elements[3]);
                     }
-                    else if (Regex.IsMatch(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)"))
+                    else if (Regex.IsMatch(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)$"))
                     {
-                        string tag = (Regex.Match(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)").Groups[1].ToString());
-                        if (!Value.tags.Contains(tag))
-                            Value.tags.Add(tag);
+                        string tag = (Regex.Match(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)$").Groups[1].ToString());
+                        if (!Value.runtime_tags.Contains(tag))
+                            Value.runtime_tags.Add(tag);
                     }
                     else if (text.StartsWith("mark:"))
                     {
                         string segment = text.Split(' ')[0].Substring(5);
-                        if (!Value.names.Contains(segment))
-                            Value.names.Add(segment);
+                        if (!Value.runtime_names.Contains(segment))
+                            Value.runtime_names.Add(segment);
                     }
                     else if (text.StartsWith("init:scoreboard teams add"))
                     {
                         string team = (text.Split(' ')[3]);
-                        if (!Value.teams.Contains(team))
-                            Value.teams.Add(team);
+                        if (!Value.runtime_teams.Contains(team))
+                            Value.runtime_teams.Add(team);
                     }
             }
         }

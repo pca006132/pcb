@@ -81,11 +81,17 @@ namespace pcb.core.autocomplete
 
         //for data in functions
         //can be used concurrently
-        public static BlockingCollection<string> names = new BlockingCollection<string>();
-        public static BlockingCollection<string> teams = new BlockingCollection<string>();
-        public static BlockingCollection<string> tags = new BlockingCollection<string>();
-        public static BlockingCollection<string> scbObj = new BlockingCollection<string>();
-        public static BlockingCollection<string> triggerObj = new BlockingCollection<string>();
+        public static List<string> names = new List<string>();
+        public static List<string> teams = new List<string>();
+        public static List<string> tags = new List<string>();
+        public static List<string> scbObj = new List<string>();
+        public static List<string> triggerObj = new List<string>();
+
+        public static List<string> runtime_names = new List<string>();
+        public static List<string> runtime_teams = new List<string>();
+        public static List<string> runtime_tags = new List<string>();
+        public static List<string> runtime_scbObj = new List<string>();
+        public static List<string> runtime_triggerObj = new List<string>();
 
         private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector","command"};
 
@@ -273,16 +279,20 @@ namespace pcb.core.autocomplete
                     switch (values[0])
                     {
                         case "scbObj":
-                            result = scbObj.ToList();
+                            result.AddRange(scbObj);
+                            result.AddRange(runtime_scbObj);
                             break;
                         case "trigger":
-                            result = triggerObj.ToList();
+                            result.AddRange(triggerObj);
+                            result.AddRange(runtime_triggerObj);
                             break;
                         case "team":
-                            result = teams.ToList();
+                            result.AddRange(teams);
+                            result.AddRange(runtime_teams);
                             break;
                         case "tag":
-                            result = tags.ToList();
+                            result.AddRange(tags);
+                            result.AddRange(runtime_tags);
                             break;
                         case "sound":
                             if (sounds != null)

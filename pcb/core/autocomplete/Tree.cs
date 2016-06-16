@@ -68,6 +68,10 @@ namespace pcb.core.autocomplete
                     }
                 }
             }
+            if (input.Length == 0)
+            {
+                return new CompletionData();
+            }
 
             string[] keys = input.Split(' ');
             Tree temp = this;

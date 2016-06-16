@@ -17,7 +17,12 @@ namespace pcb
         {            
             if (System.Threading.Thread.CurrentThread.CurrentCulture.Name == "zh-CN")
             {
-                var culture = new System.Globalization.CultureInfo("us");
+                var culture = new System.Globalization.CultureInfo("zh");
+                System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+            } else
+            {
+                var culture = new System.Globalization.CultureInfo("en");
                 System.Threading.Thread.CurrentThread.CurrentCulture = culture;
                 System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
             }
