@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.3";
+        string version = "0.6.4";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -370,6 +370,23 @@ namespace pcb
             if (Thread.CurrentThread.CurrentCulture.Name == "zh-CN")
             {
                 checkUpdate();
+            } else
+            {
+                FontFamily font = new FontFamily(Properties.UIresources.font);
+                Editor.FontFamily = font;
+                foreach (MenuItem item in menu.Items)
+                {
+                    item.FontFamily = font;
+                    if (item.Items.Count > 0)
+                    {
+                        foreach (object subItem in item.Items)
+                        {
+                            if (subItem is MenuItem) {
+                                ((MenuItem)subItem).FontFamily = font;
+                            }
+                        }
+                    }
+                }
             }
             tryLoadText();
             initBackUpFile();
@@ -1352,7 +1369,6 @@ namespace pcb
         class save : ICommand
         {
             MainWindow parent;
-            System.Windows.Threading.DispatcherTimer dispatcherTimer;
             public save(MainWindow window)
             {
                 parent = window;

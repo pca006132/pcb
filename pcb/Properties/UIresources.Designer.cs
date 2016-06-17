@@ -277,7 +277,16 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to generate.
+        ///   Looks up a localized string similar to Arial.
+        /// </summary>
+        public static string font {
+            get {
+                return ResourceManager.GetString("font", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate.
         /// </summary>
         public static string generate {
             get {
@@ -331,7 +340,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to load file.
+        ///   Looks up a localized string similar to Open.
         /// </summary>
         public static string loadFile {
             get {
@@ -349,7 +358,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to new file.
+        ///   Looks up a localized string similar to New.
         /// </summary>
         public static string newFile {
             get {
@@ -466,7 +475,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to save.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string save {
             get {
@@ -475,7 +484,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to save as....
+        ///   Looks up a localized string similar to Save as.
         /// </summary>
         public static string saveAs {
             get {
@@ -484,7 +493,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to save.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string saveFile {
             get {
@@ -520,7 +529,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to settings.
+        ///   Looks up a localized string similar to Settings.
         /// </summary>
         public static string setting {
             get {

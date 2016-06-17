@@ -194,7 +194,7 @@
     <value>run python</value>
   </data>
   <data name="setting" xml:space="preserve">
-    <value>settings</value>
+    <value>Settings</value>
   </data>
   <data name="editorFont" xml:space="preserve">
     <value>editor font</value>
@@ -242,19 +242,19 @@
     <value>File</value>
   </data>
   <data name="newFile" xml:space="preserve">
-    <value>new file</value>
+    <value>New</value>
   </data>
   <data name="loadFile" xml:space="preserve">
-    <value>load file</value>
+    <value>Open</value>
   </data>
   <data name="saveAs" xml:space="preserve">
-    <value>save as...</value>
+    <value>Save as</value>
   </data>
   <data name="save" xml:space="preserve">
-    <value>save</value>
+    <value>Save</value>
   </data>
   <data name="saveFile" xml:space="preserve">
-    <value>save</value>
+    <value>Save</value>
   </data>
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
@@ -296,9 +296,12 @@
     <value>autocomplete setting</value>
   </data>
   <data name="generate" xml:space="preserve">
-    <value>generate</value>
+    <value>Generate</value>
   </data>
   <data name="generateToolTip" xml:space="preserve">
     <value>generate ooc from whole document/selected lines</value>
+  </data>
+  <data name="font" xml:space="preserve">
+    <value>Arial</value>
   </data>
 </root>

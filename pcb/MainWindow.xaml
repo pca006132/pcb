@@ -12,6 +12,8 @@
         ShowIconOnTitleBar="False" BorderThickness="1" Closing="MetroWindow_Closing"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" 
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
+        RenderOptions.ClearTypeHint="Enabled"
+        TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     <Grid>
         <avalonEdit:TextEditor ShowLineNumbers="True" Margin="5,30,5,30" WordWrap="True" 
@@ -32,7 +34,7 @@
             </Border>
         </Grid>
         <Menu VerticalAlignment="Top" Height="30" IsMainMenu="True" BorderBrush="Gray"
-        BorderThickness="1">
+        BorderThickness="1" x:Name="menu">
             <MenuItem Header="{x:Static p:UIresources.file}">
                 <MenuItem Header="{x:Static p:UIresources.newFile}" Click="NewFile_Click"/>
                 <MenuItem Header="{x:Static p:UIresources.loadFile}" Click="OpenFile_Click"></MenuItem>

@@ -108,7 +108,12 @@ namespace pcb.core
                     block = "command_block";
                     break;
             }
-            return String.Format("setblock ~{0} ~{1} ~{2} {3} {4} replace {{Command:\"{5}\"{6}}}", relativeX, relativeY, relativeZ, block, damage + (isCond ? 8 : 0), CommandUtil.escape(command), (isAuto ? ",auto:1b" : ""));
+            string cmd = command;
+            if (CommandUtil.needEscape(command))
+            {
+                cmd = "\"" + CommandUtil.escape(cmd) + "\"";
+            }
+            return String.Format("setblock ~{0} ~{1} ~{2} {3} {4} replace {{Command:{5}{6}}}", relativeX, relativeY, relativeZ, block, damage + (isCond ? 8 : 0), cmd, (isAuto ? ",auto:1b" : ""));
         }
     }
 }

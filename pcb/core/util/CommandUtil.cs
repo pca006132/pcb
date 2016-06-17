@@ -55,5 +55,60 @@ namespace pcb.core.util
 
             return new long[] { most, least };
         }
+        public static bool needEscape(string str)
+        {
+            Stack<char> brackets = new Stack<char>();
+            bool inString = false;
+            foreach (char chr in str)
+            {
+                if (!inString)
+                    switch (chr)
+                    {
+                        case '{':
+                        case '[':
+                            brackets.Push(chr);
+                            break;
+                        case '}':
+                            if (brackets.Count == 0)
+                                return true;
+                            if (brackets.Peek() == '{')
+                                brackets.Pop();
+                            else
+                                return true;
+                            break;
+                        case ']':
+                            if (brackets.Count == 0)
+                                return true;
+                            if (brackets.Peek() == ']')
+                                brackets.Pop();
+                            else
+                                return true;
+                            break;
+                        case ',':
+                            if (brackets.Count == 0)
+                                return true;
+                            break;
+                        case '"':
+                            inString = true;
+                            break;
+                        case '\\':
+                            return true;
+                    }
+                else
+                    switch (chr)
+                    {
+                        case '"':
+                            inString = false;
+                            break;
+                        case '\\':
+                            return true;                            
+                    }
+            }
+            if (brackets.Count > 0)
+                return true;
+            if (inString)
+                return true;
+            return false;
+        }
     }
 }

@@ -321,4 +321,7 @@
   <data name="generateToolTip" xml:space="preserve">
     <value>把所有指令变为OOC / 把选择部分变为OOC</value>
   </data>
+  <data name="font" xml:space="preserve">
+    <value>Microsoft Yahei UI</value>
+  </data>
 </root>

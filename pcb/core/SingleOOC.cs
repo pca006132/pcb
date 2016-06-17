@@ -143,44 +143,7 @@ namespace pcb.core
                 return specialCharCount * 3 + strLength + colorCharCount;
             else
                 return specialCharCount + strLength + colorCharCount;
-        }
-        private static bool needEscape(string str)
-        {
-            Stack<char> brackets = new Stack<char>();
-            foreach (char chr in str)
-            {
-                switch (chr)
-                {
-                    case '{':
-                    case '[':
-                        brackets.Push(chr);
-                        break;
-                    case '}':
-                        if (brackets.Count == 0)
-                            return true;
-                        if (brackets.Peek() == '{')
-                            brackets.Pop();
-                        else
-                            return true;
-                        break;
-                    case ']':
-                        if (brackets.Count == 0)
-                            return true;
-                        if (brackets.Peek() == ']')
-                            brackets.Pop();
-                        else
-                            return true;
-                        break;
-                    case ',':
-                        if (brackets.Count == 0)
-                            return true;
-                        break;                       
-                }
-            }
-            if (brackets.Count > 0)
-                return true;
-            return false;
-        }
+        }        
 
         string getNormalOOC()
         {
