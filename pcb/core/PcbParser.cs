@@ -5,6 +5,7 @@ using System.Text;
 
 using pcb.core.chain;
 using pcb.core.util;
+using System.Text.RegularExpressions;
 
 namespace pcb.core
 {
@@ -32,6 +33,7 @@ namespace pcb.core
         private string[] pcb2Command(string pcb, AbstractCBChain chain)
         {
             currentLineNum = 0;
+            Dictionary<string, string> variables = new Dictionary<string, string>();
             string[] lines = pcb.Split(new string[] {"\r\n", "\n","\r" }, StringSplitOptions.None);
             List<string> initCmd = new List<string>();
             List<string> cbCmd = new List<string>();
@@ -43,6 +45,15 @@ namespace pcb.core
             {
                 currentLineNum++;
                 string line = rawLine.Trim(' ', '\t', '\r');
+                if (Regex.IsMatch(line, @"^define (\S+) = (.+)$")) {
+                    var regex = Regex.Match(line, @"^define (\S+) = (.+)$");
+                    var key = regex.Groups[1].ToString();
+                    var value = regex.Groups[2].ToString();
+                    if (variables.ContainsKey(key))
+                        variables.Remove(key);
+                    variables.Add(key, value);
+                    continue;
+                }
                 //multiline comment
                 if (isComment)
                 {
@@ -56,11 +67,17 @@ namespace pcb.core
                     continue;
                 }
                 //single line comment
-                if (line.StartsWith("//"))
+                if (line.StartsWith("//"))                
                     continue;
+
                 //empty line
                 if (line.Length == 0)
                     continue;
+
+                foreach (var key in variables.Keys)
+                {
+                    line = line.Replace(key, variables[key]);
+                }                    
 
                 //new
                 if (line.StartsWith("new"))

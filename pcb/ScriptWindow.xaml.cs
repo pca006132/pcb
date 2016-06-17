@@ -236,5 +236,15 @@ namespace pcb
         {
             return Math.Pow(num, power);
         }
+        public static int randInt(int max)
+        {
+            var rand = new Random();
+            return rand.Next(max);
+        }
+        public static double rand()
+        {
+            var rand = new Random();
+            return rand.NextDouble();
+        }
     }
 }

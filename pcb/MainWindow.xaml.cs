@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.5";
+        string version = "0.6.6";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;

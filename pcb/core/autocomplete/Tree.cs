@@ -68,6 +68,8 @@ namespace pcb.core.autocomplete
                     }
                 }
             }
+            if (input.StartsWith("/"))
+                input = input.Substring(1);
             if (input.Length == 0)
             {
                 return new CompletionData();

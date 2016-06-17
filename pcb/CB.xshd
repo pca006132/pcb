@@ -13,6 +13,9 @@
     <Rule color="Comment">
         ^\s*//.*[^{}]$
     </Rule>
+    <Rule color="Comment">
+        ^\s*//$
+    </Rule>
     <Rule color="before">
       	^\s*icb:
     </Rule>
@@ -36,6 +39,9 @@
 		</Rule>
 		<Rule color="Command">
 			^\s*new\s-?\d+\s-?\d+\s-?\d+(\s(X|Y))?
+		</Rule>
+    <Rule color="Command">
+			^\s*define (.)+ = .+$
 		</Rule>
 		<Rule color="marks">
 			^\s*mark:.*
