@@ -167,6 +167,8 @@ namespace pcb
     }
     public class math
     {
+        Random rnd = new Random();
+
         public static double pi = Math.PI;
         public static int round(double num)
         {
@@ -236,15 +238,13 @@ namespace pcb
         {
             return Math.Pow(num, power);
         }
-        public static int randInt(int max)
+        public int randInt(int max)
         {
-            var rand = new Random();
-            return rand.Next(max);
+            return rnd.Next(max);
         }
-        public static double rand()
+        public double rand()
         {
-            var rand = new Random();
-            return rand.NextDouble();
+            return rnd.NextDouble();
         }
     }
 }

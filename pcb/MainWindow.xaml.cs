@@ -748,7 +748,7 @@ namespace pcb
                 }
             }
             Title = System.IO.Path.GetFileName(path) + "----" + Properties.UIresources.pcbName;
-
+            SaveFile.IsEnabled = true;
         }
         //windows special function
         public void log(Exception ex)
