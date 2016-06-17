@@ -59,7 +59,7 @@
             </MenuItem>
             <MenuItem Header="{x:Static p:UIresources.setting}">
                 <MenuItem Header="{x:Static p:UIresources.settingGenerator}"  Click="showSetting"/>
-                <MenuItem Header="{x:Static p:UIresources.pcbName}" ToolTip="scb objectives, tags, names, teams" Click="showList"/>
+                <MenuItem Header="{x:Static p:UIresources.autocompleteSourceSetting}" ToolTip="scb objectives, tags, names, teams" Click="showList"/>
             </MenuItem>
             <MenuItem Header="{x:Static p:UIresources.generate}" Click="generateFromEditor" InputGestureText="Ctrl + G"
                       ToolTip="{x:Static p:UIresources.generateToolTip}">

@@ -57,8 +57,7 @@ namespace pcb
                 try
                 {
                     ScriptSource source =
-            engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);
-
+            engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);                    
                     source.Execute(scope);
                 }
                 catch (ThreadAbortException tae)

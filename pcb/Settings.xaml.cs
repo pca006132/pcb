@@ -26,6 +26,9 @@ namespace pcb
             InitializeComponent();
             parent = window;
 
+            FontFamily setting_font = new FontFamily(Properties.UIresources.font);
+            FontFamily = setting_font;
+
             foreach (FontFamily font in FontList.Items)
             {
                 if (font == parent.Editor.FontFamily)

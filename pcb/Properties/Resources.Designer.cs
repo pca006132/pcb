@@ -169,7 +169,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to click to generate.
+        ///   Looks up a localized string similar to right click to generate.
         /// </summary>
         public static string signText {
             get {

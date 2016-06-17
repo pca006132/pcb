@@ -142,7 +142,7 @@
     <value>未知的dot参数名称</value>
   </data>
   <data name="signText" xml:space="preserve">
-    <value>左键点击以生成</value>
+    <value>右键点击以生成</value>
   </data>
   <data name="dataLargerThan7" xml:space="preserve">
     <value>错误data数值: data不能大于7</value>

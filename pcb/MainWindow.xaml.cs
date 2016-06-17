@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.4";
+        string version = "0.6.5";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -367,23 +367,21 @@ namespace pcb
             } catch { }
             autocomplete = new autocomplete_menu(Editor, this);
             autocomplete.Owner = this;
-            if (Thread.CurrentThread.CurrentCulture.Name == "zh-CN")
+            if (Thread.CurrentThread.CurrentCulture.Name == "zh")
             {
                 checkUpdate();
-            } else
+            }
+            FontFamily font = new FontFamily(Properties.UIresources.font);
+            Editor.FontFamily = font;
+            foreach (MenuItem item in menu.Items)
             {
-                FontFamily font = new FontFamily(Properties.UIresources.font);
-                Editor.FontFamily = font;
-                foreach (MenuItem item in menu.Items)
+                item.FontFamily = font;
+                if (item.Items.Count > 0)
                 {
-                    item.FontFamily = font;
-                    if (item.Items.Count > 0)
+                    foreach (object subItem in item.Items)
                     {
-                        foreach (object subItem in item.Items)
-                        {
-                            if (subItem is MenuItem) {
-                                ((MenuItem)subItem).FontFamily = font;
-                            }
+                        if (subItem is MenuItem) {
+                            ((MenuItem)subItem).FontFamily = font;
                         }
                     }
                 }
