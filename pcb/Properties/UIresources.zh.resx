@@ -327,4 +327,7 @@
   <data name="toCBSetblock" xml:space="preserve">
     <value>转换为cb setblock指令</value>
   </data>
+  <data name="generateOptions" xml:space="preserve">
+    <value>是否把选择范围当作独立pcb生成</value>
+  </data>
 </root>

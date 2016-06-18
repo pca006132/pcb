@@ -295,6 +295,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to pretend the selected region is standalone pcb?.
+        /// </summary>
+        public static string generateOptions {
+            get {
+                return ResourceManager.GetString("generateOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to generate ooc from whole document/selected lines.
         /// </summary>
         public static string generateToolTip {

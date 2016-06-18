@@ -68,7 +68,7 @@ namespace pcb.core
                     continue;
                 }
                 //single line comment
-                if (line.StartsWith("//"))                
+                if (line.StartsWith("//"))
                     continue;
 
                 //empty line
@@ -78,7 +78,7 @@ namespace pcb.core
                 foreach (var key in variables.Keys)
                 {
                     line = line.Replace(key, variables[key]);
-                }                    
+                }
 
                 //new
                 if (line.StartsWith("new"))
@@ -107,21 +107,32 @@ namespace pcb.core
                     continue;
                 }
                 if (line.StartsWith("init:"))
-                    initCmd.Add(line.Substring(5));
+                {
+                    if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                        initCmd.Add(line.Substring(5));
+                }
                 else if (line.StartsWith("after:"))
-                    lastCmd.Add(line.Substring(6));
+                {
+                    if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                        lastCmd.Add(line.Substring(6));
+                }
                 else if (line.StartsWith("mark:"))
-                    middleCmd.Add(marker(line, chains.Peek().getNextCbCoor()));
+                {
+                    if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                        middleCmd.Add(marker(line, chains.Peek().getNextCbCoor()));
+                }
                 else if (line.StartsWith("sign:"))
                 {
                     string cmd = chains.Peek().addSign(line);
-                    if (cmd.Length > 0)
-                        middleCmd.Add(cmd);
+                    if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                        if (cmd.Length > 0)
+                            middleCmd.Add(cmd);
                 }
                 else if (line.StartsWith("stat:"))
                 {
                     int[] coor = chains.Peek().getNextCbCoor();
-                    lastCmd.AddRange(stats(line, coor[0], coor[1], coor[2]));
+                    if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                        lastCmd.AddRange(stats(line, coor[0], coor[1], coor[2]));
                 }
                 else
                     chains.Peek().addCb(line, currentLineNum);

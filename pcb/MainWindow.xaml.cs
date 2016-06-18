@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.8";
+        string version = "0.6.9";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -860,8 +860,15 @@ namespace pcb
             var parser = new core.PcbParser();
             if (Editor.SelectionLength > 0)
             {
-                parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
-                parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+                if (CustomMessageBox.ShowMessage(Properties.UIresources.generateOptions, "") == CustomMessageBox.State.yes)
+                {
+                    text = Editor.SelectedText;
+                }
+                else
+                {
+                    parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
+                    parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+                }               
             }
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)

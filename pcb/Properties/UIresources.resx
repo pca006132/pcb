@@ -307,4 +307,7 @@
   <data name="toCBSetblock" xml:space="preserve">
     <value>convert to cb setblock</value>
   </data>
+  <data name="generateOptions" xml:space="preserve">
+    <value>pretend the selected region is standalone pcb?</value>
+  </data>
 </root>
