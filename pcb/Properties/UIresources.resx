@@ -304,4 +304,7 @@
   <data name="font" xml:space="preserve">
     <value>Arial</value>
   </data>
+  <data name="toCBSetblock" xml:space="preserve">
+    <value>convert to cb setblock</value>
+  </data>
 </root>

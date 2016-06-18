@@ -60,7 +60,7 @@ namespace pcb.core.chain
             return new StraightCbChain(coor);
         }
 
-        public override List<string> getCommands()
+        public override List<string> getCommands(int start, int end)
         {
             List<string> cbCmd = new List<string>();
             List<string> rcbCmd = new List<string>();
@@ -68,10 +68,14 @@ namespace pcb.core.chain
             {
                 if (cb.cbType != CommandBlock.type.rcb)
                 {
-                    cbCmd.Add(cb.ToString());
+                    if (cb.lineNum >= start)
+                        if (end == -1 || cb.lineNum <= end)
+                            cbCmd.Add(cb.ToString());
                 }
                 else {
-                    rcbCmd.Add(cb.ToString());
+                    if (cb.lineNum >= start)
+                        if (end == -1 || cb.lineNum <= end)
+                            rcbCmd.Add(cb.ToString());
                 }
             }
             cbCmd.AddRange(rcbCmd);

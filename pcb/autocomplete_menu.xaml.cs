@@ -44,14 +44,14 @@ namespace pcb
             {
                 listbox.Items.Add(str);
             }
-            if (display.Contains(selected))
-                listbox.SelectedIndex = display.IndexOf(selected);
             if (!listbox.HasItems)
             {
                 Hide();
                 shown = false;
                 return;
             }
+            if (display.Contains(selected))
+                listbox.SelectedIndex = display.IndexOf(selected);            
             for (int i = 0; i < display.Count; i++)
             {
                 if (completion[i] == display[i].Length)

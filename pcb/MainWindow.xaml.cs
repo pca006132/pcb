@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.7";
+        string version = "0.6.8";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -317,6 +317,7 @@ namespace pcb
             Editor.InputBindings.Add(new InputBinding(new commentOut(this), new KeyGesture(Key.OemQuestion, ModifierKeys.Control)));
             Editor.InputBindings.Add(new InputBinding(new commentOut(this), new KeyGesture(Key.Divide, ModifierKeys.Control)));
             Editor.InputBindings.Add(new InputBinding(new unComment(this), new KeyGesture(Key.OemPipe, ModifierKeys.Control)));
+            Editor.InputBindings.Add(new InputBinding(new packCB(this), new KeyGesture(Key.P, ModifierKeys.Alt)));
         }
         public MainWindow()
         {
@@ -586,7 +587,7 @@ namespace pcb
                         if (!Value.runtime_names.Contains(segment))
                             Value.runtime_names.Add(segment);
                     }
-                    else if (text.StartsWith("init:scoreboard teams add"))
+                    else if (text.StartsWith("init:scoreboard teams add "))
                     {
                         string team = (text.Split(' ')[3]);
                         if (!Value.runtime_teams.Contains(team))
@@ -666,10 +667,10 @@ namespace pcb
                 string line = lines[i].Trim('\t').Trim('\n').Trim('\r');
                 if (line.StartsWith("dir:"))
                 {
-                    if (line[4].ToString() == 0.ToString())
-                        core.chain.StraightCbChain.setDirection(core.util.Direction.positiveY);
+                    if (line[4].ToString() == "0")
+                        core.chain.StraightCbChain.setDirection(Direction.positiveY);
                     else
-                        core.chain.StraightCbChain.setDirection(core.util.Direction.positiveX);
+                        core.chain.StraightCbChain.setDirection(Direction.positiveZ);
                 }
                 else if (line.StartsWith("AEC:"))
                 {
@@ -853,6 +854,38 @@ namespace pcb
                 catch { }
             }
         }
+        void generateFromPcb()
+        {
+            string text = Editor.Text;
+            var parser = new core.PcbParser();
+            if (Editor.SelectionLength > 0)
+            {
+                parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
+                parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+            }
+            core.chain.AbstractCBChain chain;
+            if (useBlockStruc)
+                chain = new core.chain.BoxCbChain(new int[] { 0, 2, 0 });
+            else
+                chain = new core.chain.StraightCbChain(new int[] { 0, 2, 0 });
+            try
+            {
+                string[] oocs = parser.getOOC(text, chain);
+                string warn = parser.checkForCondDir();
+                if (warn.Length > 0)
+                    showMessage(warn, "warning!");
+                new Output(oocs);
+            }
+            catch (core.PcbException ex)
+            {
+                showMessage(ex.Message, "pcb error!");
+            }
+            catch (Exception ex)
+            {
+                showMessage(ex.Message, "error!");
+                log(ex);
+            }
+        }
         //events
         void Editor_TextEntering(object sender, TextCompositionEventArgs e)
         {
@@ -1014,7 +1047,7 @@ namespace pcb
         }
         void inserType_Click(object sender, RoutedEventArgs e)
         {
-            if (core.PcbParser.markerType)
+            if (!core.PcbParser.markerType)
                 Editor.Document.Insert(Editor.SelectionStart, "type=AreaEffectCloud");
             else
                 Editor.Document.Insert(Editor.SelectionStart, "type=ArmorStand");
@@ -1048,6 +1081,20 @@ namespace pcb
         {
             findReplaceDialog.Show();
         }
+        void packCB_Click(object sender, RoutedEventArgs e)
+        {
+            var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
+            string text = Editor.Document.GetText(line);
+            string cmd;
+            try
+            {
+                cmd = new core.CommandBlock(text, 0, 0, 0, 1, 0).ToString();
+            } catch
+            {
+                cmd = text;
+            }
+            Editor.Document.Replace(line, cmd);
+        }
         void showSetting(object sender, RoutedEventArgs e)
         {
             new Settings(this);
@@ -1063,32 +1110,7 @@ namespace pcb
         }
         void generateFromEditor(object sender, RoutedEventArgs e)
         {
-            string text = Editor.Text;
-            if (Editor.SelectionLength > 0)
-            {
-                text = Editor.SelectedText;
-            }
-            var parser = new core.PcbParser();
-            core.chain.AbstractCBChain chain;
-            if (useBlockStruc)
-                chain = new core.chain.BoxCbChain(new int[] { 0, 2, 0 });
-            else
-                chain = new core.chain.StraightCbChain(new int[] { 0, 2, 0 });
-            try
-            {
-                string[] oocs = parser.getOOC(text, chain);
-                string warn = parser.checkForCondDir();
-                if (warn.Length > 0)
-                    showMessage(warn, "warning!");
-                new Output(oocs);
-            } catch (core.PcbException ex)
-            {
-                showMessage(ex.Message, "pcb error!");
-            } catch (Exception ex)
-            {
-                showMessage(ex.Message, "error!");
-                log(ex);
-            }
+            generateFromPcb();
         }
         void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1193,35 +1215,7 @@ namespace pcb
             }
             public void Execute(object parameter)
             {
-                var Editor = parent.Editor;
-                string text = Editor.Text;
-                if (Editor.SelectionLength > 0)
-                {
-                    text = Editor.SelectedText;
-                }
-                var parser = new core.PcbParser();
-                core.chain.AbstractCBChain chain;
-                if (parent.useBlockStruc)
-                    chain = new core.chain.BoxCbChain(new int[] { 0, 2, 0 });
-                else
-                    chain = new core.chain.StraightCbChain(new int[] { 0, 2, 0 });
-                try
-                {
-                    string[] oocs = parser.getOOC(text, chain);
-                    string warn = parser.checkForCondDir();
-                    if (warn.Length > 0)
-                        parent.showMessage(warn, Properties.Resources.warn);
-                    new Output(oocs);
-                }
-                catch (core.PcbException ex)
-                {
-                    parent.showMessage(ex.Message, Properties.Resources.error);
-                }
-                catch (Exception ex)
-                {
-                    parent.showMessage(ex.Message, Properties.Resources.error);
-                    parent.log(ex);
-                }
+                parent.generateFromPcb();
             }
         }
         class blackTech : ICommand
@@ -1241,7 +1235,45 @@ namespace pcb
                 var Editor = parent.Editor;
                 var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
                 string text = Editor.Document.GetText(line);
-                Editor.Document.Replace(line, CommandUtil.colorBlackTech(text));
+                string cmd;
+                try
+                {
+                    cmd = new core.CommandBlock(text, 0, 0, 0, 0, 0).ToString();
+                }
+                catch
+                {
+                    cmd = text;
+                }
+                Editor.Document.Replace(line, CommandUtil.colorBlackTech(cmd));
+            }
+        }
+        class packCB : ICommand
+        {
+            MainWindow parent;
+            public packCB(MainWindow window)
+            {
+                parent = window;
+            }
+            public event EventHandler CanExecuteChanged;
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+            public void Execute(object parameter)
+            {
+                var Editor = parent.Editor;
+                var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
+                string text = Editor.Document.GetText(line);
+                string cmd;
+                try
+                {
+                    cmd = new core.CommandBlock(text, 0, 0, 0, 1, 0).ToString();
+                }
+                catch
+                {
+                    cmd = text;
+                }
+                Editor.Document.Replace(line, cmd);
             }
         }
         class commentOut : ICommand
@@ -1361,7 +1393,7 @@ namespace pcb
             }
             public void Execute(object parameter)
             {
-                if (core.PcbParser.markerType)
+                if (!core.PcbParser.markerType)
                     parent.Editor.Document.Insert(parent.Editor.SelectionStart, "type=AreaEffectCloud");
                 else
                     parent.Editor.Document.Insert(parent.Editor.SelectionStart, "type=ArmorStand");

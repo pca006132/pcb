@@ -44,7 +44,7 @@ namespace pcb
             }
 
             UseAutocomplete.IsChecked = parent.useAutocomplete;
-            UseAECAsMarker.IsChecked = core.PcbParser.markerType;
+            UseAECAsMarker.IsChecked = !core.PcbParser.markerType;
             showSpace.IsChecked = parent.Editor.Options.ShowSpaces;
             placeDir.SelectedIndex = StraightCbChain.initialDir == core.util.Direction.positiveY ? 0 : 1;
             CBCount.Text = StraightCbChain.limit.ToString();
@@ -64,7 +64,7 @@ namespace pcb
         private void ApplyChange(object sender, EventArgs e)
         {
             parent.useAutocomplete = UseAutocomplete.IsChecked == true;
-            core.PcbParser.markerType = UseAECAsMarker.IsChecked == true;
+            core.PcbParser.markerType = UseAECAsMarker.IsChecked == false;
             parent.Editor.Options.ShowSpaces = showSpace.IsChecked == true;
             parent.useBlockStruc = UseBox.IsChecked == true;
             BoxCbChain.baseBlock = blockID_Top.Text;

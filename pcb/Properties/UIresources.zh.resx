@@ -324,4 +324,7 @@
   <data name="font" xml:space="preserve">
     <value>Microsoft Yahei UI</value>
   </data>
+  <data name="toCBSetblock" xml:space="preserve">
+    <value>转换为cb setblock指令</value>
+  </data>
 </root>

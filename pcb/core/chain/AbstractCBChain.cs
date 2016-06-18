@@ -19,7 +19,7 @@ namespace pcb.core.chain
         public abstract void addCb(string cmd, int lineNum);
         public abstract string addSign(string line);
         public abstract AbstractCBChain newChain(int[] coor);
-        public abstract List<string> getCommands();
+        public abstract List<string> getCommands(int start, int end);
 
         public IEnumerator GetEnumerator()
         {

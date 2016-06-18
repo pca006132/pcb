@@ -592,6 +592,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to convert to cb setblock.
+        /// </summary>
+        public static string toCBSetblock {
+            get {
+                return ResourceManager.GetString("toCBSetblock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to uncomment selected lines.
         /// </summary>
         public static string uncomment {

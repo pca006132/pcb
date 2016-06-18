@@ -23,7 +23,8 @@ namespace pcb.core
             }
             return sb.ToString();
         }
-
+        public int startLine = 0;
+        public int endLine = -1;
         public string[] getOOC(string pcb, AbstractCBChain chain)
         {
             chains = new Stack<AbstractCBChain>();
@@ -127,7 +128,7 @@ namespace pcb.core
             }
             foreach (AbstractCBChain c in chains)
             {
-                cbCmd.AddRange(c.getCommands());
+                cbCmd.AddRange(c.getCommands(startLine, endLine));
             }
             List<string> result = new List<string>();
             result.AddRange(initCmd);

@@ -49,6 +49,7 @@
                 <MenuItem Header="{x:Static p:UIresources.insertType}" Click="inserType_Click" InputGestureText="Alt + T"/>
                 <MenuItem Header="{x:Static p:UIresources.insertFormatter}" Click="insertFormat_Click" InputGestureText="Alt + F"/>
                 <MenuItem Header="{x:Static p:UIresources.colorJson}" ToolTip="{x:Static p:UIresources.colorJsonUsage}" Click="colorBlackTech_Click" InputGestureText="Alt + C"/>
+                <MenuItem Header="{x:Static p:UIresources.toCBSetblock}" Click="packCB_Click" InputGestureText="Alt + P"/>
                 <Separator/>
                 <MenuItem Header="{x:Static p:UIresources.foldAll}" Click="foldAll_Click" InputGestureText="Ctrl + K"/>
                 <MenuItem Header="{x:Static p:UIresources.findOrReplace}" Click="FindReplace_Click" InputGestureText="Ctrl + F"/>
