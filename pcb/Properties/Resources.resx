@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="formatError" xml:space="preserve">
-    <value>wrong format</value>
+    <value>incorret format</value>
   </data>
   <data name="ioError" xml:space="preserve">
-    <value>error when reading file</value>
+    <value>error occur when reading the file</value>
   </data>
   <data name="unknownError" xml:space="preserve">
     <value>unknown error</value>
@@ -133,7 +133,7 @@
     <value>unknown reference</value>
   </data>
   <data name="noBracket" xml:space="preserve">
-    <value>missing bracket</value>
+    <value>missing brackets</value>
   </data>
   <data name="unknownFunctionName" xml:space="preserve">
     <value>unknown function name</value>
@@ -145,28 +145,28 @@
     <value>right click to generate</value>
   </data>
   <data name="dataLargerThan7" xml:space="preserve">
-    <value>wrong data value: data cannot be larger than 7</value>
+    <value>wrong data value: cannot larger than 7</value>
   </data>
   <data name="dataFormatError" xml:space="preserve">
-    <value>wrong data prefix: format must be "data:x command", there should be a space char</value>
+    <value>wrong data prefix: format must be "data:x command", space should be inserted</value>
   </data>
   <data name="dataNotNum" xml:space="preserve">
-    <value>wrong data value: not number/byte</value>
+    <value>wrong data value: not a number/byte</value>
   </data>
   <data name="newFormatError" xml:space="preserve">
-    <value>new command format error</value>
+    <value>new command syntax error</value>
   </data>
   <data name="newCoorError" xml:space="preserve">
-    <value>new command's coordinates error: not valid integer</value>
+    <value>new command's coordinates error: not a valid integer</value>
   </data>
   <data name="statsFormatError" xml:space="preserve">
-    <value>stats command format error</value>
+    <value>stats command syntax error</value>
   </data>
   <data name="commandTooLong" xml:space="preserve">
-    <value>there is a command longer than 30000 char</value>
+    <value>there is a command longer than 30000 characters</value>
   </data>
   <data name="cannotInitBackup" xml:space="preserve">
-    <value>cannot init backup file, when the program crashes, data may be lost.</value>
+    <value>cannot initiate backup file, when the program crashes, data may be lost.</value>
   </data>
   <data name="warn" xml:space="preserve">
     <value>warning!</value>
