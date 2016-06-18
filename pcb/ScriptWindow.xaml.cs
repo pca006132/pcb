@@ -52,6 +52,10 @@ namespace pcb
         void Button_Click(object sender, RoutedEventArgs e)
         {
             string text = editor.Text;
+            if (File.Exists("ref/py.py"))
+            {
+                text = File.ReadAllText("ref/py.py", Encoding.UTF8) + "\r\n" + text;
+            }
             pythonThread = new Thread(() =>
             {
                 try

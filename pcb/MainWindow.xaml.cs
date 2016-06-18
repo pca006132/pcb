@@ -42,7 +42,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.6";
+        string version = "0.6.7";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -53,7 +53,6 @@ namespace pcb
         FindReplaceDialog findReplaceDialog;
         public bool useAutocomplete = true;
         public bool useBlockStruc = false;
-
         //init
         void initBackUpFile()
         {
@@ -83,7 +82,7 @@ namespace pcb
         }
         void setUp()
         {
-            if (File.Exists(@"config.txt"))
+            if (File.Exists(@"ref/config.txt"))
             {
                 try
                 {
@@ -91,7 +90,7 @@ namespace pcb
                 }
                 catch (Exception ex)
                 {
-                    showMessage(Properties.Resources.ioError + " config.txt", Properties.Resources.warn);
+                    showMessage(Properties.Resources.ioError + " ref/config.txt", Properties.Resources.warn);
                     log(ex);
                 }
             }
@@ -126,7 +125,7 @@ namespace pcb
             string doc = "#4d7ea8";
             if (File.Exists(@"ref/config.txt"))
             {
-                string[] contents = File.ReadAllLines(@"ref/config.txt");
+                string[] contents = File.ReadAllLines(@"ref/config.txt", Encoding.UTF8);
                 foreach (string line in contents)
                 {
                     if (Regex.IsMatch(line, @"theme:(\w+)"))
@@ -153,14 +152,17 @@ namespace pcb
                         marks = Regex.Match(line, @"^marks:(#[0-9A-F]{6})$").Groups[1].ToString();
                     else if (Regex.IsMatch(line, @"^doc:(#[0-9A-F]{6})$"))
                         doc = Regex.Match(line, @"^doc:(#[0-9A-F]{6})$").Groups[1].ToString();
-                    else if (Regex.IsMatch(line, @"^setup:(.+)$"))
-                        Editor.AppendText(Regex.Match(line, @"^setup:(.+)$").Groups[1].ToString() + Environment.NewLine);
+                    else if (line.StartsWith("setup:"))
+                    {
+                        if (line.Length > 6)
+                            Editor.AppendText(line.Substring(6) + Environment.NewLine);
+                    }
                     else if (line.StartsWith("dir:"))
                     {
                         if (line[4].ToString() == 0.ToString())
-                            core.chain.StraightCbChain.setDirection(core.util.Direction.positiveY);
+                            core.chain.StraightCbChain.setDirection(Direction.positiveY);
                         else
-                            core.chain.StraightCbChain.setDirection(core.util.Direction.positiveX);
+                            core.chain.StraightCbChain.setDirection(Direction.positiveX);
                     }
                     else if (line.StartsWith("AEC:"))
                     {
@@ -247,7 +249,7 @@ namespace pcb
             }
             IHighlightingDefinition customHighlighting;
             using (Stream s = typeof(MainWindow).Assembly.GetManifestResourceStream("pcb.CB.xshd"))
-            {
+            {                
                 if (s == null)
                     throw new InvalidOperationException("Could not find embedded resource");
                 string xml = new StreamReader(s).ReadToEnd();
@@ -324,7 +326,6 @@ namespace pcb
             foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
             foldingUpdateTimer.Start();
             Show();
-            setUp();
 
             foldingStrategy = new BraceFoldingStrategy();
             foldingManager = FoldingManager.Install(Editor.TextArea);
@@ -338,7 +339,9 @@ namespace pcb
 
             //change background of current line
             Editor.TextArea.TextView.BackgroundRenderers.Add(new XBackgroundRenderer(Editor));
-            
+
+            setUp();
+
             findReplaceDialog = new FindReplaceDialog(this);
             findReplaceDialog.Owner = this;
             try
@@ -908,7 +911,7 @@ namespace pcb
         void Editor_caretChanged(object sender, EventArgs e)
         {
             updateNotification();
-            if (autocomplete.Visibility == Visibility.Visible)
+            if (autocomplete != null && autocomplete.Visibility == Visibility.Visible)
                 addElements();
             Editor.TextArea.TextView.LineTransformers.RemoveAt(Editor.TextArea.TextView.LineTransformers.Count - 1);
             Editor.TextArea.TextView.LineTransformers.Add(new BracketBracing(Editor.CaretOffset, Editor.TextArea.Caret.Line));
