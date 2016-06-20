@@ -116,7 +116,7 @@
     <value>cannot open pcb</value>
   </data>
   <data name="overwritePrompt" xml:space="preserve">
-    <value>load file will overwrite the current document</value>
+    <value>load a file will overwrite the current document</value>
   </data>
   <data name="promptSaveNew" xml:space="preserve">
     <value>do you want to save the document before exiting?</value>
@@ -176,7 +176,7 @@
     <value>replace all</value>
   </data>
   <data name="regexNeedEscape" xml:space="preserve">
-    <value>if u use Regex mode, u also need to escape the text for replacement_(:3 」∠ )_</value>
+    <value>if you use Regex mode, you also need to escape the text for replacement_(:3 」∠ )_</value>
   </data>
   <data name="ooc2Long" xml:space="preserve">
     <value>OOC is too long, command:({0}/{1})</value>
@@ -209,31 +209,31 @@
     <value>display space</value>
   </data>
   <data name="direction" xml:space="preserve">
-    <value>cb direction</value>
+    <value>CB direction</value>
   </data>
   <data name="wrapCount" xml:space="preserve">
-    <value>cb count for each line</value>
+    <value>CB count for each line</value>
   </data>
   <data name="blockMode" xml:space="preserve">
     <value>block mode</value>
   </data>
   <data name="xlength" xml:space="preserve">
-    <value>x length</value>
+    <value>x-axis length</value>
   </data>
   <data name="zlength" xml:space="preserve">
-    <value>z length</value>
+    <value>z-axis length</value>
   </data>
   <data name="baseID" xml:space="preserve">
     <value>base(top and bottom) block id</value>
   </data>
   <data name="baseData" xml:space="preserve">
-    <value>base(top and bottom) block data</value>
+    <value>base(top and bottom) block data value</value>
   </data>
   <data name="sideID" xml:space="preserve">
     <value>side block id</value>
   </data>
   <data name="sideData" xml:space="preserve">
-    <value>side block data</value>
+    <value>side block data value</value>
   </data>
   <data name="noMatch" xml:space="preserve">
     <value>match not found</value>
@@ -275,13 +275,13 @@
     <value>insert §</value>
   </data>
   <data name="colorJson" xml:space="preserve">
-    <value>command to sign setblock</value>
+    <value>command to setblock sign</value>
   </data>
   <data name="colorJsonUsage" xml:space="preserve">
     <value>use clickEvent and setblock to insert § char into the game</value>
   </data>
   <data name="foldAll" xml:space="preserve">
-    <value>fold all</value>
+    <value>collapse all</value>
   </data>
   <data name="comment" xml:space="preserve">
     <value>comment selected lines</value>

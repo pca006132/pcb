@@ -79,7 +79,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to base(top and bottom) block data.
+        ///   Looks up a localized string similar to base(top and bottom) block data value.
         /// </summary>
         public static string baseData {
             get {
@@ -124,7 +124,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to command to sign setblock.
+        ///   Looks up a localized string similar to command to setblock sign.
         /// </summary>
         public static string colorJson {
             get {
@@ -178,7 +178,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cb direction.
+        ///   Looks up a localized string similar to CB direction.
         /// </summary>
         public static string direction {
             get {
@@ -268,7 +268,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to fold all.
+        ///   Looks up a localized string similar to collapse all.
         /// </summary>
         public static string foldAll {
             get {
@@ -403,7 +403,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to load file will overwrite the current document.
+        ///   Looks up a localized string similar to load a file will overwrite the current document.
         /// </summary>
         public static string overwritePrompt {
             get {
@@ -430,7 +430,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to if u use Regex mode, u also need to escape the text for replacement_(:3 」∠ )_.
+        ///   Looks up a localized string similar to if you use Regex mode, you also need to escape the text for replacement_(:3 」∠ )_.
         /// </summary>
         public static string regexNeedEscape {
             get {
@@ -556,7 +556,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to side block data.
+        ///   Looks up a localized string similar to side block data value.
         /// </summary>
         public static string sideData {
             get {
@@ -673,7 +673,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cb count for each line.
+        ///   Looks up a localized string similar to CB count for each line.
         /// </summary>
         public static string wrapCount {
             get {
@@ -682,7 +682,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to x length.
+        ///   Looks up a localized string similar to x-axis length.
         /// </summary>
         public static string xlength {
             get {
@@ -700,7 +700,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to z length.
+        ///   Looks up a localized string similar to z-axis length.
         /// </summary>
         public static string zlength {
             get {
