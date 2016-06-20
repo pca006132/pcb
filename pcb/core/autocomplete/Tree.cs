@@ -8,7 +8,8 @@ namespace pcb.core.autocomplete
 {
     public class Tree : IEnumerable
     {
-        private static readonly string[] defaultPrefixes = { "icb:", "rcb:", "cond:", "data:", "init:", "after:" };
+        private static readonly string[] defaultPrefixes = { "icb:", "rcb:", "cond:", "data:"};
+        private static readonly string[] prefixes = { "init:", "after:" };
 
         public static Tree generateTree(string text)
         {
@@ -38,44 +39,64 @@ namespace pcb.core.autocomplete
 
         public CompletionData autocomplete(string input)
         {
-            bool deletePrefix = true;
-            if (input.StartsWith(defaultPrefixes[4]))
+            string[] keys = input.Split(' ');
+
+            CompletionData result = new CompletionData();
+            
+            if (prefixes[0].StartsWith(keys[0]))
             {
-                input = input.Substring(5);
-                deletePrefix = false;
-            } else if (input.StartsWith(defaultPrefixes[5]))
-            {
-                input = input.Substring(6);
-                deletePrefix = false;
-            }
-            while (deletePrefix)
-            {
-                deletePrefix = false;
-                foreach (string prefix in defaultPrefixes.Take(4))
+                if (keys.Length == 1 && prefixes[0].Length > keys[0].Length)
                 {
-                    if (input.StartsWith(prefix))
+                    result.displayData.Add(prefixes[0]);
+                    result.startLength.Add(keys[0].Length);
+                } else
+                {
+                    keys[0] = keys[0].Substring(prefixes[0].Length);
+                }
+            }
+            else if (prefixes[1].StartsWith(keys[0]))
+            {
+                if (keys.Length == 1 && prefixes[1].Length > keys[0].Length)
+                {
+                    result.displayData.Add(prefixes[1]);
+                    result.startLength.Add(keys[0].Length);
+                }
+                else
+                    keys[0] = keys[0].Substring(prefixes[1].Length);
+            }
+            else
+            {
+                List<string> posiblePrefixes = new List<string>(defaultPrefixes);
+                bool notFinish = true;
+                while (notFinish)
+                {
+                    notFinish = false;
+                    foreach (string prefix in defaultPrefixes)
                     {
-                        int length = prefix.Length;
-                        deletePrefix = true;
-                        if (prefix == "data:")
-                            length = 7;
-                        if (input.Length > length)
-                            input = input.Substring(length);
-                        else if (input.Length == length)
-                            input = "";
-                        else
-                            return new CompletionData();
+                        if (keys[0].StartsWith(prefix))
+                        {
+                            if (prefix == "data:")
+                                keys[0] = keys[0].Substring(7);
+                            else                            
+                                keys[0] = keys[0].Substring(prefix.Length);
+                            posiblePrefixes.Remove(prefix);
+                            notFinish = true;
+                        }
+                        else if (keys.Length == 1 && prefix.StartsWith(keys[0]) && prefix.Length > keys[0].Length)
+                        {
+                            result.displayData.Add(prefix);
+                            result.startLength.Add(keys[0].Length);
+                        }
                     }
                 }
             }
-            if (input.StartsWith("/"))
-                input = input.Substring(1);
             if (input.Length == 0)
             {
                 return new CompletionData();
             }
+            if (keys[0].StartsWith("/"))
+                keys[0] = keys[0].Substring(1);
 
-            string[] keys = input.Split(' ');
             Tree temp = this;
 
             for (int i = 0; i < keys.Length - 1; i++)
@@ -93,8 +114,7 @@ namespace pcb.core.autocomplete
                 }
             }
             if (temp.Count > 0)
-            {
-                CompletionData result = new CompletionData();
+            {                
                 foreach (Tree tree in temp)
                 {
                     CompletionData tempList = tree.value.getValues(keys.Last());
@@ -117,7 +137,7 @@ namespace pcb.core.autocomplete
             }
         }
         List<Tree> nodes = new List<Tree>();
-        public Value value;
+        public Value value = null;
         public Tree(string str)
         {
             if (str != null)

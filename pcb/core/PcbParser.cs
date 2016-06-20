@@ -90,7 +90,7 @@ namespace pcb.core
                     {
                         int[] newChainCoor = new int[3];
                         newChainCoor[0] = int.Parse(components[1]);
-                        newChainCoor[1] = int.Parse(components[2]) + 2;
+                        newChainCoor[1] = int.Parse(components[2]) + 4;
                         newChainCoor[2] = int.Parse(components[3]);
                         if (components.Length == 5 && components[4].Equals("py"))
                         {

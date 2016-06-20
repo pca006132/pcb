@@ -295,15 +295,6 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to pretend the selected region is standalone pcb?.
-        /// </summary>
-        public static string generateOptions {
-            get {
-                return ResourceManager.GetString("generateOptions", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to generate ooc from whole document/selected lines.
         /// </summary>
         public static string generateToolTip {
@@ -633,6 +624,24 @@ namespace pcb.Properties {
         public static string unsaveDetected {
             get {
                 return ResourceManager.GetString("unsaveDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to update Commands.
+        /// </summary>
+        public static string updateCommands {
+            get {
+                return ResourceManager.GetString("updateCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to generate ooc that will replace only the selected commands(be careful).
+        /// </summary>
+        public static string updateCommandsTooltip {
+            get {
+                return ResourceManager.GetString("updateCommandsTooltip", resourceCulture);
             }
         }
         

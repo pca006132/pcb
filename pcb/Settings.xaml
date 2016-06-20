@@ -18,7 +18,7 @@
         <Label Content="{x:Static p:UIresources.direction}" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="placeDir" HorizontalAlignment="Left" Margin="132,132,0,0" VerticalAlignment="Top" Width="91">
             <ComboBoxItem Content="+Y" IsSelected="True"/>
-            <ComboBoxItem Content="+X"/>
+            <ComboBoxItem Content="+Z"/>
         </ComboBox>
         <Label Content="{x:Static p:UIresources.wrapCount}" HorizontalAlignment="Left" Margin="10,164,0,0" 
                VerticalAlignment="Top" ToolTip="0 = will not auto changeD"/>

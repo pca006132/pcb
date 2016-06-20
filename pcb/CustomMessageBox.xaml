@@ -7,9 +7,9 @@
         xmlns:p="clr-namespace:pcb.Properties"
         mc:Ignorable="d" xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" Topmost="True"
         Height="200" Width="400" ResizeMode="NoResize" ShowCloseButton="False" ShowInTaskbar="False" Icon="Command_Block.ico"
-        Closing="MetroWindow_Closing" BorderBrush="#37AFF2" BorderThickness="2" ShowTitleBar="False" Background="White" WindowStartupLocation="CenterScreen">
+        Closing="MetroWindow_Closing" BorderBrush="#1686B5" BorderThickness="2" ShowTitleBar="False" Background="White" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Rectangle VerticalAlignment="Top" Height="40" Fill="#37AFF2" x:Name="TitleBar"/>
+        <Rectangle VerticalAlignment="Top" Height="40" Fill="#1686B5" x:Name="TitleBar"/>
         <TextBlock VerticalAlignment="Top" Margin="10" Height="25" Foreground="Black" FontSize="20" x:Name="title" FontFamily="Microsoft Yahei"></TextBlock>
         <ScrollViewer Margin="20,60,5,45">
             <TextBlock x:Name="message" TextWrapping="Wrap" Foreground="Black" Background="White" FontSize="20" FontFamily="Microsoft Yahei"></TextBlock>

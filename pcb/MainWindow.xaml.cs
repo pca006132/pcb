@@ -2,16 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using pcb.core.util;
 using pcb.core.autocomplete;
@@ -23,12 +17,12 @@ using ICSharpCode.AvalonEdit;
 using System.Text.RegularExpressions;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Snippets;
 using MahApps.Metro;
 using System.Diagnostics;
 using Microsoft.Win32;
 using System.Threading;
 using System.Net;
-using System.Globalization;
 
 namespace pcb
 {
@@ -42,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.9";
+        string version = "0.6.10";
         string backupFileName = "";
         autocomplete_menu autocomplete;
         IHighlightingDefinition syntaxHightlighting;
@@ -728,6 +722,26 @@ namespace pcb
                     byte.TryParse(line.Substring(9), out damage);
                     core.chain.BoxCbChain.outerDamage = damage;
                 }
+                else if (line.StartsWith("scbObj:"))
+                {
+                    Value.scbObj.Clear();
+                    Value.scbObj.AddRange(line.Substring(7).Split(' '));
+                }
+                else if (line.StartsWith("tags:"))
+                {
+                    Value.tags.Clear();
+                    Value.tags.AddRange(line.Substring(5).Split(' '));
+                }
+                else if (line.StartsWith("names:"))
+                {
+                    Value.names.Clear();
+                    Value.names.AddRange(line.Substring(6).Split(' '));
+                }
+                else if (line.StartsWith("teams:"))
+                {
+                    Value.teams.Clear();
+                    Value.teams.AddRange(line.Substring(6).Split(' '));
+                }
                 else
                 {
                     a = false;
@@ -828,6 +842,11 @@ namespace pcb
             if (core.chain.BoxCbChain.zLimit != 0) text += "Z:" + core.chain.BoxCbChain.zLimit.ToString() + Environment.NewLine;
             if (core.chain.BoxCbChain.baseBlock != "") text += "top_id:" + core.chain.BoxCbChain.baseBlock + Environment.NewLine;
             if (core.chain.BoxCbChain.outerBlock != "") text += "side_id:" + core.chain.BoxCbChain.outerBlock + Environment.NewLine;
+            if (Value.scbObj.Count > 0) text += "scbObj:" + String.Join(" ", Value.scbObj.ToArray()) + Environment.NewLine;
+            if (Value.names.Count > 0) text += "names:" + String.Join(" ", Value.names.ToArray()) + Environment.NewLine;
+            if (Value.teams.Count > 0) text += "teams:" + String.Join(" ", Value.teams.ToArray()) + Environment.NewLine;
+            if (Value.tags.Count > 0) text += "tags:" + String.Join(" ", Value.tags.ToArray()) + Environment.NewLine;
+
             text += "top_dam:" + core.chain.BoxCbChain.baseDamage.ToString() + Environment.NewLine;
             text += "side_dam:" + core.chain.BoxCbChain.outerDamage.ToString() + Environment.NewLine;
             text += Editor.Text;
@@ -859,22 +878,50 @@ namespace pcb
             string text = Editor.Text;
             var parser = new core.PcbParser();
             if (Editor.SelectionLength > 0)
-            {
-                if (CustomMessageBox.ShowMessage(Properties.UIresources.generateOptions, "") == CustomMessageBox.State.yes)
-                {
-                    text = Editor.SelectedText;
-                }
+            {                
+                text = Editor.SelectedText;                
+                /*
                 else
                 {
                     parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
                     parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
-                }               
+                }         
+                */
             }
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)
-                chain = new core.chain.BoxCbChain(new int[] { 0, 2, 0 });
+                chain = new core.chain.BoxCbChain(new int[] { 0, 4, 0 });
             else
-                chain = new core.chain.StraightCbChain(new int[] { 0, 2, 0 });
+                chain = new core.chain.StraightCbChain(new int[] { 0, 4, 0 });
+            try
+            {
+                string[] oocs = parser.getOOC(text, chain);
+                string warn = parser.checkForCondDir();
+                if (warn.Length > 0)
+                    showMessage(warn, "warning!");
+                new Output(oocs);
+            }
+            catch (core.PcbException ex)
+            {
+                showMessage(ex.Message, "pcb error!");
+            }
+            catch (Exception ex)
+            {
+                showMessage(ex.Message, "error!");
+                log(ex);
+            }
+        }
+        void updateFromPcb()
+        {
+            string text = Editor.Text;
+            var parser = new core.PcbParser();
+            parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
+            parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+            core.chain.AbstractCBChain chain;
+            if (useBlockStruc)
+                chain = new core.chain.BoxCbChain(new int[] { 0, 4, 0 });
+            else
+                chain = new core.chain.StraightCbChain(new int[] { 0, 4, 0 });
             try
             {
                 string[] oocs = parser.getOOC(text, chain);
@@ -1118,6 +1165,29 @@ namespace pcb
         void generateFromEditor(object sender, RoutedEventArgs e)
         {
             generateFromPcb();
+        }
+        void replaceCB(object sender, RoutedEventArgs e)
+        {
+            updateFromPcb();
+        }
+        void Editor_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            /*
+            if (e.Key == Key.U)
+            {
+                Snippet snippet = new Snippet
+                {
+                    Elements = {
+                        new SnippetTextElement { Text = "for " },
+                        new SnippetReplaceableTextElement { Text = "item" },
+                        new SnippetTextElement { Text = " in " },
+                        new SnippetReplaceableTextElement { Text = "collection" },
+                        new SnippetTextElement { Text = ":\r\n\t" },
+                    }
+                };
+                snippet.Insert(Editor.TextArea);
+            }
+            */
         }
         void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1528,6 +1598,7 @@ namespace pcb
                 parent.findReplaceDialog.Show();
             }
         }
+
     }
 }
 public class BraceFoldingStrategy : ICSharpCode.AvalonEdit.Folding.NewFolding
