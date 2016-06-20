@@ -54,7 +54,7 @@ namespace pcb.core.autocomplete
                     keys[0] = keys[0].Substring(prefixes[0].Length);
                 }
             }
-            else if (prefixes[1].StartsWith(keys[0]))
+            if (prefixes[1].StartsWith(keys[0]))
             {
                 if (keys.Length == 1 && prefixes[1].Length > keys[0].Length)
                 {
@@ -64,32 +64,42 @@ namespace pcb.core.autocomplete
                 else
                     keys[0] = keys[0].Substring(prefixes[1].Length);
             }
-            else
+            
+            List<string> posiblePrefixes = new List<string>(defaultPrefixes);
+            bool notFinish = true;
+            while (notFinish)
             {
-                List<string> posiblePrefixes = new List<string>(defaultPrefixes);
-                bool notFinish = true;
-                while (notFinish)
+                notFinish = false;
+                foreach (string prefix in posiblePrefixes)
                 {
-                    notFinish = false;
-                    foreach (string prefix in defaultPrefixes)
+                    if (keys[0].StartsWith(prefix))
                     {
-                        if (keys[0].StartsWith(prefix))
+                        if (prefix == "data:")
                         {
-                            if (prefix == "data:")
+                            if (7 < keys[0].Length)
                                 keys[0] = keys[0].Substring(7);
-                            else                            
-                                keys[0] = keys[0].Substring(prefix.Length);
-                            posiblePrefixes.Remove(prefix);
-                            notFinish = true;
+                            else
+                                keys[0] = "";
                         }
-                        else if (keys.Length == 1 && prefix.StartsWith(keys[0]) && prefix.Length > keys[0].Length)
+                        else
                         {
-                            result.displayData.Add(prefix);
-                            result.startLength.Add(keys[0].Length);
+                            if (prefix.Length < keys[0].Length)
+                                keys[0] = keys[0].Substring(prefix.Length);
+                            else
+                                keys[0] = "";
                         }
+                        posiblePrefixes.Remove(prefix);
+                        notFinish = true;
+                        break;
+                    }
+                    else if (keys.Length == 1 && prefix.StartsWith(keys[0]) && prefix.Length > keys[0].Length)
+                    {
+                        result.displayData.Add(prefix);
+                        result.startLength.Add(keys[0].Length);
                     }
                 }
             }
+
             if (input.Length == 0)
             {
                 return new CompletionData();

@@ -616,6 +616,7 @@ namespace pcb
                 autocomplete.Hide();
                 autocomplete.shown = false;
                 log(ex);
+                Debug.Print(ex.StackTrace);
                 return;
             }
 
