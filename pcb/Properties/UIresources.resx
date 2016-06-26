@@ -313,4 +313,13 @@
   <data name="updateCommandsTooltip" xml:space="preserve">
     <value>generate ooc that will replace only the selected commands(be careful)</value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>help</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>check update</value>
+  </data>
+  <data name="doc" xml:space="preserve">
+    <value>view doc</value>
+  </data>
 </root>

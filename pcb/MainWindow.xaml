@@ -62,6 +62,10 @@
                 <MenuItem Header="{x:Static p:UIresources.settingGenerator}"  Click="showSetting"/>
                 <MenuItem Header="{x:Static p:UIresources.autocompleteSourceSetting}" ToolTip="scb objectives, tags, names, teams" Click="showList"/>
             </MenuItem>
+            <MenuItem Header="{x:Static p:UIresources.help}">
+                <MenuItem Header="{x:Static p:UIresources.website}" Click="website_Click"/>
+                <MenuItem Header="{x:Static p:UIresources.doc}"  Click="readme_click"/>
+            </MenuItem>
             <MenuItem Header="OOC">
                 <MenuItem Header="{x:Static p:UIresources.generate}"  Click="generateFromEditor" InputGestureText="Ctrl + G"/>
                 <MenuItem Header="{x:Static p:UIresources.updateCommands}" ToolTip="{x:Static p:UIresources.updateCommandsTooltip}" Click="replaceCB"/>

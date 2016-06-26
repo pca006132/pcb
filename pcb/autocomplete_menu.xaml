@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="autoComplete" Height="250" Width="180" WindowStyle="None" Focusable="False" Visibility="Hidden" ResizeMode="NoResize" ShowInTaskbar="False">
     <ListBox x:Name="listbox" Foreground="White" Background="#232323" Focusable="False" 
-             BorderBrush="White" BorderThickness="1" GotFocus="listbox_GotFocus" 
-             MouseDoubleClick="listbox_MouseDoubleClick">
+             BorderBrush="White" BorderThickness="1" GotFocus="listbox_GotFocus" >
         <ListBox.ItemContainerStyle>
             <Style TargetType="ListBoxItem">
                 <Setter Property="Template">

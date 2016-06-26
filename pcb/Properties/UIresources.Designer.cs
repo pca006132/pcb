@@ -196,6 +196,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to view doc.
+        /// </summary>
+        public static string doc {
+            get {
+                return ResourceManager.GetString("doc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string edit {
@@ -300,6 +309,15 @@ namespace pcb.Properties {
         public static string generateToolTip {
             get {
                 return ResourceManager.GetString("generateToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        public static string help {
+            get {
+                return ResourceManager.GetString("help", resourceCulture);
             }
         }
         
@@ -669,6 +687,15 @@ namespace pcb.Properties {
         public static string useRegex {
             get {
                 return ResourceManager.GetString("useRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to check update.
+        /// </summary>
+        public static string website {
+            get {
+                return ResourceManager.GetString("website", resourceCulture);
             }
         }
         

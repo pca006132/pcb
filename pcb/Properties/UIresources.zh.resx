@@ -333,4 +333,13 @@
   <data name="updateCommandsTooltip" xml:space="preserve">
     <value>生成OOC覆盖选择了的命令</value>
   </data>
+  <data name="help" xml:space="preserve">
+    <value>帮助</value>
+  </data>
+  <data name="website" xml:space="preserve">
+    <value>网页(检查更新)</value>
+  </data>
+  <data name="doc" xml:space="preserve">
+    <value>查阅帮助文件</value>
+  </data>
 </root>

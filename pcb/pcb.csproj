@@ -112,6 +112,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="add_ac_list.xaml.cs" />
+    <Compile Include="autocomplete_menu_data.cs" />
     <Compile Include="core\autocomplete\CompletionData.cs" />
     <Compile Include="Properties\Resources.zh.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -130,6 +131,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UIresources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Snippet_menu.cs" />
     <Page Include="add_ac_list.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

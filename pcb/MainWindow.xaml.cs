@@ -36,9 +36,10 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.10";
+        string version = "0.6.11";
         string backupFileName = "";
-        autocomplete_menu autocomplete;
+        autocomplete_menu_data autocomplete;
+        Snippet_menu snippet_menu;
         IHighlightingDefinition syntaxHightlighting;
         //folding
         System.Windows.Threading.DispatcherTimer foldingUpdateTimer = new System.Windows.Threading.DispatcherTimer();
@@ -312,6 +313,37 @@ namespace pcb
             Editor.InputBindings.Add(new InputBinding(new commentOut(this), new KeyGesture(Key.Divide, ModifierKeys.Control)));
             Editor.InputBindings.Add(new InputBinding(new unComment(this), new KeyGesture(Key.OemPipe, ModifierKeys.Control)));
             Editor.InputBindings.Add(new InputBinding(new packCB(this), new KeyGesture(Key.P, ModifierKeys.Alt)));
+            Editor.InputBindings.Add(new InputBinding(new showSnippetsMenu(snippet_menu, Editor), new KeyGesture(Key.S, ModifierKeys.Alt)));
+        }
+        void parseSnippetFile(string path)
+        {
+            try
+            {
+                List<string> names = new List<string>();
+                List<Snippet> snippets = new List<Snippet>();
+                foreach (string fileName in Directory.GetFiles(path))
+                {
+                    string file = File.ReadAllText(fileName, Encoding.UTF8);
+                    string name = fileName.Split('.')[0].Split('/','\\').Last();
+                    Snippet snippet = new Snippet();
+                    foreach (string element in Regex.Split(file, @"(\$\([^()]+\))"))
+                    {
+                        if (element.StartsWith("$"))
+                        {
+                            snippet.Elements.Add(new SnippetReplaceableTextElement { Text = element.Substring(2, element.Length - 3) });
+                        }
+                        else
+                        {
+                            snippet.Elements.Add(new SnippetTextElement { Text = element });
+                        }
+                    }
+                    names.Add(name);
+                    snippets.Add(snippet);
+                }
+                snippet_menu = new Snippet_menu(Editor, this, snippets, names);
+                snippet_menu.Owner = this;
+            }
+            catch { }
         }
         public MainWindow()
         {
@@ -363,7 +395,7 @@ namespace pcb
             {
                 File.WriteAllText("/documents/log/log.txt", "");
             } catch { }
-            autocomplete = new autocomplete_menu(Editor, this);
+            autocomplete = new autocomplete_menu_data(Editor, this);
             autocomplete.Owner = this;
             if (Thread.CurrentThread.CurrentCulture.Name == "zh")
             {
@@ -386,10 +418,11 @@ namespace pcb
             }
             tryLoadText();
             initBackUpFile();
-            registerCommands();
             updateNotification();
             Editor.Focus();
-        }       
+            parseSnippetFile("ref/snippets");
+            registerCommands();
+        }
         bool Islatest(string LatestVersion)
         {
             try
@@ -1154,6 +1187,14 @@ namespace pcb
         {
             new Settings(this);
         }
+        void website_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("http://www.mcbbs.net/thread-533943-1-1.html");
+        }
+        void readme_click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("readme.html");
+        }
         void showList(object sender, RoutedEventArgs e)
         {
             add_ac_list window = new add_ac_list();
@@ -1597,6 +1638,27 @@ namespace pcb
             public void Execute(object parameter)
             {
                 parent.findReplaceDialog.Show();
+            }
+        }
+        class showSnippetsMenu : ICommand
+        {
+            public event EventHandler CanExecuteChanged;
+            Snippet_menu menu;
+            TextEditor editor;
+            public showSnippetsMenu(Snippet_menu _menu, TextEditor editor)
+            {
+                menu = _menu;
+                this.editor = editor;
+            }
+            public bool CanExecute(object parameter)
+            {
+                return true;
+            }
+
+            public void Execute(object parameter)
+            {
+                menu.show();
+                editor.Focus();
             }
         }
 
