@@ -16,12 +16,53 @@
         TextOptions.TextFormattingMode="Display"
         mc:Ignorable="d">
     <Grid>
-        <avalonEdit:TextEditor ShowLineNumbers="True" Margin="5,30,5,30" WordWrap="True" 
-         x:Name="Editor" FontFamily="Microsoft Yahei UI" VerticalScrollBarVisibility="Auto" 
-         HorizontalScrollBarVisibility="Auto" 
-         ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="16" Foreground="White" 
-         LineNumbersForeground="#a6a6a6" TextChanged="Editor_TextChanged" PreviewKeyDown="Editor_PreviewKeyDown">
-        </avalonEdit:TextEditor>
+        <Grid Margin="5,30,5,25">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <avalonEdit:TextEditor ShowLineNumbers="True"  WordWrap="True" Grid.Column="0" Margin="0,0,0,5"
+             x:Name="Editor" FontFamily="Microsoft Yahei UI" VerticalScrollBarVisibility="Auto" 
+             HorizontalScrollBarVisibility="Auto" 
+             ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="16" Foreground="White" 
+             LineNumbersForeground="#a6a6a6" TextChanged="Editor_TextChanged" PreviewKeyDown="Editor_PreviewKeyDown">
+                <avalonEdit:TextEditor.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="{x:Static p:UIresources.select_all}" Click="selectAll" InputGestureText="Ctrl + A"/>
+                        <MenuItem Header="{x:Static p:UIresources.copy}" Click="copy" InputGestureText="Ctrl + C"/>
+                        <MenuItem Header="{x:Static p:UIresources.paste}" Click="paste" InputGestureText="Ctrl + V"/>
+                        <Separator/>
+                        <MenuItem Header="{x:Static p:UIresources.escapeSelected}" Click="Escape_Click" InputGestureText="Alt + \"/>
+                        <MenuItem Header="{x:Static p:UIresources.unescapeSelected}" Click="Deesacpe_Click" InputGestureText="Alt + /"/>
+                        <MenuItem Header="{x:Static p:UIresources.insertUUID}" Click="insertUUID_Click" InputGestureText="Alt + R"/>
+                        <MenuItem Header="{x:Static p:UIresources.insertType}" Click="inserType_Click" InputGestureText="Alt + T"/>
+                        <MenuItem Header="{x:Static p:UIresources.insertFormatter}" Click="insertFormat_Click" InputGestureText="Alt + F"/>
+                        <MenuItem Header="{x:Static p:UIresources.colorJson}" ToolTip="{x:Static p:UIresources.colorJsonUsage}" Click="colorBlackTech_Click" InputGestureText="Alt + C"/>
+                        <MenuItem Header="{x:Static p:UIresources.toCBSetblock}" Click="packCB_Click" InputGestureText="Alt + P"/>
+                        <Separator/>
+                        <MenuItem Header="{x:Static p:UIresources.foldAll}" Click="foldAll_Click" InputGestureText="Ctrl + K"/>
+                        <MenuItem Header="{x:Static p:UIresources.findOrReplace}" Click="FindReplace_Click" InputGestureText="Ctrl + F"/>
+                        <MenuItem Header="{x:Static p:UIresources.comment}" Click="comment_Click" InputGestureText="Ctrl + /"/>
+                        <MenuItem Header="{x:Static p:UIresources.uncomment}" Click="uncomment_Click" InputGestureText="Ctrl + \"/>
+                    </ContextMenu>
+                </avalonEdit:TextEditor.ContextMenu>
+            </avalonEdit:TextEditor>
+            <GridSplitter Grid.Column="1" ResizeDirection="Columns" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" Background="#575757" Focusable="False"/>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock FontFamily="Arial" Focusable="False" Padding="5" FontSize="20" Grid.Row="0" Foreground="White">
+                    outline
+                </TextBlock>
+                <ScrollViewer  Grid.Row="1">
+                    <TreeView x:Name="outline_treeview" FontSize="14">
+                    </TreeView>
+                </ScrollViewer>
+            </Grid>
+        </Grid>
         <Grid x:Name="notifyArea" VerticalAlignment="Bottom" Height="25" HorizontalAlignment="Stretch"  
               Background="#575757">
             <Border BorderThickness="0,1,0,0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" BorderBrush="#888888">

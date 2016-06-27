@@ -1,34 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ICSharpCode.AvalonEdit.Snippets;
 using ICSharpCode.AvalonEdit;
 using System.Windows.Input;
+using System.Windows;
 
 namespace pcb
 {
     class Snippet_menu : autocomplete_menu
     {
-        public List<Snippet> snippets;
+        public List<Snippet> snippets = new List<Snippet>();
+        public List<string> names;
+        int startOffset = -1;
+        List<Snippet> storage;
+        string input = "";
         public Snippet_menu(TextEditor _editor, MainWindow _window, List<Snippet> snippets, List<string> snippets_names) : base(_editor, _window)
         {
-            this.snippets = snippets;
-            foreach (string item in snippets_names)
-            {
-                listbox.Items.Add(item);
-            }
-            editor.PreviewKeyDown += new KeyEventHandler(editor_keyDown);
+            storage = snippets;
+            names = snippets_names;
+            
+            editor.TextChanged += Editor_TextChanged;
+            editor.PreviewKeyDown += editor_keyDown;
             listbox.MouseDoubleClick += listbox_MouseDoubleClick;
             editor.TextArea.Caret.PositionChanged += new EventHandler(caretChanged);
         }
+
+
         public void show()
         {
             Hide();
+            line = editor.Document.GetLineByOffset(editor.CaretOffset).LineNumber;
+            column = editor.CaretOffset - editor.Document.GetLineByOffset(editor.CaretOffset).Offset;
+            startOffset = editor.SelectionStart;
             update_position();
+            listbox.Items.Clear();
+            snippets.Clear();
+            for (int i = 0; i < names.Count; i++)
+            {                
+                listbox.Items.Add(names[i]);
+                snippets.Add(storage[i]);
+                
+            }
             Show();
             shown = true;
             listbox.SelectedIndex = 0;
+        }        
+        void Editor_TextChanged(object sender, EventArgs e)
+        {
+            if (shown)
+            {
+                if (startOffset >= editor.SelectionStart)
+                {
+                    listbox.Items.Clear();
+                    snippets.Clear();
+                    Hide();
+                    shown = false;
+                    return;
+                }
+                input = editor.Document.GetText(startOffset, editor.SelectionStart - startOffset);
+                listbox.Items.Clear();
+                snippets.Clear();
+                line = editor.Document.GetLineByOffset(editor.CaretOffset).LineNumber;
+                column = editor.CaretOffset - editor.Document.GetLineByOffset(editor.CaretOffset).Offset;
+                for (int i = 0; i < storage.Count; i++)
+                {
+                    if (names[i].StartsWith(input))
+                    {
+                        listbox.Items.Add(names[i]);
+                        snippets.Add(storage[i]);
+                    }
+                }
+                listbox.SelectedIndex = 0;
+                if (listbox.Items.Count == 0)
+                {
+                    Hide();
+                    shown = false;
+                }
+            }
         }
         void editor_keyDown(object sender, KeyEventArgs e)
         {
@@ -55,17 +103,23 @@ namespace pcb
                         e.Handled = true;
                     }
                     if (e.Key == Key.Enter || e.Key == Key.Tab)
-                    {
-                        snippets[listbox.SelectedIndex].Insert(editor.TextArea);
+                    {                        
                         Hide();
                         shown = false;
                         e.Handled = true;
+                        if (input.Length > 0)                        
+                            editor.Document.Remove(editor.SelectionStart - input.Length, input.Length);                        
+                        input = "";
+                        snippets[listbox.SelectedIndex].Insert(editor.TextArea);
                     }
                     if (e.Key == Key.Space || e.Key == Key.Decimal || e.Key == Key.OemPeriod)
-                    {
-                        snippets[listbox.SelectedIndex].Insert(editor.TextArea);
+                    {                        
                         shown = false;
                         Hide();
+                        if (input.Length > 0)
+                            editor.Document.Remove(editor.SelectionStart - input.Length, input.Length);
+                        input = "";
+                        snippets[listbox.SelectedIndex].Insert(editor.TextArea);
                     }
                 }
             }
@@ -80,18 +134,30 @@ namespace pcb
             {
                 if (shown)
                 {
-                    snippets[listbox.SelectedIndex].Insert(editor.TextArea);
                     shown = false;
                     Hide();
+                    input = "";
+                    snippets[listbox.SelectedIndex].Insert(editor.TextArea);
                 }
             } catch { }
         }
         void caretChanged(object sender, EventArgs e)
         {
-            if (shown)
+            if (Visibility == Visibility.Visible)
             {
-                Hide();
-                shown = false;
+                if (line != editor.Document.GetLineByOffset(editor.CaretOffset).LineNumber)
+                {
+                    input = "";
+                    listbox.Items.Clear();
+                    Hide();
+                }
+                else if (Math.Abs(column - (editor.CaretOffset - editor.Document.GetLineByOffset
+                    (editor.CaretOffset).Offset)) > 2)
+                {
+                    input = "";
+                    listbox.Items.Clear();
+                    Hide();
+                }
             }
         }
     }

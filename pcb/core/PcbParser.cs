@@ -89,9 +89,14 @@ namespace pcb.core
                     try
                     {
                         int[] newChainCoor = new int[3];
-                        newChainCoor[0] = int.Parse(components[1]);
-                        newChainCoor[1] = int.Parse(components[2]) + 4;
+                        newChainCoor[0] = int.Parse(components[1]) + 2;
+                        newChainCoor[1] = int.Parse(components[2]) - 2;
                         newChainCoor[2] = int.Parse(components[3]);
+                        if (chains.Peek() is BoxCbChain)
+                        {
+                            newChainCoor[1] += 1;
+                            newChainCoor[2] += 1;
+                        }
                         if (components.Length == 5 && components[4].Equals("py"))
                         {
                             chains.Push(new StraightCbChain(newChainCoor));

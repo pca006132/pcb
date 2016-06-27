@@ -201,9 +201,6 @@
   <data name="ooc2Long" xml:space="preserve">
     <value>ooc过长, 命令: ({0}/{1})</value>
   </data>
-  <data name="copy" xml:space="preserve">
-    <value>复制</value>
-  </data>
   <data name="copyAll" xml:space="preserve">
     <value>复制所有</value>
   </data>
@@ -341,5 +338,14 @@
   </data>
   <data name="doc" xml:space="preserve">
     <value>查阅帮助文件</value>
+  </data>
+  <data name="copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="paste" xml:space="preserve">
+    <value>黏贴</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>全选</value>
   </data>
 </root>

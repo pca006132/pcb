@@ -36,8 +36,9 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.11";
+        string version = "0.6.12";
         string backupFileName = "";
+        bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
         Snippet_menu snippet_menu;
         IHighlightingDefinition syntaxHightlighting;
@@ -626,6 +627,8 @@ namespace pcb
         {
             if (autocomplete == null)
                 return;
+            if (snippet_menu.shown)
+                return;
             string text = Editor.Document.GetText(Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0), Editor.TextArea.Caret.Offset - Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0));            
             text = text.TrimStart(' ', '\t');
             if (text.Length == 0)
@@ -667,11 +670,50 @@ namespace pcb
         //folding
         void foldingUpdateTimer_Tick(object sender, EventArgs e)
         {
+            if (!needFoldingUpdate)
+                return;
             if (foldingStrategy != null)
             {
                 foldingStrategy.UpdateFoldings(foldingManager, Editor.Document);
             }
             backup();
+            string[] lines = Editor.Text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+            OutlineItem item = null;
+            outline_treeview.Items.Clear();
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i].Trim();
+                if (line.StartsWith("//") && line.EndsWith("{"))
+                {
+                    string name = line.Substring(2, line.Length - 3);
+                    int index = Editor.Document.GetLineByNumber(i+1).Offset;
+                    if (item == null)
+                    {
+                        item = new OutlineItem(Editor, index);
+                        item.Header = name;
+                        outline_treeview.Items.Add(item);
+                    }
+                    else
+                    {
+                        var newItem = new OutlineItem(Editor, index);
+                        newItem.Header = name;
+                        item.Items.Add(newItem);
+                        item = newItem;
+                    }
+                }
+                else if (line.StartsWith("//") && line.EndsWith("}"))
+                {
+                    if (item != null && item.Parent != null && item.Parent is OutlineItem)
+                    {
+                        item = (OutlineItem)item.Parent;
+                    }
+                    else
+                    {
+                        item = null;
+                    }
+                }
+            }
+            needFoldingUpdate = false;
         }
         //io
         void backup()
@@ -913,20 +955,13 @@ namespace pcb
             var parser = new core.PcbParser();
             if (Editor.SelectionLength > 0)
             {                
-                text = Editor.SelectedText;                
-                /*
-                else
-                {
-                    parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
-                    parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
-                }         
-                */
+                text = Editor.SelectedText;
             }
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)
-                chain = new core.chain.BoxCbChain(new int[] { 0, 4, 0 });
+                chain = new core.chain.BoxCbChain(new int[] { 2, -1, 1 });
             else
-                chain = new core.chain.StraightCbChain(new int[] { 0, 4, 0 });
+                chain = new core.chain.StraightCbChain(new int[] { 2, -2, 0 });
             try
             {
                 string[] oocs = parser.getOOC(text, chain);
@@ -1025,6 +1060,7 @@ namespace pcb
         }
         void Editor_TextChanged(object sender, EventArgs e)
         {
+            needFoldingUpdate = true;
             if (!useAutocomplete)
                 return;            
             addElements();
@@ -1203,6 +1239,18 @@ namespace pcb
         void openPyEditor(object sender, RoutedEventArgs e)
         {
             ScriptWindow window = new ScriptWindow(Editor);
+        }
+        void copy(object sender, RoutedEventArgs e)
+        {
+            Editor.Copy();
+        }
+        void paste(object sender, RoutedEventArgs e)
+        {
+            Editor.Paste();
+        }
+        void selectAll(object sender, RoutedEventArgs e)
+        {
+            Editor.SelectAll();
         }
         void generateFromEditor(object sender, RoutedEventArgs e)
         {
@@ -1661,7 +1709,25 @@ namespace pcb
                 editor.Focus();
             }
         }
-
+    }
+}
+public class OutlineItem : TreeViewItem
+{
+    TextEditor editor;
+    int offset;
+    
+    public OutlineItem(TextEditor editor, int offset) : base()
+    {
+        this.editor = editor;
+        this.offset = offset;
+        MouseUp += selected;
+        Resources[SystemColors.ControlBrushKey] = new SolidColorBrush(Color.FromRgb(11,113,215));
+    }
+    private void selected(object sender, MouseEventArgs e)
+    {
+        editor.Select(offset, editor.Document.GetLineByOffset(offset).Length);        
+        editor.ScrollToLine(editor.Document.GetLineByOffset(offset).LineNumber);
+        e.Handled = true;        
     }
 }
 public class BraceFoldingStrategy : ICSharpCode.AvalonEdit.Folding.NewFolding

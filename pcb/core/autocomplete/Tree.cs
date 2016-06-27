@@ -43,7 +43,7 @@ namespace pcb.core.autocomplete
 
             CompletionData result = new CompletionData();
             
-            if (prefixes[0].StartsWith(keys[0]))
+            if (prefixes[0].StartsWith(keys[0]) || keys[0].StartsWith(prefixes[0]))
             {
                 if (keys.Length == 1 && prefixes[0].Length > keys[0].Length)
                 {
@@ -54,7 +54,7 @@ namespace pcb.core.autocomplete
                     keys[0] = keys[0].Substring(prefixes[0].Length);
                 }
             }
-            if (prefixes[1].StartsWith(keys[0]))
+            if (prefixes[1].StartsWith(keys[0]) || keys[0].StartsWith(prefixes[1]))
             {
                 if (keys.Length == 1 && prefixes[1].Length > keys[0].Length)
                 {

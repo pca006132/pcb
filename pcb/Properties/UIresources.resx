@@ -181,9 +181,6 @@
   <data name="ooc2Long" xml:space="preserve">
     <value>OOC is too long, command:({0}/{1})</value>
   </data>
-  <data name="copy" xml:space="preserve">
-    <value>copy</value>
-  </data>
   <data name="copyAll" xml:space="preserve">
     <value>copy all</value>
   </data>
@@ -321,5 +318,14 @@
   </data>
   <data name="doc" xml:space="preserve">
     <value>view doc</value>
+  </data>
+  <data name="copy" xml:space="preserve">
+    <value>copy</value>
+  </data>
+  <data name="paste" xml:space="preserve">
+    <value>paste</value>
+  </data>
+  <data name="select_all" xml:space="preserve">
+    <value>select all</value>
   </data>
 </root>

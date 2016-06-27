@@ -430,6 +430,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to paste.
+        /// </summary>
+        public static string paste {
+            get {
+                return ResourceManager.GetString("paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to pcb-OOC generator.
         /// </summary>
         public static string pcbName {
@@ -543,6 +552,15 @@ namespace pcb.Properties {
         public static string scbTeam {
             get {
                 return ResourceManager.GetString("scbTeam", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to select all.
+        /// </summary>
+        public static string select_all {
+            get {
+                return ResourceManager.GetString("select_all", resourceCulture);
             }
         }
         
