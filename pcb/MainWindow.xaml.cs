@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.12";
+        string version = "0.6.13";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -72,7 +72,7 @@ namespace pcb
             }
             catch (Exception ex)
             {
-                showMessage(Properties.Resources.cannotInitBackup, Properties.Resources.warn);
+                CustomMessageBox.ShowMessage(Properties.Resources.cannotInitBackup, Properties.Resources.warn);
                 log(ex);
             }
         }
@@ -349,29 +349,6 @@ namespace pcb
         public MainWindow()
         {
             InitializeComponent();
-
-            foldingUpdateTimer.Interval = TimeSpan.FromSeconds(3);
-            foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
-            foldingUpdateTimer.Start();
-            Show();
-
-            foldingStrategy = new BraceFoldingStrategy();
-            foldingManager = FoldingManager.Install(Editor.TextArea);
-            foldingStrategy.UpdateFoldings(foldingManager, Editor.Document);
-
-            //events
-            Editor.TextArea.TextEntered += Editor_TextEntering;
-            Editor.TextArea.Caret.PositionChanged += Editor_caretChanged;
-            //options
-            Editor.Options.AllowScrollBelowDocument = true;
-
-            //change background of current line
-            Editor.TextArea.TextView.BackgroundRenderers.Add(new XBackgroundRenderer(Editor));
-
-            setUp();
-
-            findReplaceDialog = new FindReplaceDialog(this);
-            findReplaceDialog.Owner = this;
             try
             {
                 tree = InitAutocomplete.init();
@@ -396,6 +373,28 @@ namespace pcb
             {
                 File.WriteAllText("/documents/log/log.txt", "");
             } catch { }
+            parseSnippetFile("ref/snippets");
+            setUp();
+            initBackUpFile();
+
+
+            foldingUpdateTimer.Interval = TimeSpan.FromSeconds(3);
+            foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
+            foldingUpdateTimer.Start();
+            Show();
+            foldingStrategy = new BraceFoldingStrategy();
+            foldingManager = FoldingManager.Install(Editor.TextArea);
+            foldingStrategy.UpdateFoldings(foldingManager, Editor.Document);
+            //events
+            Editor.TextArea.TextEntered += Editor_TextEntering;
+            Editor.TextArea.Caret.PositionChanged += Editor_caretChanged;
+            //options
+            Editor.Options.AllowScrollBelowDocument = true;
+            //change background of current line
+            Editor.TextArea.TextView.BackgroundRenderers.Add(new XBackgroundRenderer(Editor));
+
+            findReplaceDialog = new FindReplaceDialog(this);
+            findReplaceDialog.Owner = this;
             autocomplete = new autocomplete_menu_data(Editor, this);
             autocomplete.Owner = this;
             if (Thread.CurrentThread.CurrentCulture.Name == "zh")
@@ -418,10 +417,8 @@ namespace pcb
                 }
             }
             tryLoadText();
-            initBackUpFile();
             updateNotification();
             Editor.Focus();
-            parseSnippetFile("ref/snippets");
             registerCommands();
         }
         bool Islatest(string LatestVersion)
@@ -967,7 +964,7 @@ namespace pcb
                 string[] oocs = parser.getOOC(text, chain);
                 string warn = parser.checkForCondDir();
                 if (warn.Length > 0)
-                    showMessage(warn, "warning!");
+                    showMessage(warn, Properties.Resources.warn);
                 new Output(oocs);
             }
             catch (core.PcbException ex)
@@ -976,7 +973,7 @@ namespace pcb
             }
             catch (Exception ex)
             {
-                showMessage(ex.Message, "error!");
+                showMessage(ex.Message, Properties.Resources.error);
                 log(ex);
             }
         }
@@ -988,9 +985,9 @@ namespace pcb
             parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)
-                chain = new core.chain.BoxCbChain(new int[] { 0, 4, 0 });
+                chain = new core.chain.BoxCbChain(new int[] { 2, -1, 1 });
             else
-                chain = new core.chain.StraightCbChain(new int[] { 0, 4, 0 });
+                chain = new core.chain.StraightCbChain(new int[] { 2, -2, 1 });
             try
             {
                 string[] oocs = parser.getOOC(text, chain);
@@ -1247,6 +1244,10 @@ namespace pcb
         void paste(object sender, RoutedEventArgs e)
         {
             Editor.Paste();
+        }
+        void about(object sender, RoutedEventArgs e)
+        {
+            showMessage(String.Format(Properties.UIresources.intro.Replace("<br>", "\r\n"), version), Properties.UIresources.about);
         }
         void selectAll(object sender, RoutedEventArgs e)
         {

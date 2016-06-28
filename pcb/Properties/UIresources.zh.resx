@@ -348,4 +348,10 @@
   <data name="select_all" xml:space="preserve">
     <value>全选</value>
   </data>
+  <data name="intro" xml:space="preserve">
+    <value>PCB --- 命令编辑器、生成器。&lt;br&gt;作者: pca006132&lt;br&gt;版本: {0}</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>关于</value>
+  </data>
 </root>

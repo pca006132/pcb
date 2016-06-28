@@ -22,7 +22,7 @@ namespace pcb.core.util.Tests
         [TestMethod()]
         public void colorBlackTechTest()
         {
-            Assert.AreEqual(@"setblock ~ ~ ~ standing_sign 0 replace {Text1:""{\""text\"":\""左键生成\"",\""clickEvent\"":{\""action\"":\""run_command\"",\""value\"":\""\u00a7a\\\""\""}}"",Text2:""{\""text\"":\""\""}"",Text3:""{\""text\"":\""\""}"",Text4:""{\""text\"":\""\""}""}",
+            Assert.AreEqual(@"setblock ~ ~ ~ standing_sign 0 replace {Text1:""{\""text\"":\""right click\"",\""clickEvent\"":{\""action\"":\""run_command\"",\""value\"":\""\u00a7a\\\""\""}}"",Text2:""{\""text\"":\""\""}"",Text3:""{\""text\"":\""\""}"",Text4:""{\""text\"":\""\""}""}",
                 colorBlackTech("§a\""));
         }
     }

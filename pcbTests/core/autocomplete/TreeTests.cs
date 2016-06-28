@@ -23,7 +23,7 @@ namespace pcb.core.autocomplete.Tests
         [TestMethod]
         public void autocompleteTests()
         {
-            CollectionAssert.AreEquivalent(new List<string> { "scoreboard" }, tree.autocomplete("").displayData);
+            CollectionAssert.AreEquivalent(new List<string> { "scoreboard" }, tree.autocomplete("s").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "objectives","players" }, tree.autocomplete("scoreboard ").displayData);
             CollectionAssert.AreEquivalent(new List<string> { "set", "add","remove","reset" }, 
                 tree.autocomplete("scoreboard players ").displayData);

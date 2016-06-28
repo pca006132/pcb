@@ -61,7 +61,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cannot init backup file, when the program crashes, data may be lost..
+        ///   Looks up a localized string similar to cannot initiate backup file, when the program crashes, data may be lost..
         /// </summary>
         public static string cannotInitBackup {
             get {
@@ -70,7 +70,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to there is a command longer than 30000 char.
+        ///   Looks up a localized string similar to there is a command longer than 30000 characters.
         /// </summary>
         public static string commandTooLong {
             get {
@@ -79,7 +79,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to wrong data prefix: format must be &quot;data:x command&quot;, there should be a space char.
+        ///   Looks up a localized string similar to wrong data prefix: format must be &quot;data:x command&quot;, space should be inserted.
         /// </summary>
         public static string dataFormatError {
             get {
@@ -88,7 +88,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to wrong data value: data cannot be larger than 7.
+        ///   Looks up a localized string similar to wrong data value: cannot larger than 7.
         /// </summary>
         public static string dataLargerThan7 {
             get {
@@ -97,7 +97,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to wrong data value: not number/byte.
+        ///   Looks up a localized string similar to wrong data value: not a number/byte.
         /// </summary>
         public static string dataNotNum {
             get {
@@ -124,7 +124,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to wrong format.
+        ///   Looks up a localized string similar to incorret format.
         /// </summary>
         public static string formatError {
             get {
@@ -133,7 +133,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to error when reading file.
+        ///   Looks up a localized string similar to error occur when reading the file.
         /// </summary>
         public static string ioError {
             get {
@@ -142,7 +142,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to new command&apos;s coordinates error: not valid integer.
+        ///   Looks up a localized string similar to new command&apos;s coordinates error: not a valid integer.
         /// </summary>
         public static string newCoorError {
             get {
@@ -151,7 +151,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to new command format error.
+        ///   Looks up a localized string similar to new command syntax error.
         /// </summary>
         public static string newFormatError {
             get {
@@ -160,7 +160,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to missing bracket.
+        ///   Looks up a localized string similar to missing brackets.
         /// </summary>
         public static string noBracket {
             get {
@@ -169,7 +169,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to right click to generate.
+        ///   Looks up a localized string similar to right click.
         /// </summary>
         public static string signText {
             get {
@@ -178,7 +178,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to stats command format error.
+        ///   Looks up a localized string similar to stats command syntax error.
         /// </summary>
         public static string statsFormatError {
             get {

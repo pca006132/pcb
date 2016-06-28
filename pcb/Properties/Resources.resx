@@ -142,7 +142,7 @@
     <value>unknown dot parameter</value>
   </data>
   <data name="signText" xml:space="preserve">
-    <value>right click to generate</value>
+    <value>right click</value>
   </data>
   <data name="dataLargerThan7" xml:space="preserve">
     <value>wrong data value: cannot larger than 7</value>

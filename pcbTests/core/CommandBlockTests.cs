@@ -16,9 +16,9 @@ namespace pcb.core.Tests
         {
             object[][] datas = {
                 new object[] {"say \"fa q\" \\","setblock ~0 ~2 ~0 chain_command_block 0 replace {Command:\"say \\\"fa q\\\" \\\\\",auto:1b}",false,(byte)0,ccb},
-                new object[] {"cond:say hi","setblock ~0 ~2 ~0 chain_command_block 8 replace {Command:\"say hi\",auto:1b}", true,(byte)0,ccb},
-                new object[] {"data:5 icb:say test","setblock ~0 ~2 ~0 command_block 5 replace {Command:\"say test\"}", false, (byte)5, icb},
-                new object[] {"data:5 cond:rcb:say hi","setblock ~0 ~2 ~0 repeating_command_block 13 replace {Command:\"say hi\",auto:1b}",true, (byte)5, rcb}
+                new object[] {"cond:say hi","setblock ~0 ~2 ~0 chain_command_block 8 replace {Command:say hi,auto:1b}", true,(byte)0,ccb},
+                new object[] {"data:5 icb:say test","setblock ~0 ~2 ~0 command_block 5 replace {Command:say test}", false, (byte)5, icb},
+                new object[] {"data:5 cond:rcb:say hi","setblock ~0 ~2 ~0 repeating_command_block 13 replace {Command:say hi,auto:1b}",true, (byte)5, rcb}
             };
             foreach (object[] data in datas)
             {

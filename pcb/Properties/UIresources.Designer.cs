@@ -61,6 +61,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to about.
+        /// </summary>
+        public static string about {
+            get {
+                return ResourceManager.GetString("about", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to add.
         /// </summary>
         public static string add {
@@ -345,6 +354,15 @@ namespace pcb.Properties {
         public static string insertUUID {
             get {
                 return ResourceManager.GetString("insertUUID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PCB --- a command editor and one command generator by pca006132.&lt;br&gt;version: {0}.
+        /// </summary>
+        public static string intro {
+            get {
+                return ResourceManager.GetString("intro", resourceCulture);
             }
         }
         

@@ -328,4 +328,10 @@
   <data name="select_all" xml:space="preserve">
     <value>select all</value>
   </data>
+  <data name="intro" xml:space="preserve">
+    <value>PCB --- a command editor and one command generator by pca006132.&lt;br&gt;version: {0}</value>
+  </data>
+  <data name="about" xml:space="preserve">
+    <value>about</value>
+  </data>
 </root>

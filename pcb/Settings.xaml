@@ -1,58 +1,167 @@
 ﻿<control:MetroWindow x:Class="pcb.Settings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:pcb"
-        xmlns:p="clr-namespace:pcb.Properties"
-        xmlns:control="http://metro.mahapps.com/winfx/xaml/controls"
-        mc:Ignorable="d" Icon="Command_Block.ico" ShowIconOnTitleBar="False" 
-        ResizeMode="CanMinimize" Background="#232323" TitleCaps="False"
-        Title="{x:Static p:UIresources.setting}" Height="270.23" Width="481.745">
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:control="http://metro.mahapps.com/winfx/xaml/controls"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:local="clr-namespace:pcb"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:p="clr-namespace:pcb.Properties"
+                     Title="{x:Static p:UIresources.setting}"
+                     Width="481.745"
+                     Height="270.23"
+                     Background="#232323"
+                     BorderBrush="AliceBlue"
+                     Icon="Command_Block.ico"
+                     ResizeMode="CanMinimize"
+                     ShowIconOnTitleBar="False"
+                     TitleCaps="False"
+                     mc:Ignorable="d">
     <Grid>
-        <ComboBox x:Name="FontList" ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" Margin="85,12,252,201"/>
-        <Label Content="{x:Static p:UIresources.editorFont}" FontFamily="Microsoft Yahei" HorizontalAlignment="Left" Margin="10,15,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UseAutocomplete" IsChecked="True" Content="{x:Static p:UIresources.useAutocomplete}" HorizontalAlignment="Left" Margin="10,63,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="UseAECAsMarker" IsChecked="False" Content="{x:Static p:UIresources.useAEC}" HorizontalAlignment="Left" Margin="10,86,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="showSpace" IsChecked="False" Content="{x:Static p:UIresources.displaySpace}" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top"/>
-        <Label Content="{x:Static p:UIresources.direction}" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="placeDir" HorizontalAlignment="Left" Margin="132,132,0,0" VerticalAlignment="Top" Width="91">
-            <ComboBoxItem Content="+Y" IsSelected="True"/>
-            <ComboBoxItem Content="+Z"/>
+        <ComboBox x:Name="FontList"
+                  Margin="84,15,240,195"
+                  ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
+        <Label Margin="10,15,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{x:Static p:UIresources.editorFont}"
+               FontFamily="Microsoft Yahei" />
+        <CheckBox x:Name="UseAutocomplete"
+                  Margin="10,63,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Content="{x:Static p:UIresources.useAutocomplete}"
+                  IsChecked="True" />
+        <CheckBox x:Name="UseAECAsMarker"
+                  Margin="10,86,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Content="{x:Static p:UIresources.useAEC}"
+                  IsChecked="False" />
+        <CheckBox x:Name="showSpace"
+                  Margin="10,109,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Content="{x:Static p:UIresources.displaySpace}"
+                  IsChecked="False" />
+        <Label Margin="10,132,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{x:Static p:UIresources.direction}" />
+        <ComboBox x:Name="placeDir"
+                  Width="89"
+                  Margin="151,132,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+            <ComboBoxItem Content="+Y" IsSelected="True" />
+            <ComboBoxItem Content="+Z" />
         </ComboBox>
-        <Label Content="{x:Static p:UIresources.wrapCount}" HorizontalAlignment="Left" Margin="10,164,0,0" 
-               VerticalAlignment="Top" ToolTip="0 = will not auto changeD"/>
-        <TextBox x:Name="CBCount" HorizontalAlignment="Left" Height="23" Margin="132,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="91"/>
-        <GroupBox Header="{x:Static p:UIresources.blockMode}" HorizontalAlignment="Left" Margin="245,4,0,0" 
-                  VerticalAlignment="Top" Height="185" Width="220">
+        <Label Margin="10,164,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{x:Static p:UIresources.wrapCount}"
+               ToolTip="0 = will not auto changeD" />
+        <TextBox x:Name="CBCount"
+                 Width="89"
+                 Height="23"
+                 Margin="151,163,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 TextWrapping="Wrap" />
+        <GroupBox Width="220"
+                  Height="185"
+                  Margin="245,4,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Header="{x:Static p:UIresources.blockMode}">
             <Grid>
-                <CheckBox x:Name="UseBox" Content="{x:Static p:UIresources.blockMode}" IsChecked="False" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                <CheckBox x:Name="UseBox"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          Content="{x:Static p:UIresources.blockMode}"
+                          IsChecked="False" />
 
-                <TextBox x:Name="block_X" Text="5" HorizontalAlignment="Left" 
-                            Height="23" Margin="104,23,0,0" TextWrapping="Wrap" ToolTip="{x:Static p:UIresources.xlength}" 
-                            VerticalAlignment="Top" Width="55"/>
-                <TextBox x:Name="block_z" Text="5" HorizontalAlignment="Left" 
-                            Height="23" Margin="104,54,0,0" TextWrapping="Wrap" ToolTip="{x:Static p:UIresources.zlength}" 
-                            VerticalAlignment="Top" Width="55"/>
-                <TextBox x:Name="blockID_Top" Text="stone" HorizontalAlignment="Left" 
-                            Height="23" Margin="0,85,0,0" TextWrapping="Wrap" 
-                            VerticalAlignment="Top" Width="99" ToolTip="{x:Static p:UIresources.baseID}"/>
-                <TextBox x:Name="blockID_Side" Text="glass" HorizontalAlignment="Left" 
-                            Height="23" Margin="0,116,0,0" TextWrapping="Wrap" 
-                            VerticalAlignment="Top" Width="99" ToolTip="{x:Static p:UIresources.sideID}"/>
-                <TextBox x:Name="blockDamage_Top" HorizontalAlignment="Left" Height="23"
-                            Margin="104,85,0,0" TextWrapping="Wrap" FontFamily="Microsoft Yahei"
-                            control:TextBoxHelper.Watermark="data" ToolTip="{x:Static p:UIresources.baseData}" 
-                            VerticalAlignment="Top" Width="60"/>
-                <TextBox x:Name="blockDamage_Side" HorizontalAlignment="Left" 
-                            Height="23" Margin="104,116,0,0" TextWrapping="Wrap" FontFamily="Microsoft Yahei" 
-                            control:TextBoxHelper.Watermark="data" ToolTip="{x:Static p:UIresources.sideData}" 
-                            VerticalAlignment="Top" Width="60"/>
-                <Label Content="{x:Static p:UIresources.xlength}" HorizontalAlignment="Left" Margin="0,23,0,0" VerticalAlignment="Top" Width="96"/>
-                <Label Content="{x:Static p:UIresources.zlength}" HorizontalAlignment="Left" Margin="0,54,0,0" VerticalAlignment="Top"/>
+                <TextBox x:Name="block_X"
+                         Width="60"
+                         Height="23"
+                         Margin="104,23,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Text="5"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.xlength}" />
+                <TextBox x:Name="block_z"
+                         Width="60"
+                         Height="23"
+                         Margin="104,54,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Text="5"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.zlength}" />
+                <TextBox x:Name="blockID_Top"
+                         Width="99"
+                         Height="23"
+                         Margin="0,85,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Text="stone"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.baseID}" />
+                <TextBox x:Name="blockID_Side"
+                         Width="99"
+                         Height="23"
+                         Margin="0,116,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Text="glass"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.sideID}" />
+                <TextBox x:Name="blockDamage_Top"
+                         Width="60"
+                         Height="23"
+                         Margin="104,85,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         control:TextBoxHelper.Watermark="data"
+                         FontFamily="Microsoft Yahei"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.baseData}" />
+                <TextBox x:Name="blockDamage_Side"
+                         Width="60"
+                         Height="23"
+                         Margin="104,116,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         control:TextBoxHelper.Watermark="data"
+                         FontFamily="Microsoft Yahei"
+                         TextWrapping="Wrap"
+                         ToolTip="{x:Static p:UIresources.sideData}" />
+                <Label Width="96"
+                       Margin="0,23,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Content="{x:Static p:UIresources.xlength}" />
+                <Label Margin="0,54,0,0"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Content="{x:Static p:UIresources.zlength}" />
             </Grid>
         </GroupBox>
-        <Button x:Name="btnCancel" Content="{x:Static p:UIresources.cancel}" FontFamily="Microsoft Yahei" Click="cancel" HorizontalAlignment="Left" Margin="10,206,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button x:Name="btnApply" Content="{x:Static p:UIresources.save}" FontFamily="Microsoft Yahei" Click="ApplyChange" HorizontalAlignment="Left" Margin="390,206,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button x:Name="btnCancel"
+                Width="75"
+                Margin="10,206,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="cancel"
+                Content="{x:Static p:UIresources.cancel}"
+                FontFamily="Microsoft Yahei" />
+        <Button x:Name="btnApply"
+                Width="75"
+                Margin="390,206,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="ApplyChange"
+                Content="{x:Static p:UIresources.save}"
+                FontFamily="Microsoft Yahei" />
     </Grid>
 </control:MetroWindow>
