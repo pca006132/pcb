@@ -104,7 +104,7 @@
     <value>last saved:</value>
   </data>
   <data name="close" xml:space="preserve">
-    <value>close</value>
+    <value>Close</value>
   </data>
   <data name="statsDisplaySelect" xml:space="preserve">
     <value>selected {0} characters</value>
@@ -134,46 +134,46 @@
     <value>scb tags</value>
   </data>
   <data name="scbTeam" xml:space="preserve">
-    <value>team names</value>
+    <value>Team Names</value>
   </data>
   <data name="entityNames" xml:space="preserve">
-    <value>entity names</value>
+    <value>Entity Names</value>
   </data>
   <data name="delete" xml:space="preserve">
-    <value>delete</value>
+    <value>Delete</value>
   </data>
   <data name="add" xml:space="preserve">
-    <value>add</value>
+    <value>Add</value>
   </data>
   <data name="yes" xml:space="preserve">
-    <value>yes</value>
+    <value>Yes</value>
   </data>
   <data name="no" xml:space="preserve">
-    <value>no</value>
+    <value>No</value>
   </data>
   <data name="cancel" xml:space="preserve">
-    <value>cancel</value>
+    <value>Cancel</value>
   </data>
   <data name="findOrReplace" xml:space="preserve">
-    <value>find/replace</value>
+    <value>Find/Replace</value>
   </data>
   <data name="find" xml:space="preserve">
-    <value>find</value>
+    <value>Find</value>
   </data>
   <data name="replace" xml:space="preserve">
-    <value>replace</value>
+    <value>Replace</value>
   </data>
   <data name="useRegex" xml:space="preserve">
-    <value>use Regex</value>
+    <value>Use Regex</value>
   </data>
   <data name="multiLine" xml:space="preserve">
-    <value>multiline mode</value>
+    <value>Multiline Mode</value>
   </data>
   <data name="findNext" xml:space="preserve">
-    <value>find next</value>
+    <value>Find Next</value>
   </data>
   <data name="replaceAll" xml:space="preserve">
-    <value>replace all</value>
+    <value>Replace All</value>
   </data>
   <data name="regexNeedEscape" xml:space="preserve">
     <value>if you use Regex mode, you also need to escape the text for replacement_(:3 」∠ )_</value>
@@ -182,37 +182,37 @@
     <value>OOC is too long, command:({0}/{1})</value>
   </data>
   <data name="copyAll" xml:space="preserve">
-    <value>copy all</value>
+    <value>Copy All</value>
   </data>
   <data name="run" xml:space="preserve">
-    <value>run</value>
+    <value>Run</value>
   </data>
   <data name="runPython" xml:space="preserve">
-    <value>run python</value>
+    <value>Run Python</value>
   </data>
   <data name="setting" xml:space="preserve">
     <value>Settings</value>
   </data>
   <data name="editorFont" xml:space="preserve">
-    <value>editor font</value>
+    <value>Editor Font</value>
   </data>
   <data name="useAutocomplete" xml:space="preserve">
-    <value>use autocomplete</value>
+    <value>Use Autocomplete</value>
   </data>
   <data name="useAEC" xml:space="preserve">
-    <value>use AEC as marker</value>
+    <value>Use AEC as Marker</value>
   </data>
   <data name="displaySpace" xml:space="preserve">
-    <value>display space</value>
+    <value>Display Space Characters</value>
   </data>
   <data name="direction" xml:space="preserve">
-    <value>CB direction</value>
+    <value>CB Direction</value>
   </data>
   <data name="wrapCount" xml:space="preserve">
-    <value>CB count for each line</value>
+    <value>CB Count for each line</value>
   </data>
   <data name="blockMode" xml:space="preserve">
-    <value>block mode</value>
+    <value>Block Mode</value>
   </data>
   <data name="xlength" xml:space="preserve">
     <value>x-axis length</value>
@@ -221,16 +221,16 @@
     <value>z-axis length</value>
   </data>
   <data name="baseID" xml:space="preserve">
-    <value>base(top and bottom) block id</value>
+    <value>Base(top and bottom) block id</value>
   </data>
   <data name="baseData" xml:space="preserve">
-    <value>base(top and bottom) block data value</value>
+    <value>Base(top and bottom) block data value</value>
   </data>
   <data name="sideID" xml:space="preserve">
-    <value>side block id</value>
+    <value>Side block id</value>
   </data>
   <data name="sideData" xml:space="preserve">
-    <value>side block data value</value>
+    <value>Side block data value</value>
   </data>
   <data name="noMatch" xml:space="preserve">
     <value>match not found</value>
@@ -257,40 +257,40 @@
     <value>Edit</value>
   </data>
   <data name="escapeSelected" xml:space="preserve">
-    <value>escape selected text</value>
+    <value>Escape Selected Text</value>
   </data>
   <data name="unescapeSelected" xml:space="preserve">
-    <value>unescape selected text</value>
+    <value>Unescape Selected Text</value>
   </data>
   <data name="insertUUID" xml:space="preserve">
-    <value>insert random uuid</value>
+    <value>Insert Random UUID</value>
   </data>
   <data name="insertType" xml:space="preserve">
-    <value>insert marker type</value>
+    <value>Insert Marker type</value>
   </data>
   <data name="insertFormatter" xml:space="preserve">
-    <value>insert §</value>
+    <value>Insert §</value>
   </data>
   <data name="colorJson" xml:space="preserve">
-    <value>command to setblock sign</value>
+    <value>Command to Setblock Sign</value>
   </data>
   <data name="colorJsonUsage" xml:space="preserve">
     <value>use clickEvent and setblock to insert § char into the game</value>
   </data>
   <data name="foldAll" xml:space="preserve">
-    <value>collapse all</value>
+    <value>Collapse All</value>
   </data>
   <data name="comment" xml:space="preserve">
-    <value>comment selected lines</value>
+    <value>Comment selected lines</value>
   </data>
   <data name="uncomment" xml:space="preserve">
-    <value>uncomment selected lines</value>
+    <value>Uncomment selected lines</value>
   </data>
   <data name="settingGenerator" xml:space="preserve">
-    <value>window/editor settings</value>
+    <value>Window/Editor's Settings</value>
   </data>
   <data name="settingAc" xml:space="preserve">
-    <value>autocomplete setting</value>
+    <value>Autocomplete Setting</value>
   </data>
   <data name="generate" xml:space="preserve">
     <value>Generate</value>
@@ -302,42 +302,42 @@
     <value>Arial</value>
   </data>
   <data name="toCBSetblock" xml:space="preserve">
-    <value>convert to cb setblock</value>
+    <value>Convert to CB Setblock</value>
   </data>
   <data name="updateCommands" xml:space="preserve">
-    <value>update Commands</value>
+    <value>Update Commands</value>
   </data>
   <data name="updateCommandsTooltip" xml:space="preserve">
     <value>generate ooc that will replace only the selected commands(be careful)</value>
   </data>
   <data name="help" xml:space="preserve">
-    <value>help</value>
+    <value>Help</value>
   </data>
   <data name="website" xml:space="preserve">
-    <value>check update</value>
+    <value>Website(update etc)</value>
   </data>
   <data name="doc" xml:space="preserve">
-    <value>view doc</value>
+    <value>View Doc</value>
   </data>
   <data name="copy" xml:space="preserve">
-    <value>copy</value>
+    <value>Copy</value>
   </data>
   <data name="paste" xml:space="preserve">
-    <value>paste</value>
+    <value>Paste</value>
   </data>
   <data name="select_all" xml:space="preserve">
-    <value>select all</value>
+    <value>Select All</value>
   </data>
   <data name="intro" xml:space="preserve">
     <value>PCB --- a command editor and one command generator by pca006132.&lt;br&gt;version: {0}</value>
   </data>
   <data name="about" xml:space="preserve">
-    <value>about</value>
+    <value>About</value>
   </data>
   <data name="custom_functions" xml:space="preserve">
-    <value>functions</value>
+    <value>Functions</value>
   </data>
   <data name="view_NBT" xml:space="preserve">
-    <value>view nbt</value>
+    <value>View NBT</value>
   </data>
 </root>

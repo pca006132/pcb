@@ -61,7 +61,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to about.
+        ///   Looks up a localized string similar to About.
         /// </summary>
         public static string about {
             get {
@@ -70,7 +70,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to add.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string add {
             get {
@@ -88,7 +88,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to base(top and bottom) block data value.
+        ///   Looks up a localized string similar to Base(top and bottom) block data value.
         /// </summary>
         public static string baseData {
             get {
@@ -97,7 +97,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to base(top and bottom) block id.
+        ///   Looks up a localized string similar to Base(top and bottom) block id.
         /// </summary>
         public static string baseID {
             get {
@@ -106,7 +106,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to block mode.
+        ///   Looks up a localized string similar to Block Mode.
         /// </summary>
         public static string blockMode {
             get {
@@ -115,7 +115,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to cancel.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string cancel {
             get {
@@ -124,7 +124,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to close.
+        ///   Looks up a localized string similar to Close.
         /// </summary>
         public static string close {
             get {
@@ -133,7 +133,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to command to setblock sign.
+        ///   Looks up a localized string similar to Command to Setblock Sign.
         /// </summary>
         public static string colorJson {
             get {
@@ -151,7 +151,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to comment selected lines.
+        ///   Looks up a localized string similar to Comment selected lines.
         /// </summary>
         public static string comment {
             get {
@@ -160,7 +160,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to copy.
+        ///   Looks up a localized string similar to Copy.
         /// </summary>
         public static string copy {
             get {
@@ -169,7 +169,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to copy all.
+        ///   Looks up a localized string similar to Copy All.
         /// </summary>
         public static string copyAll {
             get {
@@ -178,7 +178,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to functions.
+        ///   Looks up a localized string similar to Functions.
         /// </summary>
         public static string custom_functions {
             get {
@@ -187,7 +187,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to delete.
+        ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string delete {
             get {
@@ -196,7 +196,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CB direction.
+        ///   Looks up a localized string similar to CB Direction.
         /// </summary>
         public static string direction {
             get {
@@ -205,7 +205,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to display space.
+        ///   Looks up a localized string similar to Display Space Characters.
         /// </summary>
         public static string displaySpace {
             get {
@@ -214,7 +214,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to view doc.
+        ///   Looks up a localized string similar to View Doc.
         /// </summary>
         public static string doc {
             get {
@@ -232,7 +232,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to editor font.
+        ///   Looks up a localized string similar to Editor Font.
         /// </summary>
         public static string editorFont {
             get {
@@ -241,7 +241,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to entity names.
+        ///   Looks up a localized string similar to Entity Names.
         /// </summary>
         public static string entityNames {
             get {
@@ -250,7 +250,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to escape selected text.
+        ///   Looks up a localized string similar to Escape Selected Text.
         /// </summary>
         public static string escapeSelected {
             get {
@@ -268,7 +268,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to find.
+        ///   Looks up a localized string similar to Find.
         /// </summary>
         public static string find {
             get {
@@ -277,7 +277,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to find next.
+        ///   Looks up a localized string similar to Find Next.
         /// </summary>
         public static string findNext {
             get {
@@ -286,7 +286,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to find/replace.
+        ///   Looks up a localized string similar to Find/Replace.
         /// </summary>
         public static string findOrReplace {
             get {
@@ -295,7 +295,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to collapse all.
+        ///   Looks up a localized string similar to Collapse All.
         /// </summary>
         public static string foldAll {
             get {
@@ -331,7 +331,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to help.
+        ///   Looks up a localized string similar to Help.
         /// </summary>
         public static string help {
             get {
@@ -340,7 +340,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert §.
+        ///   Looks up a localized string similar to Insert §.
         /// </summary>
         public static string insertFormatter {
             get {
@@ -349,7 +349,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert marker type.
+        ///   Looks up a localized string similar to Insert Marker type.
         /// </summary>
         public static string insertType {
             get {
@@ -358,7 +358,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to insert random uuid.
+        ///   Looks up a localized string similar to Insert Random UUID.
         /// </summary>
         public static string insertUUID {
             get {
@@ -394,7 +394,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to multiline mode.
+        ///   Looks up a localized string similar to Multiline Mode.
         /// </summary>
         public static string multiLine {
             get {
@@ -412,7 +412,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to no.
+        ///   Looks up a localized string similar to No.
         /// </summary>
         public static string no {
             get {
@@ -457,7 +457,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to paste.
+        ///   Looks up a localized string similar to Paste.
         /// </summary>
         public static string paste {
             get {
@@ -493,7 +493,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to replace.
+        ///   Looks up a localized string similar to Replace.
         /// </summary>
         public static string replace {
             get {
@@ -502,7 +502,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to replace all.
+        ///   Looks up a localized string similar to Replace All.
         /// </summary>
         public static string replaceAll {
             get {
@@ -511,7 +511,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to run.
+        ///   Looks up a localized string similar to Run.
         /// </summary>
         public static string run {
             get {
@@ -520,7 +520,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to run python.
+        ///   Looks up a localized string similar to Run Python.
         /// </summary>
         public static string runPython {
             get {
@@ -574,7 +574,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to team names.
+        ///   Looks up a localized string similar to Team Names.
         /// </summary>
         public static string scbTeam {
             get {
@@ -583,7 +583,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to select all.
+        ///   Looks up a localized string similar to Select All.
         /// </summary>
         public static string select_all {
             get {
@@ -601,7 +601,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to autocomplete setting.
+        ///   Looks up a localized string similar to Autocomplete Setting.
         /// </summary>
         public static string settingAc {
             get {
@@ -610,7 +610,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to window/editor settings.
+        ///   Looks up a localized string similar to Window/Editor&apos;s Settings.
         /// </summary>
         public static string settingGenerator {
             get {
@@ -619,7 +619,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to side block data value.
+        ///   Looks up a localized string similar to Side block data value.
         /// </summary>
         public static string sideData {
             get {
@@ -628,7 +628,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to side block id.
+        ///   Looks up a localized string similar to Side block id.
         /// </summary>
         public static string sideID {
             get {
@@ -655,7 +655,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to convert to cb setblock.
+        ///   Looks up a localized string similar to Convert to CB Setblock.
         /// </summary>
         public static string toCBSetblock {
             get {
@@ -664,7 +664,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to uncomment selected lines.
+        ///   Looks up a localized string similar to Uncomment selected lines.
         /// </summary>
         public static string uncomment {
             get {
@@ -673,7 +673,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to unescape selected text.
+        ///   Looks up a localized string similar to Unescape Selected Text.
         /// </summary>
         public static string unescapeSelected {
             get {
@@ -691,7 +691,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to update Commands.
+        ///   Looks up a localized string similar to Update Commands.
         /// </summary>
         public static string updateCommands {
             get {
@@ -709,7 +709,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to use AEC as marker.
+        ///   Looks up a localized string similar to Use AEC as Marker.
         /// </summary>
         public static string useAEC {
             get {
@@ -718,7 +718,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to use autocomplete.
+        ///   Looks up a localized string similar to Use Autocomplete.
         /// </summary>
         public static string useAutocomplete {
             get {
@@ -727,7 +727,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to use Regex.
+        ///   Looks up a localized string similar to Use Regex.
         /// </summary>
         public static string useRegex {
             get {
@@ -736,7 +736,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to view nbt.
+        ///   Looks up a localized string similar to View NBT.
         /// </summary>
         public static string view_NBT {
             get {
@@ -745,7 +745,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to check update.
+        ///   Looks up a localized string similar to Website(update etc).
         /// </summary>
         public static string website {
             get {
@@ -754,7 +754,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CB count for each line.
+        ///   Looks up a localized string similar to CB Count for each line.
         /// </summary>
         public static string wrapCount {
             get {
@@ -772,7 +772,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to yes.
+        ///   Looks up a localized string similar to Yes.
         /// </summary>
         public static string yes {
             get {

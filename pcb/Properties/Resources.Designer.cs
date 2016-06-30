@@ -115,7 +115,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to error!.
+        ///   Looks up a localized string similar to Error!.
         /// </summary>
         public static string error {
             get {
@@ -223,7 +223,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to warning!.
+        ///   Looks up a localized string similar to Warning!.
         /// </summary>
         public static string warn {
             get {

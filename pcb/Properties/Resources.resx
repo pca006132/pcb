@@ -169,12 +169,12 @@
     <value>cannot initiate backup file, when the program crashes, data may be lost.</value>
   </data>
   <data name="warn" xml:space="preserve">
-    <value>warning!</value>
+    <value>Warning!</value>
   </data>
   <data name="wrongTheme" xml:space="preserve">
     <value>wrong theme name</value>
   </data>
   <data name="error" xml:space="preserve">
-    <value>error!</value>
+    <value>Error!</value>
   </data>
 </root>
