@@ -94,6 +94,8 @@
                         <MenuItem Click="uncomment_Click"
                                   Header="{x:Static p:UIresources.uncomment}"
                                   InputGestureText="Ctrl + \" />
+                        <Separator />
+                        <MenuItem Click="viewNBT_click" Header="{x:Static p:UIresources.view_NBT}" />
                     </ContextMenu>
                 </avalonEdit:TextEditor.ContextMenu>
             </avalonEdit:TextEditor>
@@ -200,7 +202,10 @@
                           InputGestureText="Ctrl + \" />
                 <Separator />
                 <MenuItem Click="openPyEditor" Header="{x:Static p:UIresources.runPython}" />
+                <Separator />
+                <MenuItem Click="viewNBT_click" Header="{x:Static p:UIresources.view_NBT}" />
             </MenuItem>
+            <MenuItem x:Name="customs" Header="{x:Static p:UIresources.custom_functions}" />
             <MenuItem Header="{x:Static p:UIresources.setting}">
                 <MenuItem Click="showSetting" Header="{x:Static p:UIresources.settingGenerator}" />
                 <MenuItem Click="showList"

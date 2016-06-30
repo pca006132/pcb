@@ -10,23 +10,27 @@
   <Color name="doc" foreground="#4d7ea8"/>
 	<!-- This is the main ruleset. -->
 	<RuleSet>
+		<Rule color="folding">
+			^\s*//[^{]*{\s*$
+		</Rule>
+		<Rule color="folding">
+			^\s*//}\s*$
+		</Rule>
     <Rule color="Comment">
-        ^\s*//.*[^{}]$
+        ^\s*//.*$
     </Rule>
-    <Rule color="Comment">
-        ^\s*//$
-    </Rule>
+
     <Rule color="before">
-      	^\s*icb:
+      	^\s*(rcb:|cond:|data:)*icb:
     </Rule>
 		<Rule color="before">
-			^\s*rcb:
+			^\s*(icb:|cond:|data:)*rcb:
 		</Rule>
 		<Rule color="before">
-			^\s*cond:
+			^\s*(rcb:|icb:|data:)*cond:
 		</Rule>
 		<Rule color="before">
-			^\s*data:
+			^\s*(rcb:|cond:|icb:)*data:
 		</Rule>
 		<Rule color="init">
 			^\s*init:
@@ -51,12 +55,6 @@
 		</Rule>
     <Rule color="marks">
 			^\s*stats:.*
-		</Rule>
-		<Rule color="folding">
-			^\s*//[^{]*{$
-		</Rule>
-		<Rule color="folding">
-			^\s*//[^}]*}$
 		</Rule>
     <Span color="doc" multiline="true">
       <Begin>^\s*/\*</Begin>

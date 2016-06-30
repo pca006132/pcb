@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.13";
+        string version = "0.6.14";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -374,9 +374,12 @@ namespace pcb
                 File.WriteAllText("/documents/log/log.txt", "");
             } catch { }
             parseSnippetFile("ref/snippets");
+            foreach (var item in PythonItem.readAllPys(Editor, this))
+            {
+                customs.Items.Add(item);
+            }
             setUp();
             initBackUpFile();
-
 
             foldingUpdateTimer.Interval = TimeSpan.FromSeconds(3);
             foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
@@ -1249,6 +1252,10 @@ namespace pcb
         {
             showMessage(String.Format(Properties.UIresources.intro.Replace("<br>", "\r\n"), version), Properties.UIresources.about);
         }
+        void viewNBT_click(object sender, RoutedEventArgs e)
+        {
+            Editor.Document.Replace(Editor.Document.GetLineByOffset(Editor.SelectionStart), NbtViewer.viewNBT(Editor.Document.GetText(Editor.Document.GetLineByOffset(Editor.SelectionStart))));
+        }
         void selectAll(object sender, RoutedEventArgs e)
         {
             Editor.SelectAll();
@@ -1710,6 +1717,7 @@ namespace pcb
                 editor.Focus();
             }
         }
+
     }
 }
 public class OutlineItem : TreeViewItem

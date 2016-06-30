@@ -178,6 +178,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to functions.
+        /// </summary>
+        public static string custom_functions {
+            get {
+                return ResourceManager.GetString("custom_functions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to delete.
         /// </summary>
         public static string delete {
@@ -723,6 +732,15 @@ namespace pcb.Properties {
         public static string useRegex {
             get {
                 return ResourceManager.GetString("useRegex", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to view nbt.
+        /// </summary>
+        public static string view_NBT {
+            get {
+                return ResourceManager.GetString("view_NBT", resourceCulture);
             }
         }
         

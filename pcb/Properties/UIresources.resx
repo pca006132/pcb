@@ -334,4 +334,10 @@
   <data name="about" xml:space="preserve">
     <value>about</value>
   </data>
+  <data name="custom_functions" xml:space="preserve">
+    <value>functions</value>
+  </data>
+  <data name="view_NBT" xml:space="preserve">
+    <value>view nbt</value>
+  </data>
 </root>

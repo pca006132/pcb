@@ -114,6 +114,10 @@
     <Compile Include="add_ac_list.xaml.cs" />
     <Compile Include="autocomplete_menu_data.cs" />
     <Compile Include="core\autocomplete\CompletionData.cs" />
+    <Compile Include="NbtViewer.xaml.cs">
+      <DependentUpon>NbtViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PrintNbt.cs" />
     <Compile Include="Properties\Resources.zh.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -122,6 +126,7 @@
     <Compile Include="CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PythonItem.cs" />
     <Compile Include="ScriptWindow.xaml.cs">
       <DependentUpon>ScriptWindow.xaml</DependentUpon>
     </Compile>
@@ -180,6 +185,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="NbtViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Output.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

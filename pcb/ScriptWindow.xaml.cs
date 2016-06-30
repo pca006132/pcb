@@ -13,7 +13,6 @@ using System.Windows.Shapes;
 using pcb.core.autocomplete;
 using pcb.core.util;
 using IronPython.Hosting;
-using IronPython.Runtime;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using ICSharpCode.AvalonEdit;
@@ -51,7 +50,7 @@ namespace pcb
         }
         void Button_Click(object sender, RoutedEventArgs e)
         {
-            string text = editor.Text;
+            string text = "import clr\nclr.AddReference('System.Xml')\n" + editor.Text;
             if (File.Exists("ref/py.py"))
             {
                 text = File.ReadAllText("ref/py.py", Encoding.UTF8) + "\r\n" + text;
@@ -61,7 +60,7 @@ namespace pcb
                 try
                 {
                     ScriptSource source =
-            engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);                    
+                        engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);                    
                     source.Execute(scope);
                 }
                 catch (ThreadAbortException tae)
@@ -132,6 +131,34 @@ namespace pcb
             var length = -1;
             main_editor.Dispatcher.Invoke((Action)(() => length = main_editor.SelectionLength));
             return length;
+        }
+        public string getSelectedText()
+        {
+            var text = "";
+            main_editor.Dispatcher.BeginInvoke((Action)(() => text = main_editor.SelectedText));
+            return text;
+        }
+        public void replaceSelectedText(string text)
+        {
+            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Replace(main_editor.SelectionStart, main_editor.SelectionLength, text)));
+        }
+        public int getLineOffset(int lineNum)
+        {
+            int offset = -1;
+            main_editor.Dispatcher.BeginInvoke((Action)(() => offset = main_editor.Document.GetLineByNumber(lineNum).Offset));
+            return offset;
+        }
+        public int getLineLength(int lineNum)
+        {
+            int length = 0;
+            main_editor.Dispatcher.BeginInvoke((Action)(() => length = main_editor.Document.GetLineByNumber(lineNum).Length));
+            return length;
+        }
+        public int getLineNum(int offset)
+        {
+            int lineNum = -1;
+            main_editor.Dispatcher.BeginInvoke((Action)(() => lineNum = main_editor.Document.GetLineByOffset(offset).LineNumber));
+            return lineNum;
         }
     }
     public class Util

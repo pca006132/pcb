@@ -25,7 +25,6 @@ namespace pcb
             editor.TextArea.Caret.PositionChanged += new EventHandler(caretChanged);
         }
 
-
         public void show()
         {
             Hide();
