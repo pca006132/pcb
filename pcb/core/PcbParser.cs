@@ -11,6 +11,8 @@ namespace pcb.core
 {
     public class PcbParser
     {
+        private static Regex define = new Regex(@"^define (\S+) = (.+)$", RegexOptions.Compiled);
+
         public static bool markerType = false;
         private int currentLineNum = 0;
         private Stack<AbstractCBChain> chains = new Stack<AbstractCBChain>();
@@ -25,6 +27,15 @@ namespace pcb.core
         }
         public int startLine = 0;
         public int endLine = -1;
+
+        //statistics
+        public int entityNum = 0;
+        public int cbNum = 0;
+        public int staticCommandNum = 0;
+        public int singleLineCommentNum = 0;
+        public int docCommentNum = 0;
+        public int moduleNum = 1;
+
         public string[] getOOC(string pcb, AbstractCBChain chain)
         {
             chains = new Stack<AbstractCBChain>();
@@ -46,8 +57,8 @@ namespace pcb.core
             {
                 currentLineNum++;
                 string line = rawLine.Trim(' ', '\t', '\r');
-                if (Regex.IsMatch(line, @"^define (\S+) = (.+)$")) {
-                    var regex = Regex.Match(line, @"^define (\S+) = (.+)$");
+                if (define.IsMatch(line)) {
+                    var regex = define.Match(line);
                     var key = regex.Groups[1].ToString();
                     var value = regex.Groups[2].ToString();
                     if (variables.ContainsKey(key))
@@ -65,11 +76,15 @@ namespace pcb.core
                 if (line.StartsWith("/*"))
                 {
                     isComment = true;
+                    docCommentNum++;
                     continue;
                 }
                 //single line comment
                 if (line.StartsWith("//"))
+                {
+                    singleLineCommentNum++;
                     continue;
+                }
 
                 //empty line
                 if (line.Length == 0)
@@ -109,22 +124,32 @@ namespace pcb.core
                     {
                         throw new PcbException(currentLineNum, Properties.Resources.newCoorError);
                     }
+                    moduleNum++;
                     continue;
                 }
                 if (line.StartsWith("init:"))
                 {
                     if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                    {
                         initCmd.Add(line.Substring(5));
+                        staticCommandNum++;
+                    }
                 }
                 else if (line.StartsWith("after:"))
                 {
                     if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                    {
                         lastCmd.Add(line.Substring(6));
+                        staticCommandNum++;
+                    }
                 }
                 else if (line.StartsWith("mark:"))
                 {
                     if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                    {
                         middleCmd.Add(marker(line, chains.Peek().getNextCbCoor()));
+                        entityNum++;
+                    }
                 }
                 else if (line.StartsWith("sign:"))
                 {
@@ -137,7 +162,10 @@ namespace pcb.core
                 {
                     int[] coor = chains.Peek().getNextCbCoor();
                     if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
+                    {
                         lastCmd.AddRange(stats(line, coor[0], coor[1], coor[2]));
+                        staticCommandNum += 2;
+                    }
                 }
                 else
                     chains.Peek().addCb(line, currentLineNum);
@@ -146,6 +174,7 @@ namespace pcb.core
             {
                 cbCmd.AddRange(c.getCommands(startLine, endLine));
             }
+            cbNum = cbCmd.Count;
             List<string> result = new List<string>();
             result.AddRange(initCmd);
             result.AddRange(cbCmd);

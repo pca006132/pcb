@@ -11,7 +11,7 @@
                      Height="270.23"
                      Background="#232323"
                      BorderBrush="AliceBlue"
-                     Icon="Command_Block.ico"
+                     Icon="icon.png"
                      ResizeMode="CanMinimize"
                      ShowIconOnTitleBar="False"
                      TitleCaps="False"

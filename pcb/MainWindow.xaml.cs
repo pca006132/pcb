@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.6.14";
+        string version = "0.7.1";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -86,7 +86,7 @@ namespace pcb
                 }
                 catch (Exception ex)
                 {
-                    showMessage(Properties.Resources.ioError + " ref/config.txt", Properties.Resources.warn);
+                    CustomMessageBox.ShowMessage(Properties.Resources.ioError + " ref/config.txt", Properties.Resources.warn, false);
                     log(ex);
                 }
             }
@@ -239,7 +239,7 @@ namespace pcb
                     }
                     catch
                     {
-                        showMessage(Properties.Resources.wrongTheme, Properties.Resources.warn);
+                        CustomMessageBox.ShowMessage(Properties.Resources.wrongTheme, Properties.Resources.warn, false);
                     }
                 }
             }
@@ -327,7 +327,7 @@ namespace pcb
                     string file = File.ReadAllText(fileName, Encoding.UTF8);
                     string name = fileName.Split('.')[0].Split('/','\\').Last();
                     Snippet snippet = new Snippet();
-                    foreach (string element in Regex.Split(file, @"(\$\([^()]+\))"))
+                    foreach (string element in Regex.Split(file, @"(\$\([^()]*\))"))
                     {
                         if (element.StartsWith("$"))
                         {
@@ -342,7 +342,6 @@ namespace pcb
                     snippets.Add(snippet);
                 }
                 snippet_menu = new Snippet_menu(Editor, this, snippets, names);
-                snippet_menu.Owner = this;
             }
             catch { }
         }
@@ -385,6 +384,9 @@ namespace pcb
             foldingUpdateTimer.Tick += foldingUpdateTimer_Tick;
             foldingUpdateTimer.Start();
             Show();
+
+            if (snippet_menu != null)
+                snippet_menu.Owner = this;
             foldingStrategy = new BraceFoldingStrategy();
             foldingManager = FoldingManager.Install(Editor.TextArea);
             foldingStrategy.UpdateFoldings(foldingManager, Editor.Document);
@@ -403,6 +405,9 @@ namespace pcb
             if (Thread.CurrentThread.CurrentCulture.Name == "zh")
             {
                 checkUpdate();
+            } else
+            {
+                openWebsite.Visibility = Visibility.Collapsed;
             }
             FontFamily font = new FontFamily(Properties.UIresources.font);
             Editor.FontFamily = font;
@@ -1248,13 +1253,43 @@ namespace pcb
         {
             Editor.Paste();
         }
+        void stats_click(object sender, RoutedEventArgs e)
+        {
+            string text = Editor.Text;
+            var parser = new core.PcbParser();
+            if (Editor.SelectionLength > 0)
+            {
+                text = Editor.SelectedText;
+            }
+            core.chain.AbstractCBChain chain;
+            if (useBlockStruc)
+                chain = new core.chain.BoxCbChain(new int[] { 2, -1, 1 });
+            else
+                chain = new core.chain.StraightCbChain(new int[] { 2, -2, 0 });
+            try
+            {
+                parser.getOOC(text, chain);
+                string warn = parser.checkForCondDir();
+                showMessage(warn + String.Format(Properties.UIresources.stats_content.Replace("\\n","\n"), parser.singleLineCommentNum + parser.docCommentNum, parser.docCommentNum, parser.singleLineCommentNum, parser.staticCommandNum, parser.entityNum, parser.moduleNum, parser.cbNum), Properties.UIresources.stats);
+                
+            }
+            catch (core.PcbException ex)
+            {
+                showMessage(ex.Message, "pcb error!");
+            }
+            catch (Exception ex)
+            {
+                showMessage(ex.Message, Properties.Resources.error);
+                log(ex);
+            }
+        }
         void about(object sender, RoutedEventArgs e)
         {
             showMessage(String.Format(Properties.UIresources.intro.Replace("<br>", "\r\n"), version), Properties.UIresources.about);
         }
         void viewNBT_click(object sender, RoutedEventArgs e)
         {
-            Editor.Document.Replace(Editor.Document.GetLineByOffset(Editor.SelectionStart), NbtViewer.viewNBT(Editor.Document.GetText(Editor.Document.GetLineByOffset(Editor.SelectionStart))));
+            Editor.Document.Replace(Editor.Document.GetLineByOffset(Editor.SelectionStart), NbtViewer.viewNBT(Editor.Document.GetText(Editor.Document.GetLineByOffset(Editor.SelectionStart)),this));
         }
         void selectAll(object sender, RoutedEventArgs e)
         {

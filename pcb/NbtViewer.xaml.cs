@@ -18,9 +18,10 @@ namespace pcb
     /// </summary>
     public partial class NbtViewer
     {
-        public static string viewNBT(string str)
+        public static string viewNBT(string str, MainWindow window)
         {
             NbtViewer viewer = new NbtViewer(str);
+            viewer.Owner = window;
             viewer.ShowDialog();
             return PrintNbt.NbtToCommand(viewer.text);
         }

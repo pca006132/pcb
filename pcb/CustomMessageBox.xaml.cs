@@ -39,11 +39,9 @@ namespace pcb
                 btnYes.Visibility = Visibility.Hidden;
             }
             this.message.Text = message;
-            this.title.Text = title;
+            Title = title;
             if (this.message.ActualHeight > 100)
-                Height = 250;
-            TitleBar.MouseDown += delegate { DragMove(); };
-            this.title.MouseDown += delegate { DragMove(); };
+                Height = 250;           
             ShowDialog();
         }
 

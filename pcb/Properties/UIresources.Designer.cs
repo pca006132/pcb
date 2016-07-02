@@ -466,7 +466,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to pcb-OOC generator.
+        ///   Looks up a localized string similar to PCB-Command Editor.
         /// </summary>
         public static string pcbName {
             get {
@@ -633,6 +633,24 @@ namespace pcb.Properties {
         public static string sideID {
             get {
                 return ResourceManager.GetString("sideID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Statistics.
+        /// </summary>
+        public static string stats {
+            get {
+                return ResourceManager.GetString("stats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nModule number: {5}\nCommand Block number: {6}.
+        /// </summary>
+        public static string stats_content {
+            get {
+                return ResourceManager.GetString("stats_content", resourceCulture);
             }
         }
         

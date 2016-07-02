@@ -160,6 +160,10 @@ namespace pcb
             main_editor.Dispatcher.BeginInvoke((Action)(() => lineNum = main_editor.Document.GetLineByOffset(offset).LineNumber));
             return lineNum;
         }
+        public void showMessage(string message, string title)
+        {
+            main_editor.Dispatcher.BeginInvoke((Action)(() => CustomMessageBox.ShowMessage(message, title, false)));
+        }
     }
     public class Util
     {

@@ -12,7 +12,7 @@
                       Height="300"
                       BorderBrush="AliceBlue"
                       Closing="MetroWindow_Closing"
-                      Icon="Command_Block.ico"
+                      Icon="icon.png"
                       ShowIconOnTitleBar="False"
                       ShowInTaskbar="False"
                       TitleCaps="False"

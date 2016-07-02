@@ -18,10 +18,9 @@
                       Closing="MetroWindow_Closing"
                       FontFamily="Microsoft YaHei"
                       FontSize="16"
-                      Icon="Command_Block.ico"
+                      Icon="icon.png"
                       RenderOptions.ClearTypeHint="Enabled"
                       ResizeMode="CanResize"
-                      ShowIconOnTitleBar="False"
                       TextOptions.TextFormattingMode="Display"
                       TitleCaps="False"
                       TitlebarHeight="30"
@@ -213,7 +212,9 @@
                           ToolTip="scb objectives, tags, names, teams" />
             </MenuItem>
             <MenuItem Header="{x:Static p:UIresources.help}">
-                <MenuItem Click="website_Click" Header="{x:Static p:UIresources.website}" />
+                <MenuItem x:Name="openWebsite"
+                          Click="website_Click"
+                          Header="{x:Static p:UIresources.website}" />
                 <MenuItem Click="readme_click" Header="{x:Static p:UIresources.doc}" />
                 <MenuItem Click="about" Header="{x:Static p:UIresources.about}" />
             </MenuItem>
@@ -221,6 +222,7 @@
                 <MenuItem Click="generateFromEditor"
                           Header="{x:Static p:UIresources.generate}"
                           InputGestureText="Ctrl + G" />
+                <MenuItem Click="stats_click" Header="{x:Static p:UIresources.stats}" />
                 <MenuItem Click="replaceCB"
                           Header="{x:Static p:UIresources.updateCommands}"
                           ToolTip="{x:Static p:UIresources.updateCommandsTooltip}" />

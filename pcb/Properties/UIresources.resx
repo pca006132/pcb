@@ -98,7 +98,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="pcbName" xml:space="preserve">
-    <value>pcb-OOC generator</value>
+    <value>PCB-Command Editor</value>
   </data>
   <data name="lastSaved" xml:space="preserve">
     <value>last saved:</value>
@@ -339,5 +339,11 @@
   </data>
   <data name="view_NBT" xml:space="preserve">
     <value>View NBT</value>
+  </data>
+  <data name="stats" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="stats_content" xml:space="preserve">
+    <value>Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nModule number: {5}\nCommand Block number: {6}</value>
   </data>
 </root>

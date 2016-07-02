@@ -9,7 +9,7 @@
                       Title="Output"
                       Width="498"
                       Height="327"
-                      Icon="Command_Block.ico"
+                      Icon="icon.png"
                       ResizeMode="NoResize"
                       ShowIconOnTitleBar="False"
                       ShowMaxRestoreButton="False"
