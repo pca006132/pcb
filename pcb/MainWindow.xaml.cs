@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.1";
+        string version = "0.7.2";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -402,13 +402,9 @@ namespace pcb
             findReplaceDialog.Owner = this;
             autocomplete = new autocomplete_menu_data(Editor, this);
             autocomplete.Owner = this;
-            if (Thread.CurrentThread.CurrentCulture.Name == "zh")
-            {
-                checkUpdate();
-            } else
-            {
-                openWebsite.Visibility = Visibility.Collapsed;
-            }
+            
+            checkUpdate();
+
             FontFamily font = new FontFamily(Properties.UIresources.font);
             Editor.FontFamily = font;
             foreach (MenuItem item in menu.Items)
@@ -466,7 +462,7 @@ namespace pcb
             {
                 try
                 {
-                    string urlAddress = "http://www.mcbbs.net/thread-533943-1-1.html";
+                    string urlAddress = "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2703820-command-pcb-command-editor-ooc-generator-for-mc-1";
                     HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
@@ -486,26 +482,23 @@ namespace pcb
 
                         string data = readStream.ReadToEnd();
 
-                        if (Regex.IsMatch(data, @"<th>软件版本:<\/th>\s*<td>([^<]*)<\/td>"))
+                        if (Regex.IsMatch(data, @"<p>version (\d+\.\d+\.\d+)"))
                         {
-                            Match match = Regex.Match(data, @"<th>软件版本:<\/th>\s*<td>([^<]*)<\/td>");
+                            Match match = Regex.Match(data, @"<p>version (\d+\.\d+\.\d+)");
                             string latestVersion = match.Groups[1].ToString().Trim();
                             if (Islatest(latestVersion))
-                            {
-                                var mySettings = new MetroDialogSettings()
-                                {
-                                    AffirmativeButtonText = "下载(打开浏览器)",
-                                    NegativeButtonText = "关闭"
-                                };
-                                Match url = Regex.Match(data, @"<th>下载地址:<\/th>\s*<td><a href=""([^""]*)");
-
+                            {                               
                                 Dispatcher.Invoke((Action)(() =>
                                 {
-                                    if (CustomMessageBox.ShowMessage("当前版本:" + version + Environment.NewLine + "最新版本:" +
-                                        latestVersion + Environment.NewLine + "下载地址:" +
-                                        url.Groups[1].ToString(), "发现新版本！") == CustomMessageBox.State.yes)
+                                    if (CustomMessageBox.ShowMessage(String.Format(Properties.UIresources.versionText.Replace("\\n","\n"), latestVersion), Properties.UIresources.versionDetected) == CustomMessageBox.State.yes)
                                     {
-                                        Process.Start(url.Groups[1].ToString());
+                                        if (Thread.CurrentThread.CurrentCulture.Name == "zh")
+                                        {
+                                            Process.Start("http://www.mcbbs.net/thread-533943-1-1.html");
+                                        } else
+                                        {
+                                            Process.Start("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2703820-command-pcb-command-editor-ooc-generator-for-mc-1");
+                                        }
                                     }
                                 }));                                
                             }
@@ -516,6 +509,7 @@ namespace pcb
                         }
                         else
                         {
+                            Dispatcher.BeginInvoke((Action)(() => CustomMessageBox.ShowMessage(data, "")));
                             throw new Exception();
                         }
                         response.Close();
@@ -524,62 +518,6 @@ namespace pcb
                 }
                 catch
                 {
-                    new Thread(() =>
-                    {
-                        try
-                        {
-                            string urlAddress = "http://www.pcapcb.com/forum.php?mod=viewthread&tid=24";
-                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-
-                            if (response.StatusCode == HttpStatusCode.OK)
-                            {
-                                Stream receiveStream = response.GetResponseStream();
-                                StreamReader readStream = null;
-
-                                if (response.CharacterSet == null)
-                                {
-                                    readStream = new StreamReader(receiveStream);
-                                }
-                                else
-                                {
-                                    readStream = new StreamReader(receiveStream, Encoding.GetEncoding(response.CharacterSet));
-                                }
-
-                                string data = readStream.ReadToEnd();
-
-                                if (Regex.IsMatch(data, @"版本: ([0-9.]*)"))
-                                {
-                                    Match match = Regex.Match(data, @"版本: ([0-9.]*)");
-                                    string latestVersion = match.Groups[1].ToString().Trim();
-                                    if (Islatest(latestVersion))
-                                    {
-                                        var mySettings = new MetroDialogSettings()
-                                        {
-                                            AffirmativeButtonText = "下载(打开浏览器)",
-                                            NegativeButtonText = "关闭"
-                                        };
-                                        Match url = Regex.Match(data, @"下载地址: <a href=""([^""]*)""");               
-                                        Dispatcher.Invoke((Action)(() =>
-                                        {
-                                            if (CustomMessageBox.ShowMessage("当前版本:" + version + Environment.NewLine +
-                                                "最新版本:" + latestVersion + Environment.NewLine + "下载地址:" +
-                                                    url.Groups[1].ToString(), "发现新版本！") == CustomMessageBox.State.yes)
-                                            {
-                                                System.Diagnostics.Process.Start(url.Groups[1].ToString());
-                                            }
-                                        }));
-                                    }
-                                }
-                                response.Close();
-                                readStream.Close();
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            log(ex);
-                        }
-                    }).Start();
                 }
             }).Start();
 
@@ -1230,7 +1168,10 @@ namespace pcb
         }
         void website_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start("http://www.mcbbs.net/thread-533943-1-1.html");
+            if (Thread.CurrentThread.CurrentCulture.Name == "zh")
+                Process.Start("http://www.mcbbs.net/thread-533943-1-1.html");
+            else
+                Process.Start("http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2703820-command-pcb-command-editor-ooc-generator-for-mc-1");
         }
         void readme_click(object sender, RoutedEventArgs e)
         {

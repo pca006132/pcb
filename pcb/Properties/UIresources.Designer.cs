@@ -754,6 +754,24 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Update Detected!.
+        /// </summary>
+        public static string versionDetected {
+            get {
+                return ResourceManager.GetString("versionDetected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Latest Version: {0}\nYes to open browser to download.
+        /// </summary>
+        public static string versionText {
+            get {
+                return ResourceManager.GetString("versionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View NBT.
         /// </summary>
         public static string view_NBT {

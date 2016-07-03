@@ -346,4 +346,10 @@
   <data name="stats_content" xml:space="preserve">
     <value>Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nModule number: {5}\nCommand Block number: {6}</value>
   </data>
+  <data name="versionText" xml:space="preserve">
+    <value>Latest Version: {0}\nYes to open browser to download</value>
+  </data>
+  <data name="versionDetected" xml:space="preserve">
+    <value>Update Detected!</value>
+  </data>
 </root>

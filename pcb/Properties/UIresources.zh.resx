@@ -366,4 +366,10 @@
   <data name="stats_content" xml:space="preserve">
     <value>总注释数: {0}\n多行注释数: {1}\n单行注释数: {2}\n命令数(init/last/stats): {3}\n实体数: {4}\n模块数: {5}\n命令方块数: {6}</value>
   </data>
+  <data name="versionText" xml:space="preserve">
+    <value>新版本:{0}\n点击开启浏览器下载新版本</value>
+  </data>
+  <data name="versionDetected" xml:space="preserve">
+    <value>发现新版本!</value>
+  </data>
 </root>
