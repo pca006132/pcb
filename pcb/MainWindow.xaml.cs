@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.2";
+        string version = "0.7.3";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -73,7 +73,6 @@ namespace pcb
             catch (Exception ex)
             {
                 CustomMessageBox.ShowMessage(Properties.Resources.cannotInitBackup, Properties.Resources.warn);
-                log(ex);
             }
         }
         void setUp()
@@ -87,7 +86,6 @@ namespace pcb
                 catch (Exception ex)
                 {
                     CustomMessageBox.ShowMessage(Properties.Resources.ioError + " ref/config.txt", Properties.Resources.warn, false);
-                    log(ex);
                 }
             }
             else
@@ -292,7 +290,6 @@ namespace pcb
                 catch (Exception ex)
                 {
                     showMessage(Properties.Resources.ioError, Properties.Resources.warn);
-                    log(ex);
                 }
             }
         }
@@ -356,7 +353,6 @@ namespace pcb
             catch (AutocompleteParseException ex)
             {
                 CustomMessageBox.ShowMessage(ex.Message, Properties.Resources.error, false);
-                log(ex);
                 App.Current.Shutdown();
                 return;
             }
@@ -364,7 +360,6 @@ namespace pcb
             {
                 CustomMessageBox.ShowMessage(ex.Message, Properties.Resources.error, false);
                 CustomMessageBox.ShowMessage(ex.StackTrace, Properties.Resources.error, false);
-                log(ex);
                 App.Current.Shutdown();
                 return;
             }
@@ -397,6 +392,9 @@ namespace pcb
             Editor.Options.AllowScrollBelowDocument = true;
             //change background of current line
             Editor.TextArea.TextView.BackgroundRenderers.Add(new XBackgroundRenderer(Editor));
+
+            Dispatcher.UnhandledException += Dispatcher_UnhandledException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             findReplaceDialog = new FindReplaceDialog(this);
             findReplaceDialog.Owner = this;
@@ -594,8 +592,6 @@ namespace pcb
             {
                 autocomplete.Hide();
                 autocomplete.shown = false;
-                log(ex);
-                Debug.Print(ex.StackTrace);
                 return;
             }
 
@@ -794,9 +790,7 @@ namespace pcb
             {
                 if (!File.Exists("documents/log/log.txt"))
                     File.Create("documents/log/log.txt");
-                var writer = File.AppendText("documents/log/log.txt");
-                writer.WriteLine(ex.Message);
-                writer.WriteLine(ex.StackTrace);
+                File.AppendAllText("documents/log/log.txt", ex.Message + "\n" + ex.StackTrace);
             }
             catch { }
         }
@@ -920,7 +914,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(ex.Message, Properties.Resources.error);
-                log(ex);
             }
         }
         void updateFromPcb()
@@ -949,7 +942,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(ex.Message, "error!");
-                log(ex);
             }
         }
         //events
@@ -1054,7 +1046,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
-                log(ex);
                 Title = Properties.UIresources.pcbName;
             }
         }
@@ -1083,7 +1074,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
-                log(ex);
             }
         }
         void SaveFile_Click(object sender, RoutedEventArgs e)
@@ -1096,7 +1086,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
-                log(ex);
             }
         }
         void Escape_Click(object sender, RoutedEventArgs e)
@@ -1221,7 +1210,6 @@ namespace pcb
             catch (Exception ex)
             {
                 showMessage(ex.Message, Properties.Resources.error);
-                log(ex);
             }
         }
         void about(object sender, RoutedEventArgs e)
@@ -1351,6 +1339,15 @@ namespace pcb
             }
             deleteBackupFile();
         }
+        void Dispatcher_UnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {            
+            log(e.Exception);           
+        }
+        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+                log((Exception)e.ExceptionObject);
+        }
+
         //command classes
         class generate : ICommand
         {
@@ -1593,7 +1590,6 @@ namespace pcb
                 catch (Exception ex)
                 {
                     parent.showMessage(Properties.Resources.ioError + "\n" + ex.ToString(), Properties.Resources.error);
-                    parent.log(ex);
                 }
             }
         }

@@ -35,7 +35,10 @@ namespace pcb
                         var compiled = engine.CreateScriptSourceFromString(file).Compile();
                         result.Add(new PythonItem(engine, scope, name, compiled));
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        CustomMessageBox.ShowMessage(ex.Message, Properties.Resources.error + "   " + fileName, false);
+                    }
                 }
             } catch { }
             return result;
@@ -61,7 +64,7 @@ namespace pcb
                 code.Execute(scope);
             } catch (Exception ex)
             {
-                CustomMessageBox.ShowMessage(ex.ToString(), Properties.Resources.error);
+                CustomMessageBox.ShowMessage(ex.ToString(), Properties.Resources.error, false);
             }
         }
     }

@@ -29,7 +29,6 @@ namespace pcb
     {
         ScriptEngine engine = Python.CreateEngine();
         ScriptScope scope;
-        Thread pythonThread;
         public ScriptWindow(TextEditor editor)
         {
             InitializeComponent();
@@ -55,42 +54,22 @@ namespace pcb
             {
                 text = File.ReadAllText("ref/py.py", Encoding.UTF8) + "\r\n" + text;
             }
-            pythonThread = new Thread(() =>
+
+            try
             {
-                try
-                {
-                    ScriptSource source =
-                        engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);                    
-                    source.Execute(scope);
-                }
-                catch (ThreadAbortException tae)
-                {
-                    if (tae.ExceptionState is KeyboardInterruptException)
-                    {
-                        Thread.ResetAbort();
-                    }
-                    else { throw; }
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.BeginInvoke((Action)(() => showMessage(ex.Message, "error!")));
-                    try
-                    {
-                        if (!File.Exists("documents/log/log.txt"))
-                            File.Create("documents/log/log.txt");
-                        var writer = File.AppendText("documents/log/log.txt");
-                        writer.WriteLine(ex.Message);
-                        writer.WriteLine(ex.StackTrace);
-                    }
-                    catch { }
-                }
-            });
-            pythonThread.Start();
+                ScriptSource source =
+                    engine.CreateScriptSourceFromString(text, SourceCodeKind.Statements);                    
+                source.Execute(scope);
+            }
+           
+            catch (Exception ex)
+            {
+                showMessage(ex.Message, "error!");
+            }            
         }
         void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (pythonThread != null)
-                pythonThread.Abort(new KeyboardInterruptException(""));
+
         }
     }
 
@@ -104,32 +83,32 @@ namespace pcb
 
         public void appendText(string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Insert(main_editor.Text.Length, text)));
+            main_editor.Document.Insert(main_editor.Text.Length, text);
         }
         public void insertText(int index, string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Insert(index, text)));
+           main_editor.Document.Insert(index, text);
         }
         public void replaceText(int index, int length, string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Replace(index, length, text)));
+           main_editor.Document.Replace(index, length, text);
         }
         public string getText()
         {
             string text = "";
-            main_editor.Dispatcher.Invoke((Action)(() => text = main_editor.Text));
+            text = main_editor.Text;
             return text;
         }
         public int getSelectionStart()
         {
             var index = -1;
-            main_editor.Dispatcher.Invoke((Action)(() => index = main_editor.SelectionStart));
+            index = main_editor.SelectionStart;
             return index;
         }
         public int getSelectionLength()
         {
             var length = -1;
-            main_editor.Dispatcher.Invoke((Action)(() => length = main_editor.SelectionLength));
+            length = main_editor.SelectionLength;
             return length;
         }
         public string getSelectedText()
@@ -140,29 +119,29 @@ namespace pcb
         }
         public void replaceSelectedText(string text)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(() => main_editor.Document.Replace(main_editor.SelectionStart, main_editor.SelectionLength, text)));
+            main_editor.Document.Replace(main_editor.SelectionStart, main_editor.SelectionLength, text);
         }
         public int getLineOffset(int lineNum)
         {
             int offset = -1;
-            main_editor.Dispatcher.BeginInvoke((Action)(() => offset = main_editor.Document.GetLineByNumber(lineNum).Offset));
+            offset = main_editor.Document.GetLineByNumber(lineNum).Offset;
             return offset;
         }
         public int getLineLength(int lineNum)
         {
             int length = 0;
-            main_editor.Dispatcher.BeginInvoke((Action)(() => length = main_editor.Document.GetLineByNumber(lineNum).Length));
+            length = main_editor.Document.GetLineByNumber(lineNum).Length;
             return length;
         }
         public int getLineNum(int offset)
         {
             int lineNum = -1;
-            main_editor.Dispatcher.BeginInvoke((Action)(() => lineNum = main_editor.Document.GetLineByOffset(offset).LineNumber));
+            lineNum = main_editor.Document.GetLineByOffset(offset).LineNumber;
             return lineNum;
         }
         public void showMessage(string message, string title)
         {
-            main_editor.Dispatcher.BeginInvoke((Action)(() => CustomMessageBox.ShowMessage(message, title, false)));
+           CustomMessageBox.ShowMessage(message, title, false);
         }
     }
     public class Util
@@ -274,7 +253,7 @@ namespace pcb
             return Math.Pow(num, power);
         }
         public int randInt(int max)
-        {
+        {            
             return rnd.Next(max);
         }
         public double rand()
