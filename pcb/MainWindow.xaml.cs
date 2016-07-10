@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.3";
+        string version = "0.7.4";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -70,7 +70,7 @@ namespace pcb
             {
                 File.Create(backupFileName);
             }
-            catch (Exception ex)
+            catch
             {
                 CustomMessageBox.ShowMessage(Properties.Resources.cannotInitBackup, Properties.Resources.warn);
             }
@@ -83,7 +83,7 @@ namespace pcb
                 {
                     configs();
                 }
-                catch (Exception ex)
+                catch
                 {
                     CustomMessageBox.ShowMessage(Properties.Resources.ioError + " ref/config.txt", Properties.Resources.warn, false);
                 }
@@ -287,7 +287,7 @@ namespace pcb
                 {
                     loadFile(filePath);
                 }
-                catch (Exception ex)
+                catch
                 {
                     showMessage(Properties.Resources.ioError, Properties.Resources.warn);
                 }
@@ -588,7 +588,7 @@ namespace pcb
             try
             {
                 list = tree.autocomplete(text);
-            } catch (Exception ex)
+            } catch
             {
                 autocomplete.Hide();
                 autocomplete.shown = false;

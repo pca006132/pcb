@@ -344,7 +344,7 @@
     <value>Statistics</value>
   </data>
   <data name="stats_content" xml:space="preserve">
-    <value>Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nModule number: {5}\nCommand Block number: {6}</value>
+    <value>Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nCB Chain number: {5}\nCommand Block number: {6}</value>
   </data>
   <data name="versionText" xml:space="preserve">
     <value>Latest Version: {0}\nYes to open browser to download</value>

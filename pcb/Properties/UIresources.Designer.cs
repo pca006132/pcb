@@ -646,7 +646,7 @@ namespace pcb.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nModule number: {5}\nCommand Block number: {6}.
+        ///   Looks up a localized string similar to Total Comment number: {0}\nMultiline comment number: {1}\nSingle line comment number: {2}\nCommand number(init/last/stats): {3}\nEntity number: {4}\nCB Chain number: {5}\nCommand Block number: {6}.
         /// </summary>
         public static string stats_content {
             get {

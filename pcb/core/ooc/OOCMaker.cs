@@ -25,7 +25,7 @@ namespace pcb.core
         public string[] getOOCs()
         {
             List<string> results = new List<string>();
-            foreach (SingleOOC ooc in oocs)
+            foreach (SingleOOC ooc in oocs.Reverse())
             {
                 results.Add(ooc.getOOC());
             }

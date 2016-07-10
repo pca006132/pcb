@@ -36,6 +36,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -54,8 +58,8 @@
     <Compile Include="core\autocomplete\InitStaticValue.cs" />
     <Compile Include="core\autocomplete\TreeTests.cs" />
     <Compile Include="core\autocomplete\ValueTests.cs" />
-    <Compile Include="core\CommandBlockTests.cs" />
-    <Compile Include="core\MarkerTests.cs" />
+    <Compile Include="core\ooc\CommandBlockTests.cs" />
+    <Compile Include="core\ooc\MarkerTests.cs" />
     <Compile Include="core\util\Command_UtilTests.cs" />
     <Compile Include="core\util\Coor_UtilTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,6 +69,9 @@
       <Project>{691F3923-C704-4823-AE19-7D2BF8E9548C}</Project>
       <Name>pcb</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
