@@ -113,6 +113,7 @@ namespace pcb
             if (!int.TryParse(limit.Text, out temp) || temp < 1000)
             {
                 this.ShowMessageAsync(Properties.Resources.error, isChinese ? "OOC字符数必须为大于等于1000的整数" : "OOC char limit should be an integer not smaller than 1000");
+                return;
             }
             core.SingleOOC.oocLimit = temp;
             Close();
