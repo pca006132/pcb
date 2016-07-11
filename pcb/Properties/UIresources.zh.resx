@@ -372,4 +372,7 @@
   <data name="versionDetected" xml:space="preserve">
     <value>发现新版本!</value>
   </data>
+  <data name="ooc_limit" xml:space="preserve">
+    <value>OOC字符数限制</value>
+  </data>
 </root>

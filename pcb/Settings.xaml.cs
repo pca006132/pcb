@@ -55,6 +55,7 @@ namespace pcb
             blockID_Side.Text = BoxCbChain.outerBlock;
             blockDamage_Top.Text = BoxCbChain.baseDamage.ToString();
             blockDamage_Side.Text = BoxCbChain.outerDamage.ToString();
+            limit.Text = core.SingleOOC.oocLimit.ToString();
             Show();
         }        
         private void cancel(object sender, EventArgs e)
@@ -78,37 +79,43 @@ namespace pcb
             }
             parent.FontFamily = (FontFamily)FontList.SelectedItem;
             int temp;
+            bool isChinese = System.Threading.Thread.CurrentThread.CurrentCulture.Name == "zh";
             if (int.TryParse(block_X.Text, out temp) == false || temp < 2)
             {
-                this.ShowMessageAsync("错误", "X轴长度请填写大于2的整数");
+                this.ShowMessageAsync(Properties.Resources.error,  isChinese? "X轴长度请填写大于2的整数" : "X axis length must be an integer larger than 2");
                 return;
             }
             BoxCbChain.xLimit = temp;
             if (int.TryParse(block_z.Text, out temp) == false || temp < 2)
             {
-                this.ShowMessageAsync("错误", "Z轴长度请填写大于2的整数");
+                this.ShowMessageAsync(Properties.Resources.error, isChinese ? "Z轴长度请填写大于2的整数" : "Z axis length must be an integer larger than 2");
                 return;
             }
             BoxCbChain.zLimit = temp;
             if (int.TryParse(blockDamage_Top.Text, out temp) == false || temp < 0 || temp > 16)
             {
-                this.ShowMessageAsync("错误", "数据值请填写大于0，小于16的整数");
+                this.ShowMessageAsync(Properties.Resources.error, isChinese? "数据值请填写大于0，小于16的整数" : "data value should be integer >= 0 and <= 15");
                 return;
             }
             BoxCbChain.baseDamage = (byte)temp;
             if (int.TryParse(blockDamage_Side.Text, out temp) == false || temp < 0 || temp > 16)
             {
-                this.ShowMessageAsync("错误", "数据值请填写大于0，小于16的整数");
+                this.ShowMessageAsync(Properties.Resources.error, isChinese ? "数据值请填写大于0，小于16的整数" : "data value should be integer >= 0 and <= 15");
                 return;
             }
             BoxCbChain.outerDamage = (byte)temp;
             if (int.TryParse(CBCount.Text, out temp) == false || (temp < 2 && temp != 0))
             {
-                this.ShowMessageAsync("错误", "自动换行CB数必须为大于等于2的整数");
+                this.ShowMessageAsync(Properties.Resources.error, isChinese ? "自动换行CB数必须为大于等于2的整数" : "CB count should be integer larger than or equal to 2, or 0");
                 return;
             }
-            StraightCbChain.limit = temp;            
-            this.Close();
+            StraightCbChain.limit = temp;
+            if (!int.TryParse(limit.Text, out temp) || temp < 1000)
+            {
+                this.ShowMessageAsync(Properties.Resources.error, isChinese ? "OOC字符数必须为大于等于1000的整数" : "OOC char limit should be an integer not smaller than 1000");
+            }
+            core.SingleOOC.oocLimit = temp;
+            Close();
         }
     }
 }

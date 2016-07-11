@@ -10,6 +10,7 @@ namespace pcb.core.autocomplete
     {
         private static readonly string[] defaultPrefixes = { "icb:", "rcb:", "cond:", "data:"};
         private static readonly string[] prefixes = { "init:", "after:" };
+        public static List<string> defines = new List<string>();
 
         public static Tree generateTree(string text)
         {
@@ -138,6 +139,14 @@ namespace pcb.core.autocomplete
                     }
                     result.displayData.AddRange(tempList.displayData);
                     result.startLength.AddRange(tempList.startLength);
+                }
+                foreach (string define in defines)
+                {
+                    if (define.ToLower().StartsWith(keys.Last().ToLower()))
+                    {
+                        result.displayData.Add(define);
+                        result.startLength.Add(keys.Last().Length);
+                    }
                 }
                 return result;
             }

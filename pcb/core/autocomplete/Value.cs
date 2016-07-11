@@ -93,7 +93,7 @@ namespace pcb.core.autocomplete
         public static List<string> runtime_scbObj = new List<string>();
         public static List<string> runtime_triggerObj = new List<string>();
 
-        private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector","command"};
+        private static readonly string[] functionNames = {"scbObj" ,"trigger","team","tag","sound","dot","selector","command","nbt"};
 
         public enum Type{
             reference, //values[0] = value key
@@ -306,6 +306,10 @@ namespace pcb.core.autocomplete
                                     result.AddRange(attributes.Autocomplete(value + "." + beginMatch));
                                 }
                             beginMatch = input.Split('.').Last();
+                            break;
+                        case "nbt":
+                            beginMatch = input.Split('{', '[', ',').Last();
+                            result.AddRange(getRef("nbt"));
                             break;
                         case "selector":
                             if ((beginMatch.StartsWith("@a[") || beginMatch.StartsWith("@p[") || beginMatch.StartsWith("@e[") || beginMatch.StartsWith("@r[")) && beginMatch.LastIndexOf(',') >= beginMatch.LastIndexOf('='))

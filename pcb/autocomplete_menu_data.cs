@@ -105,15 +105,7 @@ namespace pcb
                         listbox.Items.Clear();
                         Hide();
                         e.Handled = true;
-                    }
-                    if (e.Key == Key.Space || e.Key == Key.Decimal || e.Key == Key.OemPeriod)
-                    {
-                        editor.Document.Replace(editor.SelectionStart - completion[listbox.SelectedIndex], completion[listbox.SelectedIndex], display[listbox.SelectedIndex]);
-                        display.Clear();
-                        completion.Clear();
-                        listbox.Items.Clear();
-                        Hide();
-                    }
+                    }                    
                 }
             }
             catch (Exception ex)

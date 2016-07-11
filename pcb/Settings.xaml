@@ -8,7 +8,7 @@
                      xmlns:p="clr-namespace:pcb.Properties"
                      Title="{x:Static p:UIresources.setting}"
                      Width="481.745"
-                     Height="270.23"
+                     Height="299.668"
                      Background="#232323"
                      BorderBrush="AliceBlue"
                      Icon="icon.png"
@@ -18,7 +18,7 @@
                      mc:Ignorable="d">
     <Grid>
         <ComboBox x:Name="FontList"
-                  Margin="84,15,240,195"
+                  Margin="84,15,240,224"
                   ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
         <Label Margin="10,15,0,0"
                HorizontalAlignment="Left"
@@ -149,7 +149,7 @@
         </GroupBox>
         <Button x:Name="btnCancel"
                 Width="75"
-                Margin="10,206,0,0"
+                Margin="10,236,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="cancel"
@@ -157,11 +157,24 @@
                 FontFamily="Microsoft Yahei" />
         <Button x:Name="btnApply"
                 Width="75"
-                Margin="390,206,0,0"
+                Margin="390,236,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="ApplyChange"
                 Content="{x:Static p:UIresources.save}"
                 FontFamily="Microsoft Yahei" />
+        <Label x:Name="label"
+               Margin="10,194,0,0"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Top"
+               Content="{x:Static p:UIresources.ooc_limit}" />
+        <TextBox x:Name="limit"
+                 Width="89"
+                 Height="23"
+                 Margin="151,194,0,0"
+                 HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Text=""
+                 TextWrapping="Wrap" />
     </Grid>
 </control:MetroWindow>

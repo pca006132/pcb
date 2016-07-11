@@ -8,8 +8,8 @@ namespace pcb.core
     public class SingleOOC
     {
         //constants
-        const string prefix = "/summon FallingSand ~ ~2 ~ " +
-                "{Time:1,Block:minecraft:redstone_block,Passengers:" +
+        const string prefix = "/summon FallingSand ~ ~1.5 ~ " +
+                "{Time:1,Block:minecraft:redstone_block,Motion:[0d,-1d,0d],Passengers:" +
                 "[{id:FallingSand,Time:1,Block:minecraft:activator_rail" +
                 ",Passengers:[";
         const string suffix = "{id:MinecartCommandBlock,Command:" +
@@ -21,6 +21,8 @@ namespace pcb.core
         static int colorCmdPrefixLength = getColorModeLength(cmdPrefix, false);
         static int suffixLength = suffix.Length;
         static int colorSuffixLength = getColorModeLength(suffix, false);
+        static int colorSignLength = colorBlackTech("").Length;
+        public static int oocLimit = 31000;
         //end constants
 
         private bool useColorBlackTech;
@@ -46,14 +48,14 @@ namespace pcb.core
                 cmd.Append("\"");
                 cmd.Append(escape(command));
                 cmd.Append("\"");
-                colorModeLength += getColorModeLength(command, true) + colorCmdPrefixLength + 4;
-                normalLength += getEscapedLength(command) + cmdPrefixLength + 3;
+                colorModeLength += getColorModeLength(command, true) + colorCmdPrefixLength + 6;
+                normalLength += getEscapedLength(command) + cmdPrefixLength + 4;
             }
             else
             {
                 cmd.Append(command);
-                colorModeLength += getColorModeLength(command, false) + colorCmdPrefixLength + 4;
-                normalLength += command.Length + cmdPrefixLength + 1;
+                colorModeLength += getColorModeLength(command, false) + colorCmdPrefixLength + 2;
+                normalLength += command.Length + cmdPrefixLength + 2;
             }
             cmd.Append("},");            
         }
@@ -69,34 +71,34 @@ namespace pcb.core
             bool _needEscape = needEscape(command);
             if (_needEscape)
             {
-                if (getEscapedLength(command) > 30000)
+                if (getEscapedLength(command) > oocLimit)
                     throw new PcbException(Properties.Resources.commandTooLong);
                 if (useColorBlackTech || command.Contains("§"))
                 {
-                    if (colorModeLength + getColorModeLength(command, true) + colorCmdPrefixLength + 4 + colorSuffixLength > 28000)
+                    if (colorModeLength + getColorModeLength(command, true) + colorCmdPrefixLength + 6 + colorSuffixLength + colorSignLength> oocLimit)
                         return false;
                     else
                         return true;
                 }
                 else {
-                    if (normalLength + getEscapedLength(command) + cmdPrefixLength + 3 + suffixLength > 30000)
+                    if (normalLength + getEscapedLength(command) + cmdPrefixLength + 4 + suffixLength > oocLimit)
                         return false;
                     else
                         return true;
                 }
             } else
             {
-                if (command.Length > 30000)
+                if (command.Length > oocLimit)
                     throw new PcbException(Properties.Resources.commandTooLong);
                 if (useColorBlackTech || command.Contains("§"))
                 {
-                    if (colorModeLength + getColorModeLength(command, false) + colorCmdPrefixLength + 4 + colorSuffixLength > 28000)
+                    if (colorModeLength + getColorModeLength(command, false) + colorCmdPrefixLength + 2 + colorSuffixLength + colorSignLength > oocLimit)
                         return false;
                     else
                         return true;
                 }
                 else {
-                    if (normalLength + command.Length + cmdPrefixLength + 1 + suffixLength > 30000)
+                    if (normalLength + command.Length + cmdPrefixLength + 2 + suffixLength > oocLimit)
                         return false;
                     else
                         return true;
@@ -140,9 +142,9 @@ namespace pcb.core
                 }
             }
             if (doubleEscape)
-                return specialCharCount * 3 + strLength + colorCharCount;
+                return specialCharCount * 7 + strLength + colorCharCount;
             else
-                return specialCharCount + strLength + colorCharCount;
+                return specialCharCount * 3 + strLength + colorCharCount;
         }        
 
         string getNormalOOC()

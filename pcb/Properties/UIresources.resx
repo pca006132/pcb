@@ -352,4 +352,7 @@
   <data name="versionDetected" xml:space="preserve">
     <value>Update Detected!</value>
   </data>
+  <data name="ooc_limit" xml:space="preserve">
+    <value>OOC char Limit</value>
+  </data>
 </root>

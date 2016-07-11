@@ -430,6 +430,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OOC char Limit.
+        /// </summary>
+        public static string ooc_limit {
+            get {
+                return ResourceManager.GetString("ooc_limit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OOC is too long, command:({0}/{1}).
         /// </summary>
         public static string ooc2Long {

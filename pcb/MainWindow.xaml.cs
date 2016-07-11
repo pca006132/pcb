@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.4";
+        string version = "0.7.5";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -524,6 +524,7 @@ namespace pcb
         void parseDocument()
         {
             string[] lines = Editor.Text.Split('\n');
+            Tree.defines.Clear();
             Value.runtime_names.Clear();
             Value.runtime_scbObj.Clear();
             Value.runtime_tags.Clear();
@@ -533,6 +534,7 @@ namespace pcb
             {
                 string text = rawLine.Trim();
                 if (!text.StartsWith("//"))
+                {
                     if (Regex.IsMatch(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w"))
                     {
                         string str = Regex.Match(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w").Groups[1].ToString();
@@ -562,6 +564,12 @@ namespace pcb
                         if (!Value.runtime_teams.Contains(team))
                             Value.runtime_teams.Add(team);
                     }
+                    else if (text.StartsWith("define "))
+                    {
+                        string define = text.Split(' ')[1];
+                        Tree.defines.Add(define);
+                    }
+                }
             }
         }
         void addElements()
@@ -951,6 +959,9 @@ namespace pcb
             {
                 return;
             }
+            string text = Editor.Document.GetText(Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0), Editor.TextArea.Caret.Offset - Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0));
+            if (text.Trim().StartsWith("//"))
+                return;
             try
             {
                 if (e.Text == ")" && Editor.Text[Editor.SelectionStart] == ')')

@@ -27,7 +27,7 @@ namespace pcb.core.autocomplete
             } catch (Exception ex)
             {
                 throw new AutocompleteParseException(Properties.Resources.formatError + ": references.json: \n" + ex.Message);
-            }
+            }            
             foreach (var pair in json)
             {
                 if (pair.Value.Type == JTokenType.Array)
