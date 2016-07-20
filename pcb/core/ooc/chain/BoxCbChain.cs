@@ -99,15 +99,17 @@ namespace pcb.core.chain
         {
             List<string> cb_cmd = new List<string>();
             List<string> rcb_cmd = new List<string>();
+            if (cbStack.Count == 0)
+                return cb_cmd;
             if ((end != -1 && cbStack.Last().lineNum > end) || cbStack.First().lineNum < start)
                 return cb_cmd;
             //outer block
             if (start == 0 && end == -1)
             {
                 cb_cmd.Add(String.Format(
-        "fill ~{0} ~{1} ~{2} ~{3} ~{4} ~{5} {6} {7} hollow", newCoor[0] - 1, newCoor[1], newCoor[2] - 1,
-        newCoor[0] + xLimit, newCoor[1] + yCount, newCoor[2] + zLimit,
-        outerBlock, outerDamage));
+                    "fill ~{0} ~{1} ~{2} ~{3} ~{4} ~{5} {6} {7} hollow", newCoor[0] - 1, newCoor[1], newCoor[2] - 1,
+                    newCoor[0] + xLimit, newCoor[1] + yCount, newCoor[2] + zLimit,
+                    outerBlock, outerDamage));
                 //top block
                 cb_cmd.Add(String.Format(
                         "fill ~{0} ~{1} ~{2} ~{3} ~{4} ~{5} {6} {7} hollow", newCoor[0] - 1, newCoor[1] - 1, newCoor[2] - 1,

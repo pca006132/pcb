@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.5";
+        string version = "0.7.7";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -523,7 +523,7 @@ namespace pcb
         //autocomplete
         void parseDocument()
         {
-            string[] lines = Editor.Text.Split('\n');
+            string[] lines = Editor.Text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
             Tree.defines.Clear();
             Value.runtime_names.Clear();
             Value.runtime_scbObj.Clear();
@@ -901,6 +901,13 @@ namespace pcb
             if (Editor.SelectionLength > 0)
             {                
                 text = Editor.SelectedText;
+                foreach (string line in Editor.Text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None))
+                {
+                    if (line.Trim().StartsWith("define"))
+                    {
+                        text = line + "\n" + text;
+                    }
+                }
             }
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)
@@ -1231,6 +1238,11 @@ namespace pcb
         {
             Editor.Document.Replace(Editor.Document.GetLineByOffset(Editor.SelectionStart), NbtViewer.viewNBT(Editor.Document.GetText(Editor.Document.GetLineByOffset(Editor.SelectionStart)),this));
         }
+        void openUuidDialog(object sender, RoutedEventArgs e)
+        {
+            UUID uuid = new UUID();
+            uuid.Show();
+        }
         void selectAll(object sender, RoutedEventArgs e)
         {
             Editor.SelectAll();
@@ -1358,7 +1370,6 @@ namespace pcb
         {
                 log((Exception)e.ExceptionObject);
         }
-
         //command classes
         class generate : ICommand
         {
@@ -1580,7 +1591,7 @@ namespace pcb
                         parent.LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
                     }
                     else
-                    {
+                    {                        
                         SaveFileDialog savefiledialog = new SaveFileDialog();
                         savefiledialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory;
                         if (Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + "documents"))
@@ -1590,10 +1601,10 @@ namespace pcb
                         savefiledialog.Filter = "*.pcb|*.pcb|*.txt|*.txt";
                         if (savefiledialog.ShowDialog() == true)
                         {
-                            parent.path = savefiledialog.SafeFileName;
+                            parent.path = savefiledialog.FileName;
                             File.WriteAllText(savefiledialog.FileName, parent.getText(), new UTF8Encoding());
                             parent.LastEditTB.Text = Properties.UIresources.lastSaved + DateTime.Now.ToString();
-                            parent.Title = System.IO.Path.GetFileName(parent.path) + "----" + Properties.UIresources.pcbName;
+                            parent.Title = Path.GetFileName(parent.path) + "----" + Properties.UIresources.pcbName;
                             parent.SaveFile.IsEnabled = true;
                         }
                     }

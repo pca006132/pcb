@@ -163,7 +163,7 @@
                           InputGestureText="Ctrl + S"
                           IsEnabled="False" />
             </MenuItem>
-            <MenuItem Header="{x:Static p:UIresources.edit}">
+            <MenuItem Header="{x:Static p:UIresources.edit}" Click="openUuidDialog">
                 <MenuItem Click="Escape_Click"
                           Header="{x:Static p:UIresources.escapeSelected}"
                           InputGestureText="Alt + \" />
@@ -201,6 +201,7 @@
                           InputGestureText="Ctrl + \" />
                 <Separator />
                 <MenuItem Click="openPyEditor" Header="{x:Static p:UIresources.runPython}" />
+                <MenuItem Header="UUID"/>
             </MenuItem>
             <MenuItem x:Name="customs" Header="{x:Static p:UIresources.custom_functions}" />
             <MenuItem Header="{x:Static p:UIresources.setting}">
