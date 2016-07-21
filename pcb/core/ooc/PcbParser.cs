@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.IO;
 using pcb.core.chain;
 using pcb.core.util;
 using System.Text.RegularExpressions;
+using IronPython.Hosting;
+using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 
 namespace pcb.core
 {
@@ -85,7 +88,28 @@ namespace pcb.core
                     singleLineCommentNum++;
                     continue;
                 }
-
+                #region call py code to process line
+                if (File.Exists(@"ref\compile.py"))
+                {
+                    /*
+                     * example:
+                     * def compile(line):
+                     *      return "//" + line
+                     */
+                    var pyEngine = Python.CreateEngine();
+                    var scope = engine.CreateScope();
+                    try
+                    {
+                        var sourceCode = pyEngine.CreateScriptSourceFromString(File.ReadAllText(@"ref\compile.py")).Compile().Execute(scope);
+                        var compileFunc = scope.GetVariable<Func<string, string>>("compile");  
+                    }
+                    catch (Exception e)
+                    {
+                        throw new PcbException(e.Message);
+                    }
+                    line = compileFunc(line); 
+                }
+                #endregion
                 //empty line
                 if (line.Length == 0)
                     continue;
@@ -94,7 +118,6 @@ namespace pcb.core
                 {
                     line = line.Replace(key, variables[key]);
                 }
-
                 //new
                 if (line.StartsWith("new"))
                 {
