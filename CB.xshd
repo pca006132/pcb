@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<SyntaxDefinition name="CB" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment" foreground="#0F5E46" />
+	<Color name="String" foreground="White"/>
+	<Color name="Command" foreground="Orange"/>
+	<Color name="before" foreground="Yellow"/>
+	<Color name="init" foreground="Aqua"/>
+	<Color name="folding" foreground="#a3632e"/>
+  <Color name="marks" foreground="#FF00FF"/>
+  <Color name="doc" foreground="#4d7ea8"/>
+	<!-- This is the main ruleset. -->
+	<RuleSet>
+		<Rule color="folding">
+			^\s*//[^{]*{\s*$
+		</Rule>
+		<Rule color="folding">
+			^\s*//}\s*$
+		</Rule>
+    <Rule color="Comment">
+        ^\s*//.*$
+    </Rule>
+
+    <Rule color="before">
+      	^\s*(rcb:|cond:|data:)*icb:
+    </Rule>
+		<Rule color="before">
+			^\s*(icb:|cond:|data:)*rcb:
+		</Rule>
+		<Rule color="before">
+			^\s*(rcb:|icb:|data:)*cond:
+		</Rule>
+		<Rule color="before">
+			^\s*(rcb:|cond:|icb:)*data:
+		</Rule>
+		<Rule color="init">
+			^\s*init:
+		</Rule>
+    <Rule color="init">
+      ^\s*after:
+    </Rule>
+		<Rule color="Command">
+			^\s*changeD
+		</Rule>
+		<Rule color="Command">
+			^\s*new\s-?\d+\s-?\d+\s-?\d+(\s(X|Y))?
+		</Rule>
+    <Rule color="Command">
+			^\s*define (.)+ = .+$
+		</Rule>
+		<Rule color="marks">
+			^\s*mark:.*
+		</Rule>
+		<Rule color="marks">
+			^\s*sign:.*
+		</Rule>
+    <Rule color="marks">
+			^\s*stats:.*
+		</Rule>
+    <Rule color="marks">
+      (active)|(close):(this)|(@(e|a|p|r)(\[.*\])?)
+    </Rule>
+    <Span color="doc" multiline="true">
+      <Begin>^\s*/\*</Begin>
+      <End>^\s*\*/$</End>
+    </Span>
+	</RuleSet>
+</SyntaxDefinition>
