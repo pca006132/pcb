@@ -340,6 +340,13 @@ namespace pcb.core.autocomplete
                                     result.Add("score_" + objective + "_min");
                                     result.Add("score_" + objective);
                                 }
+                                foreach (string objective in runtime_scbObj)
+                                {
+                                    if (result.Contains("score_" + objective))
+                                        continue;
+                                    result.Add("score_" + objective + "_min");
+                                    result.Add("score_" + objective);
+                                }
                                 string[] elements = input.Split(',');
                                 if (elements.Length > 1)
                                     foreach (string element in elements.Take(elements.Length - 1))
@@ -362,15 +369,18 @@ namespace pcb.core.autocomplete
                                 }
                                 else if (name == "team")
                                 {
-                                    result = teams.ToList();
+                                    result = teams;
+                                    result.AddRange(runtime_teams);
                                 }
                                 else if (name == "tag")
                                 {
-                                    result = tags.ToList();
+                                    result = tags;
+                                    result.AddRange(runtime_tags);
                                 }
                                 else if (name == "name")
                                 {
-                                    result = names.ToList();
+                                    result = names;
+                                    result.AddRange(runtime_names);
                                 }
                                 beginMatch = input.Split('=', '!').Last();
                             }
@@ -378,7 +388,7 @@ namespace pcb.core.autocomplete
                     }
                     break;
             }
-            result = result.Distinct().Where(s => s.ToLower().StartsWith(beginMatch.ToLower())).ToList();
+            result = result.Distinct().Where(s => s.ToLower().Contains(beginMatch.ToLower())).ToList();
             result.Sort();
             List<int> indexes = new List<int>();
             for (int i = 0; i < result.Count; i++)

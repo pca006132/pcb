@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.7";
+        string version = "0.7.8";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -1182,7 +1182,10 @@ namespace pcb
         }
         void readme_click(object sender, RoutedEventArgs e)
         {
-            Process.Start("readme.html");
+            if (Thread.CurrentThread.CurrentCulture.Name == "zh")
+                Process.Start("readme_zh.html");
+            else
+                Process.Start("readme.html");
         }
         void showList(object sender, RoutedEventArgs e)
         {

@@ -147,6 +147,10 @@ namespace pcb.core.chain
                 nbt = nbt.Replace("{delete me}", String.Format(
                         "fill ~{0} ~{1} ~{2} ~{3} ~{4} ~{5} air 0", coor1[0], coor1[1], coor1[2],
                         coor2[0], coor2[1], coor2[2]));
+                nbt = nbt.Replace("{Delete Me}", String.Format(
+                        "fill ~{0} ~{1} ~{2} ~{3} ~{4} ~{5} air 0", coor1[0], coor1[1], coor1[2],
+                        coor2[0], coor2[1], coor2[2]));
+
                 signCount++;
                 cb_cmd.Add(sign(nbt, coor[0], coor[1], coor[2], 4, false));
             }

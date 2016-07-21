@@ -158,7 +158,7 @@ namespace pcb.core
                         if (cmd.Length > 0)
                             middleCmd.Add(cmd);
                 }
-                else if (line.StartsWith("stat:"))
+                else if (line.StartsWith("stats:"))
                 {
                     int[] coor = chains.Peek().getNextCbCoor();
                     if (currentLineNum >= startLine && (endLine == -1 || currentLineNum <= endLine))
