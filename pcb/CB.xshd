@@ -56,6 +56,9 @@
     <Rule color="marks">
 			^\s*stats:.*
 		</Rule>
+    <Rule color="marks">
+      (active)|(close):(this)|(@(e|a|p|r)(\[.*\])?)
+    </Rule>
     <Span color="doc" multiline="true">
       <Begin>^\s*/\*</Begin>
       <End>^\s*\*/$</End>
