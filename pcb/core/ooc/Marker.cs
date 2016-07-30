@@ -28,8 +28,9 @@ namespace pcb.core
         public override string ToString()
         {
             string nbt = "";
+            name = "\"" + util.CommandUtil.escape(name) + "\"";
             if (type.Equals("ArmorStand"))
-            {
+            {                
                 nbt = String.Format(@"CustomName:{0},NoGravity:1b,Invisible:1b",name);
             } else if (type.Equals("AreaEffectCloud"))
             {
@@ -41,7 +42,7 @@ namespace pcb.core
                 sb.Append(",Tags:[");
                 foreach (string tag in tags)
                 {
-                    sb.Append(tag);
+                    sb.Append("\"" + util.CommandUtil.escape(tag) + "\"");
                     sb.Append(",");
                 }
                 sb.Remove(sb.Length - 1, 1);

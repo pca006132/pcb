@@ -20,7 +20,10 @@ namespace pcb.core.chain
         {
             if (cmd.Equals("changeD"))
             {
-                cbStack.Peek().setDirection(CoorUtil.directionToCBDamage(Direction.positiveX));
+                if (dir != Direction.positiveX && dir != Direction.negativeX)
+                    cbStack.Peek().setDirection(CoorUtil.directionToCBDamage(Direction.positiveX));
+                else
+                    cbStack.Peek().setDirection(CoorUtil.directionToCBDamage(Direction.positiveZ));
                 dir = CoorUtil.inverseDirection(dir);
                 return;
             }
@@ -31,7 +34,10 @@ namespace pcb.core.chain
                 rowCbCount++;
                 if (rowCbCount == limit)
                 {
-                    tempDir = Direction.positiveX;
+                    if (dir != Direction.positiveX && dir != Direction.negativeX)
+                        tempDir = Direction.positiveX;
+                    else
+                        tempDir = Direction.positiveZ;
                     rowCbCount = 0;
                     dir = CoorUtil.inverseDirection(dir);
                 }
@@ -84,8 +90,6 @@ namespace pcb.core.chain
 
         public static void setDirection(Direction direction)
         {
-            if (direction == Direction.positiveX || direction == Direction.negativeX)
-                throw new ArgumentException();
             initialDir = direction;
         }
         public static void setRowCbLimit(int count)

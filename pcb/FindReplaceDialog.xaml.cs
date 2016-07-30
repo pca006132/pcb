@@ -130,5 +130,54 @@ namespace pcb
             replaceAll();
             parent.Editor.Focus();
         }
+
+        bool findEnlarged = false;
+        private void findTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (findTB.Text.Length > 20 && !findEnlarged)
+            {
+                var margin1 = replaceLbl.Margin;
+                margin1.Top += 80;
+                replaceLbl.Margin = margin1;
+
+                var margin2 = replaceTB.Margin;
+                margin2.Top += 80;
+                replaceTB.Margin = margin2;
+
+                findTB.Height += 80;
+                Height += 80;
+                findEnlarged = true;
+            }
+            else if (findTB.Text.Length <= 20 && findEnlarged)
+            {
+                var margin1 = replaceLbl.Margin;
+                margin1.Top -= 80;
+                replaceLbl.Margin = margin1;
+
+                var margin2 = replaceTB.Margin;
+                margin2.Top -= 80;
+                replaceTB.Margin = margin2;
+
+                findTB.Height -= 80;
+                Height -= 80;
+                findEnlarged = false;
+            }
+        }
+        bool replaceEnlarged = false;
+        private void replaceTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (replaceTB.Text.Length > 20 && !replaceEnlarged)
+            {
+                replaceTB.Height += 80;
+                Height += 80;
+                replaceEnlarged = true;
+            }
+            else if (replaceTB.Text.Length <= 20 && replaceEnlarged)
+            {
+                replaceTB.Height -= 80;
+                Height -= 80;
+                replaceEnlarged = false;
+            }
+        }
     }    
 }

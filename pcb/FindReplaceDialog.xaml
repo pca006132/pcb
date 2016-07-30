@@ -8,7 +8,7 @@
                      xmlns:p="clr-namespace:pcb.Properties"
                      Title="{x:Static p:UIresources.findOrReplace}"
                      Width="260"
-                     Height="170"
+                     Height="180"
                      Background="#545454"
                      BorderBrush="AliceBlue"
                      Closing="MetroWindow_Closing"
@@ -26,52 +26,50 @@
                  Margin="67,10,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 TextWrapping="Wrap" />
+                 TextWrapping="Wrap" TextChanged="findTB_TextChanged" />
         <Label Margin="10,11,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="{x:Static p:UIresources.find}" />
+               Content="{x:Static p:UIresources.find}" Height="25" />
         <TextBox x:Name="replaceTB"
                  Width="178"
                  Height="23"
                  Margin="67,41,0,0"
                  HorizontalAlignment="Left"
                  VerticalAlignment="Top"
-                 TextWrapping="Wrap" />
-        <Label Margin="10,41,0,0"
+                 TextWrapping="Wrap" TextChanged="replaceTB_TextChanged" />
+        <Label x:Name="replaceLbl"  Margin="10,41,0,0"
                HorizontalAlignment="Left"
                VerticalAlignment="Top"
-               Content="{x:Static p:UIresources.replace}" />
+               Content="{x:Static p:UIresources.replace}" Height="25" />
         <CheckBox x:Name="UseRegex"
-                  Margin="10,72,139,40"
+                  Margin="10,0,139,47" VerticalAlignment="Bottom"
                   Content="{x:Static p:UIresources.useRegex}"
                   IsChecked="False"
-                  ToolTip="{x:Static p:UIresources.regexNeedEscape}" />
-        <CheckBox x:Name="MultiLine"
+                  ToolTip="{x:Static p:UIresources.regexNeedEscape}" Width="105" Height="29" />
+        <CheckBox x:Name="MultiLine" VerticalAlignment="Bottom"
                   Width="105"
-                  Margin="140,72,0,40"
+                  Margin="140,0,0,47"
                   HorizontalAlignment="Left"
                   Content="{x:Static p:UIresources.multiLine}"
-                  IsChecked="True" />
+                  IsChecked="True" Height="29" />
         <Button x:Name="btnFindNext"
-                Width="105"
-                Margin="10,106,0,0"
+                Width="105" VerticalAlignment="Bottom"
+                Margin="10,0,0,10"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
                 BorderThickness="0"
                 Click="btnFindNext_Click"
                 Content="{x:Static p:UIresources.findNext}"
                 FontFamily="MicroSoft Yahei UI"
-                Style="{DynamicResource SquareButtonStyle}" />
-        <Button x:Name="btnReplaceAll"
+                Style="{DynamicResource SquareButtonStyle}" Height="27" />
+        <Button x:Name="btnReplaceAll" VerticalAlignment="Bottom"
                 Width="105"
-                Margin="140,106,0,0"
+                Margin="140,0,0,10"
                 HorizontalAlignment="Left"
-                VerticalAlignment="Top"
                 BorderThickness="0"
                 Click="btnReplaceAll_Click"
                 Content="{x:Static p:UIresources.replaceAll}"
                 FontFamily="MicroSoft Yahei UI"
-                Style="{DynamicResource SquareButtonStyle}" />
+                Style="{DynamicResource SquareButtonStyle}" Height="27" />
     </Grid>
 </control:MetroWindow>

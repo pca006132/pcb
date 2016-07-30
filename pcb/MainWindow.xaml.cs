@@ -154,9 +154,11 @@ namespace pcb
                     else if (line.StartsWith("dir:"))
                     {
                         if (line[4].ToString() == 0.ToString())
+                            core.chain.StraightCbChain.setDirection(Direction.positiveX);
+                        else if (line[4].ToString() == 1.ToString())
                             core.chain.StraightCbChain.setDirection(Direction.positiveY);
                         else
-                            core.chain.StraightCbChain.setDirection(Direction.positiveX);
+                            core.chain.StraightCbChain.setDirection(Direction.positiveZ);
                     }
                     else if (line.StartsWith("AEC:"))
                     {
@@ -224,6 +226,13 @@ namespace pcb
                         {
                             showMessage("Font错误！", "错误！");
                         }
+                    }
+                    else if (line.StartsWith("lim:"))
+                    {
+                        int length;
+                        int.TryParse(line.Substring(4), out length);
+                        if (length >= 1000)
+                            core.SingleOOC.oocLimit = length;
                     }
                 }
                 if (theme != "Blue")
@@ -569,6 +578,32 @@ namespace pcb
                         string define = text.Split(' ')[1];
                         Tree.defines.Add(define);
                     }
+                } else
+                {
+                    if (Regex.IsMatch(text, @"//scb:\s*([a-zA-Z0-9_]+)"))
+                    {
+                        string str = Regex.Match(text, @"//scb:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
+                        if (!Value.runtime_scbObj.Contains(str))
+                            Value.runtime_scbObj.Add(str);
+                    }
+                    else if (Regex.IsMatch(text, @"//tag:\s*([a-zA-Z0-9_]+)"))
+                    {
+                        string str = Regex.Match(text, @"//tag:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
+                        if (!Value.runtime_tags.Contains(str))
+                            Value.runtime_tags.Add(str);
+                    }
+                    else if (Regex.IsMatch(text, @"//name:\s*([a-zA-Z0-9_]+)"))
+                    {
+                        string str = Regex.Match(text, @"//name:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
+                        if (!Value.runtime_names.Contains(str))
+                            Value.runtime_names.Add(str);
+                    }
+                    else if (Regex.IsMatch(text, @"//team:\s*([a-zA-Z0-9_]+)"))
+                    {
+                        string str = Regex.Match(text, @"//team:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
+                        if (!Value.runtime_teams.Contains(str))
+                            Value.runtime_teams.Add(str);
+                    }
                 }
             }
         }
@@ -684,7 +719,9 @@ namespace pcb
                 string line = lines[i].Trim('\t').Trim('\n').Trim('\r');
                 if (line.StartsWith("dir:"))
                 {
-                    if (line[4].ToString() == "0")
+                    if (line[4].ToString() == 0.ToString())
+                        core.chain.StraightCbChain.setDirection(Direction.positiveX);
+                    else if (line[4].ToString() == 1.ToString())
                         core.chain.StraightCbChain.setDirection(Direction.positiveY);
                     else
                         core.chain.StraightCbChain.setDirection(Direction.positiveZ);
@@ -764,6 +801,13 @@ namespace pcb
                 {
                     Value.teams.Clear();
                     Value.teams.AddRange(line.Substring(6).Split(' '));
+                }
+                else if (line.StartsWith("lim:"))
+                {
+                    int length;
+                    int.TryParse(line.Substring(4), out length);
+                    if (length >= 1000)
+                        core.SingleOOC.oocLimit = length;
                 }
                 else
                 {
@@ -855,7 +899,7 @@ namespace pcb
         string getText()
         {
             string text = "";
-            text += "dir:" + (core.chain.StraightCbChain.initialDir == Direction.positiveY ? "0" : "1") + Environment.NewLine;
+            text += "dir:" + (core.chain.StraightCbChain.initialDir == Direction.positiveX ? "0" : core.chain.StraightCbChain.initialDir == Direction.positiveY ? "1" : "2") + Environment.NewLine;
             if (core.PcbParser.markerType) text += "AEC:1" + Environment.NewLine;
             if (useBlockStruc) text += "block:1" + Environment.NewLine;
             if (core.chain.StraightCbChain.limit != 0) text += "NL:" + core.chain.StraightCbChain.limit.ToString() + Environment.NewLine;
@@ -867,7 +911,7 @@ namespace pcb
             if (Value.names.Count > 0) text += "names:" + String.Join(" ", Value.names.ToArray()) + Environment.NewLine;
             if (Value.teams.Count > 0) text += "teams:" + String.Join(" ", Value.teams.ToArray()) + Environment.NewLine;
             if (Value.tags.Count > 0) text += "tags:" + String.Join(" ", Value.tags.ToArray()) + Environment.NewLine;
-
+            text += "lim:" + core.SingleOOC.oocLimit + Environment.NewLine;
             text += "top_dam:" + core.chain.BoxCbChain.baseDamage.ToString() + Environment.NewLine;
             text += "side_dam:" + core.chain.BoxCbChain.outerDamage.ToString() + Environment.NewLine;
             text += Editor.Text;
@@ -941,7 +985,7 @@ namespace pcb
             if (useBlockStruc)
                 chain = new core.chain.BoxCbChain(new int[] { 2, -1, 1 });
             else
-                chain = new core.chain.StraightCbChain(new int[] { 2, -2, 1 });
+                chain = new core.chain.StraightCbChain(new int[] { 2, -2, 0 });
             try
             {
                 string[] oocs = parser.getOOC(text, chain);
@@ -1714,7 +1758,6 @@ namespace pcb
                 editor.Focus();
             }
         }
-
     }
 }
 public class OutlineItem : TreeViewItem

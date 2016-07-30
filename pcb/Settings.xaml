@@ -52,6 +52,7 @@
                   Margin="151,132,0,0"
                   HorizontalAlignment="Left"
                   VerticalAlignment="Top">
+            <ComboBoxItem Content="+X" />
             <ComboBoxItem Content="+Y" IsSelected="True" />
             <ComboBoxItem Content="+Z" />
         </ComboBox>

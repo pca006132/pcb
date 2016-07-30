@@ -11,6 +11,7 @@
                      Background="#232323"
                      BorderBrush="AliceBlue"
                      Icon="icon.png"
+                     ResizeMode="CanMinimize"
                      mc:Ignorable="d">
     <Grid>
         <Label Width="92"

@@ -388,14 +388,22 @@ namespace pcb.core.autocomplete
                     }
                     break;
             }
-            result = result.Distinct().Where(s => s.ToLower().Contains(beginMatch.ToLower())).ToList();
-            result.Sort();
+            var completions = new List<string>();            
+            completions = result.Distinct().Where(s =>
+            {
+                bool match = false;
+                foreach (string str in s.Split('_'))
+                    if (str.ToLower().StartsWith(beginMatch.ToLower())) { match = true; break; };
+                return match;
+            }).ToList();
+
+            completions.Sort();
             List<int> indexes = new List<int>();
-            for (int i = 0; i < result.Count; i++)
+            for (int i = 0; i < completions.Count; i++)
             {
                 indexes.Add(beginMatch.Length);
             }
-            return new CompletionData(result, indexes);
+            return new CompletionData(completions, indexes);
         }
     }
 }

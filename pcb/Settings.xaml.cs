@@ -46,7 +46,7 @@ namespace pcb
             UseAutocomplete.IsChecked = parent.useAutocomplete;
             UseAECAsMarker.IsChecked = !core.PcbParser.markerType;
             showSpace.IsChecked = parent.Editor.Options.ShowSpaces;
-            placeDir.SelectedIndex = StraightCbChain.initialDir == core.util.Direction.positiveY ? 0 : 1;
+            placeDir.SelectedIndex = StraightCbChain.initialDir == core.util.Direction.positiveY ? 1 : (StraightCbChain.initialDir == core.util.Direction.positiveX) ? 0 : 2;
             CBCount.Text = StraightCbChain.limit.ToString();
             UseBox.IsChecked = parent.useBlockStruc;
             block_X.Text = BoxCbChain.xLimit.ToString();
@@ -70,13 +70,14 @@ namespace pcb
             parent.useBlockStruc = UseBox.IsChecked == true;
             BoxCbChain.baseBlock = blockID_Top.Text;
             BoxCbChain.outerBlock = blockID_Side.Text;
+
             if (placeDir.SelectedIndex == 0)
-            {
+                StraightCbChain.initialDir = core.util.Direction.positiveX;
+            else if (placeDir.SelectedIndex == 1)            
                 StraightCbChain.initialDir = core.util.Direction.positiveY;
-            } else
-            {
+            else            
                 StraightCbChain.initialDir = core.util.Direction.positiveZ;
-            }
+            
             parent.FontFamily = (FontFamily)FontList.SelectedItem;
             int temp;
             bool isChinese = System.Threading.Thread.CurrentThread.CurrentCulture.Name == "zh";
