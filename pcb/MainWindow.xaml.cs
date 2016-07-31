@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.7.9";
+        string version = "0.8.1";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -1004,6 +1004,58 @@ namespace pcb
             }
         }
         //events
+        void checkCommands(object sender, RoutedEventArgs e)
+        {
+            parseDocument();
+            string[] lines = Editor.Text.Split(new string[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+            string Message = "";
+            bool comment = false;
+            var defines = new List<string[]>();
+            bool moved = false;
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var line = lines[i].Trim();
+                if (core.PcbParser.define.IsMatch(line))
+                {
+                    var match = core.PcbParser.define.Match(line);
+                    var key = match.Groups[1].ToString();
+                    var value = match.Groups[2].ToString();
+
+                    defines.Add(new string[] { key, value});
+                    continue;
+                }
+                if (line.Length == 0)
+                    continue;
+                if (line.StartsWith("/*") && !comment)
+                    comment = true;
+                if (line.EndsWith("*/") && comment)
+                {
+                    comment = false;
+                    continue;
+                }
+                if (comment)
+                    continue;
+                foreach (var pair in defines)
+                {
+                    line = line.Replace(pair[0], pair[1]);
+                }
+                int offset = tree.check(line);
+                if (offset > -1)
+                {
+                    if (!moved)
+                    {
+                        Editor.SelectionStart = Editor.Document.GetLineByNumber(i + 1).Offset + offset;
+                        moved = true;
+                    }
+                    Message += String.Format("line {0}, char {1}\n", i+1, offset+1);
+                }
+            }
+            if (Message == "")
+            {
+                Message = "No error found";
+            }
+            CustomMessageBox.ShowMessage(Message, "result", false);
+        }
         void Editor_TextEntering(object sender, TextCompositionEventArgs e)
         {
             if (useAutocomplete == false)

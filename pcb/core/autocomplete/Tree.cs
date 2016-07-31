@@ -155,6 +155,111 @@ namespace pcb.core.autocomplete
                 return new CompletionData();
             }
         }
+        public int check(string line)
+        {
+            string[] keys = line.Split(' ');
+            if (keys[0].StartsWith("//"))
+                return -1;
+            var key0 = keys[0];
+            if (keys[0].StartsWith("mark:") || keys[0].StartsWith("stats:") || keys[0].StartsWith("new") || keys[0].StartsWith("sign") || keys[0].StartsWith("changeD"))
+                return -1;
+            if (prefixes[0].StartsWith(keys[0]) || keys[0].StartsWith(prefixes[0]))
+            {
+                if (keys.Length == 1 && prefixes[0].Length > keys[0].Length)
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (keys[0].Length > prefixes[0].Length)
+                        keys[0] = keys[0].Substring(prefixes[0].Length);
+                    else
+                        keys[0] = "";
+                }                           
+            }
+            if (prefixes[1].StartsWith(keys[0]) || keys[0].StartsWith(prefixes[1]))
+            {
+                if (keys.Length == 1 && prefixes[1].Length > keys[0].Length)
+                {
+                    return 0;
+                }
+                else
+                {
+                    if (keys[0].Length > prefixes[1].Length)
+                        keys[0] = keys[0].Substring(prefixes[1].Length);
+                    else
+                        keys[0] = "";
+                }
+            }
+
+            List<string> posiblePrefixes = new List<string>(defaultPrefixes);
+            bool notFinish = true;
+            while (notFinish)
+            {
+                notFinish = false;
+                foreach (string prefix in posiblePrefixes)
+                {
+                    if (keys[0].StartsWith(prefix))
+                    {
+                        if (prefix == "data:")
+                        {
+                            if (7 < keys[0].Length)
+                                keys[0] = keys[0].Substring(7);
+                            else
+                                keys[0] = "";
+                        }
+                        else
+                        {
+                            if (prefix.Length < keys[0].Length)
+                                keys[0] = keys[0].Substring(prefix.Length);
+                            else if (keys.Length == 1)
+                                return -1;
+                            else
+                                keys[0] = "";
+                        }
+                        posiblePrefixes.Remove(prefix);
+                        notFinish = true;
+                        break;
+                    }
+                }
+            }
+
+            if (keys[0].StartsWith("/"))
+                keys[0] = keys[0].Substring(1);
+            Tree temp = this;
+
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (temp.Count == 0)
+                    break;
+                if (!temp.strictContains(keys[i]))
+                {
+                    int offset = 0;
+                    for (int j = 0; j < i; j++)
+                    {
+                        if (j == 0)
+                            offset += key0.Length;
+                        else
+                            offset += keys[j].Length;
+                        offset += 1;
+                    }
+                    return offset;
+                }
+                else
+                {
+                    temp = temp.getChild(keys[i]);
+                    if (temp.value.type == Value.Type.function && temp.value.values[0] == "command")
+                    {
+                        temp = this;
+                        if (keys[i].StartsWith("/"))
+                            keys[i] = keys[i].Substring(1);
+                        i--;
+                    }
+                }
+            }
+            return -1;
+        }
+
         List<Tree> nodes = new List<Tree>();
         public Value value = null;
         public Tree(string str)
@@ -176,6 +281,15 @@ namespace pcb.core.autocomplete
             }
             return false;
         }
+        public bool strictContains(string para)
+        {
+            foreach (Tree node in nodes)
+            {
+                if (node.value.strictMatch(para))
+                    return true;
+            }
+            return false;
+        }
         public bool containsRaw(string para)
         {
             foreach (Tree node in nodes)
@@ -189,6 +303,21 @@ namespace pcb.core.autocomplete
             foreach (Tree node in nodes)
             {
                 if (node.value.isMatch(para))
+                {
+                    if (node.value.type == Value.Type.function)
+                        func = node;
+                    else
+                        return node;
+                }
+            }
+            return func;
+        }
+        public Tree getChildStrict(string para)
+        {
+            Tree func = null;
+            foreach (Tree node in nodes)
+            {
+                if (node.value.strictMatch(para))
                 {
                     if (node.value.type == Value.Type.function)
                         func = node;

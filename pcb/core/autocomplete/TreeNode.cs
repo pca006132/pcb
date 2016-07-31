@@ -54,6 +54,22 @@ namespace pcb.core.autocomplete
                 return new List<string>();
             }
         }
+        public bool match(string path)
+        {
+            string[] keys = path.Split('.');
+            TreeNode temp = this;
+
+            for (int i = 0; i < keys.Length - 1; i++)
+            {
+                if (!temp.contains(keys[i]))
+                    return false;
+                else
+                {
+                    temp = temp.GetChild(keys[i]);
+                }
+            }
+            return true;
+        }
 
         private readonly Dictionary<string, TreeNode> _children = new Dictionary<string, TreeNode>();
         public readonly string ID;

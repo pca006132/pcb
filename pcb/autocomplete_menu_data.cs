@@ -77,7 +77,15 @@ namespace pcb
                                 temp.AppendLine(after);
                             }
                             editor.Document.Replace(line, temp.ToString());
+                        }                        
+                    }
+                    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+                    {
+                        if (e.Key == Key.Enter)
+                        {
+                            editor.Document.Insert(editor.SelectionStart, Environment.NewLine);
                         }
+                        return;
                     }
                     if (e.Key == Key.Up)
                     {
@@ -106,7 +114,7 @@ namespace pcb
                         Hide();
                         e.Handled = true;
                     }
-                    if (e.Key == Key.Space)
+                    if (e.Key == Key.Space || e.Key == Key.Decimal)
                     {
                         editor.Document.Replace(editor.SelectionStart - completion[listbox.SelectedIndex], completion[listbox.SelectedIndex], display[listbox.SelectedIndex]);
                         display.Clear();
@@ -114,6 +122,7 @@ namespace pcb
                         listbox.Items.Clear();
                         Hide();
                     }
+                    
                 }
             }
             catch (Exception ex)

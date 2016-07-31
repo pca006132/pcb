@@ -201,7 +201,7 @@
                           InputGestureText="Ctrl + \" />
                 <Separator />
                 <MenuItem Click="openPyEditor" Header="{x:Static p:UIresources.runPython}" />
-                <MenuItem Header="UUID"  Click="openUuidDialog"/>
+                <MenuItem Click="openUuidDialog" Header="UUID" />
             </MenuItem>
             <MenuItem x:Name="customs" Header="{x:Static p:UIresources.custom_functions}" />
             <MenuItem Header="{x:Static p:UIresources.setting}">
@@ -225,6 +225,7 @@
                 <MenuItem Click="replaceCB"
                           Header="{x:Static p:UIresources.updateCommands}"
                           ToolTip="{x:Static p:UIresources.updateCommandsTooltip}" />
+                <MenuItem Click="checkCommands" Header="Command check(syntax only, not finished)" />
             </MenuItem>
         </Menu>
     </Grid>

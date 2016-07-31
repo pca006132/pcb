@@ -141,5 +141,25 @@ namespace pcb.core.autocomplete.Tests
             //CollectionAssert.AreEquivalent(new List<string> {"","m","x","xm","y","ym" }, value.getValues("@e[r")[1]);
             //CollectionAssert.AreEquivalent(new List<string> { "lime", "keleton" }, value.getValues("@e[type=!S")[1]);
         }
+
+
+        //match test
+        [TestMethod]
+        public void selectorTest()
+        {
+            Value value = new Value("$selector");
+            Assert.AreEqual(true, value.strictMatch("@a"));
+            Assert.AreEqual(false, value.strictMatch("@a[score_abc=5]"));
+        }
+        [TestMethod]
+        public void optionsTest()
+        {
+            Value value = new Value("{a|b|c}");
+            Assert.AreEqual(true, value.strictMatch("a"));
+            Assert.AreEqual(true, value.strictMatch("b"));
+            Assert.AreEqual(true, value.strictMatch("c"));
+            Assert.AreEqual(false, value.strictMatch("d"));
+
+        }
     }
 }

@@ -39,6 +39,11 @@ namespace pcb.core.autocomplete.Tests
                 tree.autocomplete("scoreboard players add @e[type=!").displayData);
         }
         [TestMethod]
+        public void matchTest()
+        {
+            Assert.AreNotEqual(-1, tree.check("scoreboard players set @a[score_abc=5]"));
+        }
+        [TestMethod]
         public void containsRawTest()
         {
             Tree tree = new Tree(null);

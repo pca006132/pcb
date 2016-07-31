@@ -11,7 +11,7 @@ namespace pcb.core
 {
     public class PcbParser
     {
-        private static Regex define = new Regex(@"^define (\S+) = (.+)$", RegexOptions.Compiled);
+        public static Regex define = new Regex(@"^define (\S+) = (.+)$", RegexOptions.Compiled);
 
         public static bool markerType = false;
         private int currentLineNum = 0;

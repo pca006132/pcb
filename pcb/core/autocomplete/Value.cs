@@ -229,7 +229,156 @@ namespace pcb.core.autocomplete
                     return false;           
             }
         }
-
+        public bool strictMatch(string segment)
+        {
+            bool noPrefix = false;
+            do
+            {
+                noPrefix = true;
+                foreach (string str in prefix)
+                {
+                    if (segment.StartsWith(str))
+                    {
+                        noPrefix = false;
+                        segment = segment.Substring(str.Length);
+                    }
+                }
+            } while (!noPrefix);
+            switch (type)
+            {
+                case Type.function:
+                    switch (values[0])
+                    {
+                        case "scbObj":
+                            return scbObj.Contains(segment) || runtime_scbObj.Contains(segment);
+                        case "trigger":
+                            return triggerObj.Contains(segment) || runtime_triggerObj.Contains(segment);
+                        case "team":
+                            return teams.Contains(segment) || runtime_teams.Contains(segment);
+                        case "tag":
+                            return tags.Contains(segment) || runtime_tags.Contains(segment);
+                        case "sound":
+                            return sounds.match(segment);
+                        case "dot":
+                            var match = false;
+                            foreach (string value in values.Skip(1))
+                            {
+                                if (attributes.match(value + "." + segment))
+                                {
+                                    match = true;
+                                    break;
+                                }
+                            }
+                            return match;
+                        case "command":
+                            return true;
+                        case "selector":
+                            if (segment.Length > 2 && (segment.StartsWith("@a") || segment.StartsWith("@e") || segment.StartsWith("@r") || segment.StartsWith("@p")))
+                            {
+                                if (segment.Length == 2)
+                                    return true;
+                                if (!(segment[2] == '[' && segment.EndsWith("]")))
+                                    return false;
+                                segment = segment.Substring(3, segment.Length - 4);
+                                if (Regex.IsMatch(segment, @"^,0-9a-zA-Z=!_-"))
+                                    return false;
+                                var pairs = segment.Split(',');
+                                var result = new List<string>();
+                                result.Add("x");
+                                result.Add("y");
+                                result.Add("z");
+                                result.Add("dx");
+                                result.Add("dy");
+                                result.Add("dz");
+                                result.Add("r");
+                                result.Add("rm");
+                                result.Add("c");
+                                result.Add("m");
+                                result.Add("l");
+                                result.Add("lm");
+                                result.Add("team");
+                                result.Add("name");
+                                result.Add("rx");
+                                result.Add("rxm");
+                                result.Add("ry");
+                                result.Add("rym");
+                                result.Add("type");
+                                result.Add("tag");
+                                foreach (string objective in scbObj)
+                                {
+                                    result.Add("score_" + objective + "_min");
+                                    result.Add("score_" + objective);
+                                }
+                                foreach (string objective in runtime_scbObj)
+                                {
+                                    if (result.Contains("score_" + objective))
+                                        continue;
+                                    result.Add("score_" + objective + "_min");
+                                    result.Add("score_" + objective);
+                                }
+                                foreach (string pair in pairs)
+                                {
+                                    var key_value = pair.Split('=');
+                                    if (key_value.Length > 2)
+                                        return false;
+                                    if (key_value.Length == 1)
+                                    {
+                                        if (!Regex.IsMatch(key_value[0], @"^-?\d+$"))
+                                            return false;
+                                        continue;
+                                    }
+                                    if (key_value[1].StartsWith("!"))
+                                        key_value[1] = key_value[1].Substring(1);
+                                    if (Regex.IsMatch(key_value[0], @"[^0-9a-zA-Z_]") || Regex.IsMatch(key_value[1], @"[^0-9a-zA-Z_\-]"))
+                                        return false;
+                                    if (!result.Contains(key_value[0]))
+                                        return false;
+                                    result.Remove(key_value[0]);
+                                    switch (key_value[0])
+                                    {
+                                        case "team":
+                                            if (key_value[1] != "" && !(teams.Contains(key_value[1]) || runtime_teams.Contains(key_value[1])))
+                                                return false;
+                                            break;
+                                        case "name":
+                                            if (key_value[1]!="" && !(names.Contains(key_value[1]) || runtime_names.Contains(key_value[1])))
+                                                return false;
+                                            break;
+                                        case "tag":
+                                            if (key_value[1] != "" && !(tags.Contains(key_value[1]) || runtime_tags.Contains(key_value[1])))
+                                                return false;
+                                            break;
+                                        case "type":
+                                            if (key_value[1] != "Player" && !getRef("entityID").Contains(key_value[1]))
+                                                return false;
+                                            break;
+                                        default:
+                                            if (!Regex.IsMatch(key_value[1], @"^-?\d+$"))
+                                                return false;
+                                            break;
+                                    }
+                                }
+                                return true;
+                            }
+                            else
+                                return true;
+                        case "nbt":
+                            return true;
+                        default:
+                            return false;
+                    }
+                case Type.reference:                    
+                        return (references[values[0]].Contains(segment));                    
+                case Type.regex:
+                    return Regex.IsMatch(segment, values[0]);
+                case Type.options:
+                    return values.Contains(segment);
+                case Type.normal:
+                    return values[0].Equals(segment);
+                default:
+                    return false;
+            }
+        }
         public CompletionData getValues(string input)
         {
             List<string> result = new List<string>();
