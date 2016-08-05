@@ -184,7 +184,7 @@
     <value>蓝</value>
   </data>
   <data name="ColorHex" xml:space="preserve">
-    <value>颜色(Hex六进制)</value>
+    <value>颜色(Hex十六进制)</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>修改颜色</value>
