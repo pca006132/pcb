@@ -45,7 +45,7 @@
                                    ShowLineNumbers="True"
                                    TextChanged="Editor_TextChanged"
                                    VerticalScrollBarVisibility="Auto"
-                                   WordWrap="True">
+                                   WordWrap="True" PreviewMouseWheel="Editor_PreviewMouseWheel">
                 <avalonEdit:TextEditor.ContextMenu>
                     <ContextMenu>
                         <MenuItem Click="selectAll"
@@ -163,7 +163,7 @@
                           InputGestureText="Ctrl + S"
                           IsEnabled="False" />
             </MenuItem>
-            <MenuItem Header="{x:Static p:UIresources.edit}">
+            <MenuItem Header="{x:Static p:UIresources.edit}" Click="colorClick">
                 <MenuItem Click="Escape_Click"
                           Header="{x:Static p:UIresources.escapeSelected}"
                           InputGestureText="Alt + \" />
@@ -202,6 +202,7 @@
                 <Separator />
                 <MenuItem Click="openPyEditor" Header="{x:Static p:UIresources.runPython}" />
                 <MenuItem Click="openUuidDialog" Header="UUID" />
+                <MenuItem Header="{x:Static p:UIresources.colorGen}"/>
             </MenuItem>
             <MenuItem x:Name="customs" Header="{x:Static p:UIresources.custom_functions}" />
             <MenuItem Header="{x:Static p:UIresources.setting}">

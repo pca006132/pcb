@@ -177,4 +177,25 @@
   <data name="error" xml:space="preserve">
     <value>错误!</value>
   </data>
+  <data name="Green" xml:space="preserve">
+    <value>绿</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>蓝</value>
+  </data>
+  <data name="ColorHex" xml:space="preserve">
+    <value>颜色(Hex六进制)</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>修改颜色</value>
+  </data>
+  <data name="AddColor" xml:space="preserve">
+    <value>增加颜色</value>
+  </data>
+  <data name="generate" xml:space="preserve">
+    <value>生成</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
 </root>

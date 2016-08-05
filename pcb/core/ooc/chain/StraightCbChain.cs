@@ -72,17 +72,14 @@ namespace pcb.core.chain
             List<string> rcbCmd = new List<string>();
             foreach (CommandBlock cb in cbStack)
             {
-                if (cb.cbType != CommandBlock.type.rcb)
-                {
-                    if (cb.lineNum >= start)
-                        if (end == -1 || cb.lineNum <= end)
-                            cbCmd.Add(cb.ToString());
-                }
-                else {
-                    if (cb.lineNum >= start)
-                        if (end == -1 || cb.lineNum <= end)
-                            rcbCmd.Add(cb.ToString());
-                }
+                if (cb.lineNum >= start && (end == -1 || cb.lineNum <= end))
+                    if (cb.cbType != CommandBlock.type.rcb)
+                    {                    
+                        cbCmd.Add(cb.ToString());
+                    }
+                    else {
+                        rcbCmd.Add(cb.ToString());
+                    }
             }
             cbCmd.AddRange(rcbCmd);
             return cbCmd;

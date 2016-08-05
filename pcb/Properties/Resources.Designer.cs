@@ -61,11 +61,56 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to add color.
+        /// </summary>
+        public static string AddColor {
+            get {
+                return ResourceManager.GetString("AddColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to apply.
+        /// </summary>
+        public static string Apply {
+            get {
+                return ResourceManager.GetString("Apply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to blue.
+        /// </summary>
+        public static string Blue {
+            get {
+                return ResourceManager.GetString("Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to cannot initiate backup file, when the program crashes, data may be lost..
         /// </summary>
         public static string cannotInitBackup {
             get {
                 return ResourceManager.GetString("cannotInitBackup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to color(Hex).
+        /// </summary>
+        public static string ColorHex {
+            get {
+                return ResourceManager.GetString("ColorHex", resourceCulture);
             }
         }
         
@@ -129,6 +174,24 @@ namespace pcb.Properties {
         public static string formatError {
             get {
                 return ResourceManager.GetString("formatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to generate.
+        /// </summary>
+        public static string generate {
+            get {
+                return ResourceManager.GetString("generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to green.
+        /// </summary>
+        public static string Green {
+            get {
+                return ResourceManager.GetString("Green", resourceCulture);
             }
         }
         

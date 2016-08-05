@@ -375,4 +375,10 @@
   <data name="ooc_limit" xml:space="preserve">
     <value>OOC字符数限制</value>
   </data>
+  <data name="colorGen" xml:space="preserve">
+    <value>颜色代码选择</value>
+  </data>
+  <data name="red" xml:space="preserve">
+    <value>红</value>
+  </data>
 </root>

@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.8.1";
+        string version = "0.8.2";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -979,8 +979,11 @@ namespace pcb
         {
             string text = Editor.Text;
             var parser = new core.PcbParser();
-            parser.startLine = Editor.Document.GetLineByOffset(Editor.CaretOffset).LineNumber;
-            parser.endLine = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+            var start = Editor.Document.GetLineByOffset(Editor.SelectionStart).LineNumber;
+            var end = Editor.Document.GetLineByOffset(Editor.SelectionStart + Editor.SelectionLength).LineNumber;
+            
+            parser.startLine = start;
+            parser.endLine = end;
             core.chain.AbstractCBChain chain;
             if (useBlockStruc)
                 chain = new core.chain.BoxCbChain(new int[] { 2, -1, 1 });
@@ -1122,6 +1125,20 @@ namespace pcb
             Editor.TextArea.TextView.LineTransformers.RemoveAt(Editor.TextArea.TextView.LineTransformers.Count - 1);
             Editor.TextArea.TextView.LineTransformers.Add(new BracketBracing(Editor.CaretOffset, Editor.TextArea.Caret.Line));
         }
+        void Editor_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                if (e.Delta > 0)
+                {
+                    Editor.FontSize *= 1.2;
+                }
+                if (e.Delta < 0)
+                {
+                    Editor.FontSize *= 0.8;
+                }
+            }
+        }
         void NewFile_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -1251,6 +1268,15 @@ namespace pcb
         {
             findReplaceDialog.Show();
         }
+        void colorClick(object sender, RoutedEventArgs e)
+        {
+            var window = new colorGenerator();
+            window.ShowDialog();
+            if (window != null && window.text != null)
+            {                
+                Editor.Document.Insert(Editor.SelectionStart, window.text);
+            }
+        }
         void packCB_Click(object sender, RoutedEventArgs e)
         {
             var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
@@ -1356,22 +1382,7 @@ namespace pcb
         }
         void Editor_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            /*
-            if (e.Key == Key.U)
-            {
-                Snippet snippet = new Snippet
-                {
-                    Elements = {
-                        new SnippetTextElement { Text = "for " },
-                        new SnippetReplaceableTextElement { Text = "item" },
-                        new SnippetTextElement { Text = " in " },
-                        new SnippetReplaceableTextElement { Text = "collection" },
-                        new SnippetTextElement { Text = ":\r\n\t" },
-                    }
-                };
-                snippet.Insert(Editor.TextArea);
-            }
-            */
+            
         }
         void MetroWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -1810,6 +1821,7 @@ namespace pcb
                 editor.Focus();
             }
         }
+
     }
 }
 public class OutlineItem : TreeViewItem

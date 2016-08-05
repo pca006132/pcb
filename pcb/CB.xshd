@@ -9,7 +9,7 @@
   <Color name="marks" foreground="#FF00FF"/>
   <Color name="doc" foreground="#4d7ea8"/>
 	<!-- This is the main ruleset. -->
-	<RuleSet>
+	<RuleSet>      
 		<Rule color="folding">
 			^\s*//[^{]*{\s*$
 		</Rule>

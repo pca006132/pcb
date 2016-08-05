@@ -537,12 +537,14 @@ namespace pcb.core.autocomplete
                     }
                     break;
             }
-            var completions = new List<string>();            
-            completions = result.Distinct().Where(s =>
+            
+            var completions = result.Distinct().Where(s =>
             {
                 bool match = false;
-                foreach (string str in s.Split('_'))
-                    if (str.ToLower().StartsWith(beginMatch.ToLower())) { match = true; break; };
+                if (s.ToLower().StartsWith(beginMatch.ToLower()))
+                    return true;
+                foreach (string str in s.ToLower().Split('_'))
+                    if (str.StartsWith(beginMatch.ToLower())) { match = true; break; };
                 return match;
             }).ToList();
 

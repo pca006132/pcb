@@ -133,6 +133,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to color chooser.
+        /// </summary>
+        public static string colorGen {
+            get {
+                return ResourceManager.GetString("colorGen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command to Setblock Sign.
         /// </summary>
         public static string colorJson {
@@ -489,6 +498,15 @@ namespace pcb.Properties {
         public static string promptSaveNew {
             get {
                 return ResourceManager.GetString("promptSaveNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to red.
+        /// </summary>
+        public static string red {
+            get {
+                return ResourceManager.GetString("red", resourceCulture);
             }
         }
         

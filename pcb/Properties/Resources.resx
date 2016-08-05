@@ -177,4 +177,25 @@
   <data name="error" xml:space="preserve">
     <value>Error!</value>
   </data>
+  <data name="Green" xml:space="preserve">
+    <value>green</value>
+  </data>
+  <data name="Blue" xml:space="preserve">
+    <value>blue</value>
+  </data>
+  <data name="ColorHex" xml:space="preserve">
+    <value>color(Hex)</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>apply</value>
+  </data>
+  <data name="AddColor" xml:space="preserve">
+    <value>add color</value>
+  </data>
+  <data name="generate" xml:space="preserve">
+    <value>generate</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
 </root>
