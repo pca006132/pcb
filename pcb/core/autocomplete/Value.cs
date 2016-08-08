@@ -537,14 +537,19 @@ namespace pcb.core.autocomplete
                     }
                     break;
             }
-            
+
+            var matchBeginning = false;
             var completions = result.Distinct().Where(s =>
             {
                 bool match = false;
                 if (s.ToLower().StartsWith(beginMatch.ToLower()))
+                {
+                    matchBeginning = true;
                     return true;
-                foreach (string str in s.ToLower().Split('_'))
-                    if (str.StartsWith(beginMatch.ToLower())) { match = true; break; };
+                }
+                if (!matchBeginning)
+                    foreach (string str in breakWords(s))
+                        if (str.ToLower().StartsWith(beginMatch.ToLower())) { match = true; break; };
                 return match;
             }).ToList();
 
@@ -555,6 +560,34 @@ namespace pcb.core.autocomplete
                 indexes.Add(beginMatch.Length);
             }
             return new CompletionData(completions, indexes);
+        }
+
+        public static string[] breakWords(string str)
+        {
+            Stack<StringBuilder> words = new Stack<StringBuilder>();
+            words.Push(new StringBuilder());
+            bool newChar = false;
+            foreach (char c in str)
+            {
+                if (c == '_')
+                {
+                    newChar = true;
+                    continue;
+                }
+                if (!Char.IsLower(c) || newChar)
+                {
+                    words.Push(new StringBuilder());
+                }
+                newChar = false;
+                words.Peek().Append(c);
+            }
+            string[] result = new string[words.Count];
+            var newWords = words.ToList();
+            for (var i = 0; i < result.Length; i++)
+            {
+                result[i] = newWords[result.Length - 1 - i].ToString();
+            }
+            return result;
         }
     }
 }

@@ -34,6 +34,7 @@ namespace pcb.core
         public SingleOOC()
         {
             cmd.Append(prefix);
+            addCommand("setblock ~ ~-2 ~ command_block 0 replace {auto:0b,Command:\"\"}");
         }
 
         public void addCommand(string command)

@@ -159,7 +159,16 @@ namespace pcb.core.autocomplete.Tests
             Assert.AreEqual(true, value.strictMatch("b"));
             Assert.AreEqual(true, value.strictMatch("c"));
             Assert.AreEqual(false, value.strictMatch("d"));
+        }
 
+        [TestMethod]
+        public void breakWordTest()
+        {
+            string word = "abc_efg";
+            CollectionAssert.AreEqual(new string[] { "abc", "efg" }, Value.breakWords(word));
+
+            word = "abcEfg";
+            CollectionAssert.AreEqual(new string[] { "abc", "Efg" }, Value.breakWords(word));
         }
     }
 }

@@ -113,6 +113,7 @@ namespace pcb
                         listbox.Items.Clear();
                         Hide();
                         e.Handled = true;
+                        window.addElements();                        
                     }
                     if (e.Key == Key.Space || e.Key == Key.Decimal)
                     {

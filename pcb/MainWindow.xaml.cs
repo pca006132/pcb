@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.8.2";
+        string version = "0.8.3";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -547,67 +547,68 @@ namespace pcb
                     if (Regex.IsMatch(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w"))
                     {
                         string str = Regex.Match(text, @"scoreboard objectives add ([a-zA-Z0-9_]+) \w").Groups[1].ToString();
-                        if (!Value.runtime_scbObj.Contains(str))
+                        if (!Value.runtime_scbObj.Contains(str) && !Value.scbObj.Contains(str))
                             Value.runtime_scbObj.Add(str);
 
                         string[] elements = text.Split(' ');
                         if (elements.Length > 4 && elements[4] == "trigger")
-                            if (!Value.runtime_triggerObj.Contains(elements[3]))
+                            if (!Value.runtime_triggerObj.Contains(elements[3]) && !Value.triggerObj.Contains(elements[3]))
                                 Value.runtime_triggerObj.Add(elements[3]);
                     }
                     else if (Regex.IsMatch(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)$"))
                     {
                         string tag = (Regex.Match(text, @"scoreboard players tag \S* \w+ ([a-zA-Z0-9_]+)$").Groups[1].ToString());
-                        if (!Value.runtime_tags.Contains(tag))
+                        if (!Value.runtime_tags.Contains(tag) && !Value.tags.Contains(tag))
                             Value.runtime_tags.Add(tag);
                     }
                     else if (text.StartsWith("mark:"))
                     {
                         string segment = text.Split(' ')[0].Substring(5);
-                        if (!Value.runtime_names.Contains(segment))
+                        if (!Value.runtime_names.Contains(segment) && !Value.names.Contains(segment))
                             Value.runtime_names.Add(segment);
                     }
                     else if (text.StartsWith("init:scoreboard teams add "))
                     {
                         string team = (text.Split(' ')[3]);
-                        if (!Value.runtime_teams.Contains(team))
+                        if (!Value.runtime_teams.Contains(team) && !Value.teams.Contains(team))
                             Value.runtime_teams.Add(team);
                     }
                     else if (text.StartsWith("define "))
                     {
                         string define = text.Split(' ')[1];
-                        Tree.defines.Add(define);
+                        if (!Tree.defines.Contains(define))
+                            Tree.defines.Add(define);
                     }
                 } else
                 {
                     if (Regex.IsMatch(text, @"//scb:\s*([a-zA-Z0-9_]+)"))
                     {
                         string str = Regex.Match(text, @"//scb:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
-                        if (!Value.runtime_scbObj.Contains(str))
+                        if (!Value.runtime_scbObj.Contains(str) && !Value.scbObj.Contains(str))
                             Value.runtime_scbObj.Add(str);
                     }
                     else if (Regex.IsMatch(text, @"//tag:\s*([a-zA-Z0-9_]+)"))
                     {
                         string str = Regex.Match(text, @"//tag:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
-                        if (!Value.runtime_tags.Contains(str))
+                        if (!Value.runtime_tags.Contains(str) && !Value.tags.Contains(str))
                             Value.runtime_tags.Add(str);
                     }
                     else if (Regex.IsMatch(text, @"//name:\s*([a-zA-Z0-9_]+)"))
                     {
                         string str = Regex.Match(text, @"//name:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
-                        if (!Value.runtime_names.Contains(str))
+                        if (!Value.runtime_names.Contains(str) && !Value.names.Contains(str))
                             Value.runtime_names.Add(str);
                     }
                     else if (Regex.IsMatch(text, @"//team:\s*([a-zA-Z0-9_]+)"))
                     {
                         string str = Regex.Match(text, @"//team:\s*([a-zA-Z0-9_]+)").Groups[1].ToString();
-                        if (!Value.runtime_teams.Contains(str))
+                        if (!Value.runtime_teams.Contains(str) && !Value.teams.Contains(str))
                             Value.runtime_teams.Add(str);
                     }
                 }
             }
         }
-        void addElements()
+        public void addElements()
         {
             if (autocomplete == null)
                 return;
@@ -785,22 +786,22 @@ namespace pcb
                 else if (line.StartsWith("scbObj:"))
                 {
                     Value.scbObj.Clear();
-                    Value.scbObj.AddRange(line.Substring(7).Split(' '));
+                    Value.scbObj.AddRange(line.Substring(7).Split(' ').Distinct());
                 }
                 else if (line.StartsWith("tags:"))
                 {
                     Value.tags.Clear();
-                    Value.tags.AddRange(line.Substring(5).Split(' '));
+                    Value.tags.AddRange(line.Substring(5).Split(' ').Distinct());
                 }
                 else if (line.StartsWith("names:"))
                 {
                     Value.names.Clear();
-                    Value.names.AddRange(line.Substring(6).Split(' '));
+                    Value.names.AddRange(line.Substring(6).Split(' ').Distinct());
                 }
                 else if (line.StartsWith("teams:"))
                 {
                     Value.teams.Clear();
-                    Value.teams.AddRange(line.Substring(6).Split(' '));
+                    Value.teams.AddRange(line.Substring(6).Split(' ').Distinct());
                 }
                 else if (line.StartsWith("lim:"))
                 {
@@ -900,7 +901,7 @@ namespace pcb
         {
             string text = "";
             text += "dir:" + (core.chain.StraightCbChain.initialDir == Direction.positiveX ? "0" : core.chain.StraightCbChain.initialDir == Direction.positiveY ? "1" : "2") + Environment.NewLine;
-            if (core.PcbParser.markerType) text += "AEC:1" + Environment.NewLine;
+            if (core.PcbParser.markerType) text += "AEC:0" + Environment.NewLine;
             if (useBlockStruc) text += "block:1" + Environment.NewLine;
             if (core.chain.StraightCbChain.limit != 0) text += "NL:" + core.chain.StraightCbChain.limit.ToString() + Environment.NewLine;
             if (core.chain.BoxCbChain.xLimit != 0) text += "X:" + core.chain.BoxCbChain.xLimit.ToString() + Environment.NewLine;
