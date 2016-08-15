@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.8.3";
+        string version = "0.8.4";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -614,7 +614,8 @@ namespace pcb
                 return;
             if (snippet_menu.shown)
                 return;
-            string text = Editor.Document.GetText(Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0), Editor.TextArea.Caret.Offset - Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0));            
+            string text = Editor.Document.GetText(Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0), Editor.TextArea.Caret.Offset - Editor.Document.GetOffset(Editor.TextArea.Caret.Line, 0)); 
+
             text = text.TrimStart(' ', '\t');
             if (text.Length == 0)
             {

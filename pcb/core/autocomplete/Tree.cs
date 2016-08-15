@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace pcb.core.autocomplete
 {
@@ -50,6 +49,7 @@ namespace pcb.core.autocomplete
                 {
                     result.displayData.Add(prefixes[0]);
                     result.startLength.Add(keys[0].Length);
+                    result.startsWith.Add(true);
                 } else
                 {
                     keys[0] = keys[0].Substring(prefixes[0].Length);
@@ -61,6 +61,7 @@ namespace pcb.core.autocomplete
                 {
                     result.displayData.Add(prefixes[1]);
                     result.startLength.Add(keys[0].Length);
+                    result.startsWith.Add(true);
                 }
                 else
                     keys[0] = keys[0].Substring(prefixes[1].Length);
@@ -97,6 +98,7 @@ namespace pcb.core.autocomplete
                     {
                         result.displayData.Add(prefix);
                         result.startLength.Add(keys[0].Length);
+                        result.startsWith.Add(true);
                     }
                 }
             }
@@ -135,10 +137,12 @@ namespace pcb.core.autocomplete
                             CompletionData tempList2 = t.value.getValues(keys.Last());
                             tempList.displayData.AddRange(tempList2.displayData);
                             tempList.startLength.AddRange(tempList2.startLength);
+                            tempList.startsWith.AddRange(tempList2.startsWith);
                         });
                     }
                     result.displayData.AddRange(tempList.displayData);
                     result.startLength.AddRange(tempList.startLength);
+                    result.startsWith.AddRange(tempList.startsWith);
                 }
                 foreach (string define in defines)
                 {
@@ -146,8 +150,11 @@ namespace pcb.core.autocomplete
                     {
                         result.displayData.Add(define);
                         result.startLength.Add(keys.Last().Length);
+                        result.startsWith.Add(true);
                     }
                 }
+                result.Filter();
+                
                 return result;
             }
             else

@@ -395,11 +395,13 @@ namespace pcb.core.autocomplete
                     {
                         result.Add(str);
                         var result2 = new List<int>();
+                        var result3 = new List<bool>();
                         for (int i = 0; i < result.Count; i++)
                         {
                             result2.Add(beginMatch.Length);
+                            result3.Add(true);
                         }
-                        return new CompletionData(result, result2);
+                        return new CompletionData(result, result2, result3);
                     }
                 }
             else
@@ -538,56 +540,36 @@ namespace pcb.core.autocomplete
                     break;
             }
 
-            var matchBeginning = false;
-            var completions = result.Distinct().Where(s =>
+            var raw = result.Distinct();
+            List<string> partMatch = new List<string>();
+            List<string> completions = new List<string>();
+            bool startswith = false;
+            foreach (string s in raw)
             {
-                bool match = false;
                 if (s.ToLower().StartsWith(beginMatch.ToLower()))
-                {
-                    matchBeginning = true;
-                    return true;
-                }
-                if (!matchBeginning)
-                    foreach (string str in breakWords(s))
-                        if (str.ToLower().StartsWith(beginMatch.ToLower())) { match = true; break; };
-                return match;
-            }).ToList();
+                    completions.Add(s);
+                if (s.ToLower().Contains(beginMatch.ToLower()))
+                    partMatch.Add(s);
+            }
+
+            if (completions.Count == 0)
+            {
+                completions.AddRange(partMatch);
+            }
+            else
+            {
+                startswith = true;
+            }
 
             completions.Sort();
             List<int> indexes = new List<int>();
+            List<bool> startsWith = new List<bool>();
             for (int i = 0; i < completions.Count; i++)
             {
                 indexes.Add(beginMatch.Length);
+                startsWith.Add(startswith);
             }
-            return new CompletionData(completions, indexes);
-        }
-
-        public static string[] breakWords(string str)
-        {
-            Stack<StringBuilder> words = new Stack<StringBuilder>();
-            words.Push(new StringBuilder());
-            bool newChar = false;
-            foreach (char c in str)
-            {
-                if (c == '_')
-                {
-                    newChar = true;
-                    continue;
-                }
-                if (!Char.IsLower(c) || newChar)
-                {
-                    words.Push(new StringBuilder());
-                }
-                newChar = false;
-                words.Peek().Append(c);
-            }
-            string[] result = new string[words.Count];
-            var newWords = words.ToList();
-            for (var i = 0; i < result.Length; i++)
-            {
-                result[i] = newWords[result.Length - 1 - i].ToString();
-            }
-            return result;
+            return new CompletionData(completions, indexes, startsWith);
         }
     }
 }
