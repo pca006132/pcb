@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.9.1";
+        string version = "0.9.2";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;

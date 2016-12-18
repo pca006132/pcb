@@ -31,7 +31,12 @@ namespace pcb
             try
             {
                 Node node = (new NodeBuilder(input.Text)).buildNode();
-                output.Text = string.Join("\n", node.getCommands());
+                output.Text = "";
+                foreach (string init in ConstantNode.setupConstants())
+                {
+                    output.Text += "init:" + init + "\n";
+                }
+                output.Text += string.Join("\n", node.getCommands());
             } catch (Exception ex)
             {
                 var mySettings = new MetroDialogSettings()
