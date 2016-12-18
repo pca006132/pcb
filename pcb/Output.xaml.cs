@@ -37,12 +37,14 @@ namespace pcb
                 temp.Append(text);
                 temp.Append("\n\n");
             }
-            Clipboard.SetText(temp.ToString());
+
+            Clipboard.SetDataObject(temp.ToString());
             this.Close();
         }
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Clipboard.SetText(textBox.Text);
+            string text = textBox.Text;
+            Clipboard.SetDataObject(text);
             count++;
             if (count > texts.Length)
             {

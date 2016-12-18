@@ -12,7 +12,7 @@ namespace pcb.core
     public class PcbParser
     {
         public static Regex define = new Regex(@"^define (\S+) = (.+)$", RegexOptions.Compiled);
-
+        public static bool version_1_11 = true;
         public static bool markerType = false;
         private int currentLineNum = 0;
         private Stack<AbstractCBChain> chains = new Stack<AbstractCBChain>();
@@ -195,11 +195,17 @@ namespace pcb.core
             string name = parts[0].Substring(5);
             if (markerType)
             {
-                entity = new Marker("ArmorStand", name, coor, parts.Skip(1).ToArray());
+                if (version_1_11)
+                    entity = new Marker("armor_stand", name, coor, parts.Skip(1).ToArray());
+                else
+                    entity = new Marker("ArmorStand", name, coor, parts.Skip(1).ToArray());
             }
             else
             {
-                entity = new Marker("AreaEffectCloud", name, coor, parts.Skip(1).ToArray());
+                if (version_1_11)
+                    entity = new Marker("area_effect_cloud", name, coor, parts.Skip(1).ToArray());
+                else
+                    entity = new Marker("AreaEffectCloud", name, coor, parts.Skip(1).ToArray());
             }
             return entity.ToString();
         }

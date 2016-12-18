@@ -205,6 +205,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to supported operators: +, -, *, /, %(mod), +=, -=, *=, /=, %=, =\noperands: Number(integer), &lt;selector&gt;.&lt;objective&gt;, \n&lt;fakePlayer&gt;.&lt;objective&gt;\nbrackets are supported\nexample: @e.scb = (@p.scb + 1)*3.
+        /// </summary>
+        public static string math_help {
+            get {
+                return ResourceManager.GetString("math_help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to new command&apos;s coordinates error: not a valid integer.
         /// </summary>
         public static string newCoorError {

@@ -381,4 +381,7 @@
   <data name="red" xml:space="preserve">
     <value>红</value>
   </data>
+  <data name="expression" xml:space="preserve">
+    <value>数学表达式</value>
+  </data>
 </root>

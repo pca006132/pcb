@@ -10,6 +10,7 @@
                      Height="174.696"
                      Background="#232323"
                      BorderBrush="AliceBlue"
+                     BorderThickness="1"
                      Icon="icon.png"
                      ResizeMode="CanMinimize"
                      mc:Ignorable="d">

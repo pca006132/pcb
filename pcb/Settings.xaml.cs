@@ -56,6 +56,7 @@ namespace pcb
             blockDamage_Top.Text = BoxCbChain.baseDamage.ToString();
             blockDamage_Side.Text = BoxCbChain.outerDamage.ToString();
             limit.Text = core.SingleOOC.oocLimit.ToString();
+            version.IsChecked = core.PcbParser.version_1_11;
             Show();
         }        
         private void cancel(object sender, EventArgs e)
@@ -117,6 +118,7 @@ namespace pcb
                 return;
             }
             core.SingleOOC.oocLimit = temp;
+            core.PcbParser.version_1_11 = version.IsChecked == true;
             Close();
         }
     }

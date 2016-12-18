@@ -198,4 +198,7 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="math_help" xml:space="preserve">
+    <value>支持的运算符: +, -, *, /, %(取余), +=, -=, *=, /=, %=, =\n运算子: 数字(整数), &lt;选择器&gt;.&lt;选择器objective&gt;, &lt;玩家名&gt;.&lt;选择器objective&gt;\n支持括号\n例子: @e.scb = (@p.scb + 1)*3</value>
+  </data>
 </root>

@@ -381,4 +381,7 @@
   <data name="red" xml:space="preserve">
     <value>red</value>
   </data>
+  <data name="expression" xml:space="preserve">
+    <value>Maths Expression</value>
+  </data>
 </root>

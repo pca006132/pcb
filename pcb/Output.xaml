@@ -9,6 +9,8 @@
                       Title="Output"
                       Width="498"
                       Height="327"
+                      BorderBrush="AliceBlue"
+                      BorderThickness="1"
                       Icon="icon.png"
                       ResizeMode="NoResize"
                       ShowIconOnTitleBar="False"

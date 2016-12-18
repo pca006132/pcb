@@ -204,6 +204,7 @@
                 <MenuItem Click="openPyEditor" Header="{x:Static p:UIresources.runPython}" />
                 <MenuItem Click="openUuidDialog" Header="UUID" />
                 <MenuItem Click="colorClick" Header="{x:Static p:UIresources.colorGen}" />
+                <MenuItem Click="expression_Click" Header="{x:Static p:UIresources.expression}" />
             </MenuItem>
             <MenuItem x:Name="customs" Header="{x:Static p:UIresources.custom_functions}" />
             <MenuItem Header="{x:Static p:UIresources.setting}">

@@ -36,7 +36,7 @@ namespace pcb
         List<string> completionData = new List<string>();
         bool closed = false;
         string path = "";
-        string version = "0.8.4";
+        string version = "0.9.1";
         string backupFileName = "";
         bool needFoldingUpdate = false;
         autocomplete_menu_data autocomplete;
@@ -233,6 +233,10 @@ namespace pcb
                         int.TryParse(line.Substring(4), out length);
                         if (length >= 1000)
                             core.SingleOOC.oocLimit = length;
+                    }
+                    else if (line.StartsWith("1.10"))
+                    {
+                        core.PcbParser.version_1_11 = false;
                     }
                 }
                 if (theme != "Blue")
@@ -711,6 +715,7 @@ namespace pcb
         void loadFile(string filePath)
         {
             path = filePath;
+            core.PcbParser.version_1_11 = true;
             LastEditTB.Text = Properties.UIresources.lastSaved + File.GetLastWriteTime(path).ToString();
             string text = File.ReadAllText(path, new UTF8Encoding());
             string[] lines = text.Split('\n');
@@ -810,6 +815,10 @@ namespace pcb
                     int.TryParse(line.Substring(4), out length);
                     if (length >= 1000)
                         core.SingleOOC.oocLimit = length;
+                }
+                else if (line.StartsWith("1.10"))
+                {
+                    core.PcbParser.version_1_11 = false;
                 }
                 else
                 {
@@ -913,6 +922,7 @@ namespace pcb
             if (Value.names.Count > 0) text += "names:" + String.Join(" ", Value.names.ToArray()) + Environment.NewLine;
             if (Value.teams.Count > 0) text += "teams:" + String.Join(" ", Value.teams.ToArray()) + Environment.NewLine;
             if (Value.tags.Count > 0) text += "tags:" + String.Join(" ", Value.tags.ToArray()) + Environment.NewLine;
+            if (!core.PcbParser.version_1_11) text += "1.10" + Environment.NewLine;
             text += "lim:" + core.SingleOOC.oocLimit + Environment.NewLine;
             text += "top_dam:" + core.chain.BoxCbChain.baseDamage.ToString() + Environment.NewLine;
             text += "side_dam:" + core.chain.BoxCbChain.outerDamage.ToString() + Environment.NewLine;
@@ -1250,6 +1260,11 @@ namespace pcb
             var line = Editor.Document.GetLineByOffset(Editor.CaretOffset);
             string text = Editor.Document.GetText(line);
             Editor.Document.Replace(line, CommandUtil.colorBlackTech(text));
+        }
+        void expression_Click(object sender, RoutedEventArgs e)
+        {
+             var window = new Expression();
+             window.ShowDialog();
         }
         void comment_Click(object sender, RoutedEventArgs e)
         {
@@ -1823,7 +1838,6 @@ namespace pcb
                 editor.Focus();
             }
         }
-
     }
 }
 public class OutlineItem : TreeViewItem

@@ -8,13 +8,13 @@ namespace pcb.core
     public class SingleOOC
     {
         //constants
-        const string prefix = "/summon FallingSand ~ ~1.5 ~ " +
+        static string prefix = "/summon FallingSand ~ ~1.5 ~ " +
                 "{Time:1,Block:minecraft:redstone_block,Motion:[0d,-1d,0d],Passengers:" +
                 "[{id:FallingSand,Time:1,Block:minecraft:activator_rail" +
                 ",Passengers:[";
-        const string suffix = "{id:MinecartCommandBlock,Command:" +
+        static string suffix = "{id:MinecartCommandBlock,Command:" +
                 "setblock ~ ~1 ~ command_block 0 replace {auto:1b,Command:fill ~ ~ ~ ~ ~-2 ~ air}},{id:MinecartCommandBlock,Command:kill @e[type=MinecartCommandBlock,r=1]}]}]}";
-        const string cmdPrefix = "{id:MinecartCommandBlock,Command:";
+        static string cmdPrefix = "{id:MinecartCommandBlock,Command:";
         static int prefixLength = prefix.Length;
         static int colorPrefixLength = getColorModeLength(prefix, false);
         static int cmdPrefixLength = cmdPrefix.Length;
@@ -23,8 +23,9 @@ namespace pcb.core
         static int colorSuffixLength = getColorModeLength(suffix, false);
         static int colorSignLength = colorBlackTech("").Length;
         public static int oocLimit = 31000;
+        static bool version_1_11 = false;
         //end constants
-
+        
         private bool useColorBlackTech;
         private StringBuilder cmd = new StringBuilder();
         private int normalLength = prefixLength;
@@ -33,6 +34,44 @@ namespace pcb.core
 
         public SingleOOC()
         {
+            if (version_1_11 != PcbParser.version_1_11) {
+                version_1_11 = PcbParser.version_1_11;
+                if (version_1_11)
+                {
+                    prefix = "/summon falling_block ~ ~1.5 ~ " +
+                        "{Time:1,Block:minecraft:redstone_block,Motion:[0d,-1d,0d],Passengers:" +
+                        "[{id:falling_block,Time:1,Block:minecraft:activator_rail" +
+                        ",Passengers:[";
+                    suffix = "{id:commandblock_minecart,Command:" +
+                        "setblock ~ ~1 ~ command_block 0 replace {auto:1b,Command:fill ~ ~ ~ ~ ~-2 ~ air}},{id:commandblock_minecart,Command:kill @e[type=commandblock_minecart,r=1]}]}]}";
+                    cmdPrefix = "{id:commandblock_minecart,Command:";
+
+                    prefixLength = prefix.Length;
+                    colorPrefixLength = getColorModeLength(prefix, false);
+                    cmdPrefixLength = cmdPrefix.Length;
+                    colorCmdPrefixLength = getColorModeLength(cmdPrefix, false);
+                    suffixLength = suffix.Length;
+                    colorSuffixLength = getColorModeLength(suffix, false);
+                    colorSignLength = colorBlackTech("").Length;
+                } else
+                {
+                    prefix = "/summon FallingSand ~ ~1.5 ~ " +
+                "{Time:1,Block:minecraft:redstone_block,Motion:[0d,-1d,0d],Passengers:" +
+                "[{id:FallingSand,Time:1,Block:minecraft:activator_rail" +
+                ",Passengers:[";
+                    suffix = "{id:MinecartCommandBlock,Command:" +
+                            "setblock ~ ~1 ~ command_block 0 replace {auto:1b,Command:fill ~ ~ ~ ~ ~-2 ~ air}},{id:MinecartCommandBlock,Command:kill @e[type=MinecartCommandBlock,r=1]}]}]}";
+                    cmdPrefix = "{id:MinecartCommandBlock,Command:";
+                    prefixLength = prefix.Length;
+                    colorPrefixLength = getColorModeLength(prefix, false);
+                    cmdPrefixLength = cmdPrefix.Length;
+                    colorCmdPrefixLength = getColorModeLength(cmdPrefix, false);
+                    suffixLength = suffix.Length;
+                    colorSuffixLength = getColorModeLength(suffix, false);
+                    colorSignLength = colorBlackTech("").Length;
+                }
+            }
+
             cmd.Append(prefix);
             addCommand("blockdata ~ ~-2 ~ {auto:0b,Command:\"\"}");
         }

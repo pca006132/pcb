@@ -177,5 +177,12 @@
                  VerticalAlignment="Top"
                  Text=""
                  TextWrapping="Wrap" />
+        <CheckBox x:Name="version"
+                  Width="168"
+                  Height="26"
+                  Margin="245,194,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  Content="OOC 1.11?" />
     </Grid>
 </control:MetroWindow>

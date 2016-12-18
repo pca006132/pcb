@@ -13,10 +13,7 @@ namespace pcb.core
         int[] coor;
         string[] tags;
         public Marker(string type, string name, int[] coor, string[] tags)
-        {
-            if (type != "ArmorStand" && type != "AreaEffectCloud")
-                //should never happen
-                throw new PcbException("unknown marker type");            
+        {   
             if (coor.Length != 3)
                 //should never happen
                 throw new PcbException("wrong coor");
@@ -29,7 +26,7 @@ namespace pcb.core
         {
             string nbt = "";
             name = "\"" + util.CommandUtil.escape(name) + "\"";
-            if (type.Equals("ArmorStand"))
+            if (type.Equals("ArmorStand") || type.Equals("armor_stand"))
             {                
                 nbt = String.Format(@"CustomName:{0},NoGravity:1b,Invisible:1b",name);
             } else if (type.Equals("AreaEffectCloud"))

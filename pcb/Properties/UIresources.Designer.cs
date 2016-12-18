@@ -268,6 +268,15 @@ namespace pcb.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maths Expression.
+        /// </summary>
+        public static string expression {
+            get {
+                return ResourceManager.GetString("expression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         public static string file {
