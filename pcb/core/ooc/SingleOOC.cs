@@ -202,7 +202,10 @@ namespace pcb.core
             if (oocGenerated)
                 return colorBlackTech(cmd.ToString()).Insert(10,"1");
             else {
-                cmd.Insert(21, "-1");
+                if (version_1_11)
+                    cmd.Insert(23,"-1");
+                else
+                    cmd.Insert(21, "-1");
                 cmd.Append(suffix);
                 oocGenerated = true;
                 return colorBlackTech(cmd.ToString()).Insert(10,"1");
