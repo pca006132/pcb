@@ -23,8 +23,7 @@ namespace pcb.core.util
             string setBlock = escape(escape(text));
             setBlock = setBlock.Replace("§", "\\u00a7");
             return "setblock ~ ~ ~ standing_sign 0 replace {Text1:\"{\\\"text\\\":\\\"" + colorSignText +
-                    "\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\""
-                    + setBlock + "\\\"}}\",Text2:\"{\\\"text\\\":\\\"\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\"setblock ~ ~ ~ air\\\"}}\",Text3:\"{\\\"text\\\":\\\"\\\"}\",Text4:\"{\\\"text\\\":\\\"\\\"}\"}";
+                    "\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\"/setblock ~ ~ ~ air\\\"}}\",Text2:\"{\\\"text\\\":\\\"\\\",\\\"clickEvent\\\":{\\\"action\\\":\\\"run_command\\\",\\\"value\\\":\\\"" + setBlock + "\\\"}}\",Text3:\"{\\\"text\\\":\\\"\\\"}\",Text4:\"{\\\"text\\\":\\\"\\\"}\"}";
         }        
         public static long[] randomUUIDPair()
         {
